@@ -83,7 +83,7 @@ function draw(){
  ctx.translate(0,(1-k)*wordH*1.05);
  ctx.save();ctx.translate(ox,oy);ctx.scale(S,S);ctx.lineJoin='round';ctx.lineWidth=CFG.sw;ctx.fillStyle=ctx.strokeStyle='#121212';ctx.fill(LET,'evenodd');ctx.stroke(LET);ctx.fillStyle=ctx.strokeStyle=cur;ctx.fill(DOT);ctx.stroke(DOT);ctx.restore();
  ctx.restore();
- ctx.fillStyle='#121212';ctx.fillRect(0,floorY,W,1.5);
+ 
  bodies.forEach(shadowFor);
  bodies.forEach(function(b){var sp=Math.hypot(b.vx,b.vy);if(b.k==='g'&&sp>1100&&b!==drag){var dt=.012;for(var g=3;g>0;g--){var gb={};for(var p in b)gb[p]=b[p];gb.x=b.x-b.vx*dt*g;gb.y=b.y-b.vy*dt*g;drawBody(gb,.07)}}});
  bodies.forEach(function(b){drawBody(b,1)});
