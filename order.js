@@ -166,7 +166,7 @@
     $('cs-slot').innerHTML = s.list.map(function (o) { return '<option value="' + o.v + '">' + o.t + '</option>'; }).join('');
     $('cs-closed').hidden = !s.closed;
     $('cs-closed').textContent = s.closed ? 'Nous sommes fermés pour le moment : votre commande sera prête ' + s.label.toLowerCase() + '.' : '';
-    try { $('cs-name').value = localStorage.getItem('brek-name') || $('cs-name').value; } catch (e) {}
+    try { $('cs-name').value = localStorage.getItem('brek-name') || $('cs-name').value; $('cs-phone').value = localStorage.getItem('brek-phone') || $('cs-phone').value; } catch (e) {}
     renderCart();
     cs.showModal();
   }
@@ -177,14 +177,16 @@
       var d = details(l);
       return '• ' + l.qty + '× ' + ITEMS[l.id].name + (d ? ' (' + d + ')' : '') + ' : CHF ' + (unit(l) * l.qty).toFixed(2);
     });
-    return ['Bonjour BREK ! Commande à emporter', '', 'Retrait : ' + slot, 'Nom : ' + name + (phone ? ' · ' + phone : ''), '']
+    return ['Bonjour BREK ! Commande à emporter', '', 'Retrait : ' + slot, 'Nom : ' + name, 'Téléphone : ' + phone, '']
       .concat(lines).concat(['', 'Total : ' + chf(total()) + ' · paiement au comptoir']).join('\n');
   }
   $('cs-send').addEventListener('click', function () {
     var name = $('cs-name').value.trim(), phone = $('cs-phone').value.trim(), slot = $('cs-slot').value;
     if (!name) { $('cs-err').textContent = 'Ajoutez votre prénom pour qu’on vous appelle au comptoir.'; $('cs-name').focus(); return; }
+    var digits = phone.replace(/[^\d]/g, '');
+    if (digits.length < 9 || digits.length > 15) { $('cs-err').textContent = 'Ajoutez votre numéro de téléphone, pour qu’on puisse vous joindre en cas de besoin.'; $('cs-phone').focus(); return; }
     if (!slot) { $('cs-err').textContent = 'Aucun créneau disponible pour le moment.'; return; }
-    try { localStorage.setItem('brek-name', name); } catch (e) {}
+    try { localStorage.setItem('brek-name', name); localStorage.setItem('brek-phone', phone); } catch (e) {}
     var url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(message(name, phone, slot));
     window.open(url, '_blank', 'noopener');
     $('cs-main').hidden = true; $('cs-foot').hidden = true; $('cs-done').hidden = false;
