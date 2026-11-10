@@ -298,14 +298,39 @@ blockquote footer { font-size: 14px; color: var(--muted); }
 .link { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; text-underline-offset: 4px; }
 
 /* ------------------------------------------------ un mot de nous: a short, warm note, centred */
-.story { max-width: 1000px; text-align: center; border-top: 1px solid var(--line); padding-top: clamp(80px, 12vw, 160px); padding-bottom: clamp(80px, 12vw, 160px); }
+.story { position: relative; max-width: var(--max); text-align: center; border-top: 1px solid var(--line); padding-top: clamp(80px, 12vw, 160px); padding-bottom: clamp(80px, 12vw, 160px); }
 .story .kicker { margin-bottom: 26px; }
-.msg { text-wrap: balance; font-size: clamp(25px, 6.6vw, 54px); font-weight: 500; letter-spacing: -.04em; line-height: 1.08; margin: 0 auto; max-width: 17em; }
+.msg { position: relative; text-wrap: balance; font-size: clamp(25px, 6.6vw, 50px); font-weight: 500; letter-spacing: -.04em; line-height: 1.08; margin: 0 auto; max-width: 15em; }
 .msg span { display: block; text-wrap: balance; }
 .msg span + span { color: #8F8A80; }
 .msg-sub { margin: 28px auto 0; max-width: 26em; font-size: clamp(16px, 1.6vw, 19px); color: #33302B; }
 .story .sign { display: inline-flex; align-items: center; gap: 10px; margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--ink); font-size: 14px; color: var(--muted); }
 .wm-inline { height: 15px; width: auto; color: var(--ink); }
+/* little line drawings around the note: matcha whisk, bowl, croffle, iced latte, a bean */
+.decos { position: absolute; inset: 0; pointer-events: none; }
+.deco { position: absolute; width: 74px; height: 74px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.d-whisk { left: 4%; top: 34px; transform: rotate(-14deg); }
+.d-bowl { right: 4%; top: 30px; transform: rotate(8deg); }
+.d-croffle { left: 6%; bottom: 26px; transform: rotate(6deg); }
+.d-glass { right: 7%; bottom: 22px; transform: rotate(-8deg); }
+.deco .grid path { stroke-width: 1.2; opacity: .7; }
+.d-bean { width: 30px; height: 30px; right: 30%; bottom: 46px; transform: rotate(24deg); stroke-width: 3; }
+.story { padding-top: clamp(130px, 14vw, 170px); padding-bottom: clamp(130px, 14vw, 170px); }
+@media (min-width: 900px) {
+  .deco { width: 150px; height: 150px; stroke-width: 1.8; }
+  .d-whisk { left: 3%; top: 16%; }
+  .d-bowl { right: 3%; top: 14%; }
+  .d-croffle { left: 7%; top: auto; bottom: 14%; }
+  .d-glass { right: 8%; bottom: 12%; }
+  .d-bean { width: 40px; height: 40px; right: auto; left: 20%; bottom: auto; top: 12%; stroke-width: 2.6; }
+}
+/* each drawing traces itself once the note is on screen */
+html.js-note .deco path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.js-note .story.in .deco path { animation: draw 1.4s cubic-bezier(.5,0,.3,1) forwards; }
+html.js-note .story.in .d-bowl path { animation-delay: .15s; }
+html.js-note .story.in .d-croffle path { animation-delay: .3s; }
+html.js-note .story.in .d-glass path { animation-delay: .45s; }
+html.js-note .story.in .d-bean path { animation-delay: .6s; }
 /* lines settle in, one after the other, when the note comes into view */
 html.js-note .msg span, html.js-note .msg-sub, html.js-note .story .sign { opacity: 0; transform: translateY(14px); }
 html.js-note .story.in .msg span, html.js-note .story.in .msg-sub, html.js-note .story.in .sign { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
