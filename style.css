@@ -297,47 +297,34 @@ blockquote footer { font-size: 14px; color: var(--muted); }
 .reviews .quote > .muted { max-width: 34em; }
 .link { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; text-underline-offset: 4px; }
 
-/* ------------------------------------------------ un mot de nous: a short, warm note, centred */
-.story { position: relative; max-width: var(--max); text-align: center; border-top: 1px solid var(--line); padding-top: clamp(80px, 12vw, 160px); padding-bottom: clamp(80px, 12vw, 160px); }
-.story .kicker { margin-bottom: 26px; }
-.msg { position: relative; text-wrap: balance; font-size: clamp(25px, 6.6vw, 50px); font-weight: 500; letter-spacing: -.04em; line-height: 1.08; margin: 0 auto; max-width: 15em; }
-.msg span { display: block; text-wrap: balance; }
-.msg span + span { color: #8F8A80; }
-.msg-sub { margin: 28px auto 0; max-width: 26em; font-size: clamp(16px, 1.6vw, 19px); color: #33302B; }
-.story .sign { display: inline-flex; align-items: center; gap: 10px; margin: 40px 0 0; padding-top: 22px; border-top: 1px solid var(--ink); font-size: 14px; color: var(--muted); }
+/* ------------------------------------------------ un mot de nous: five short lines, each with its own little drawing */
+.story { max-width: var(--max); text-align: center; border-top: 1px solid var(--line); }
+.story .kicker { margin-bottom: 14px; }
+.msg { font-size: clamp(44px, 9vw, 88px); font-weight: 500; letter-spacing: -.045em; line-height: 1; margin: 0 0 clamp(36px, 5vw, 64px); }
+.mots { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); text-align: left; }
+.mots li { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.mi { width: 44px; height: 44px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.mots span { font-size: clamp(19px, 4.8vw, 22px); font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
+.story .sign { display: inline-flex; align-items: center; gap: 10px; margin: 32px 0 0; font-size: 14px; color: var(--muted); }
 .wm-inline { height: 15px; width: auto; color: var(--ink); }
-/* little line drawings around the note: matcha whisk, bowl, croffle, iced latte, a bean */
-.decos { position: absolute; inset: 0; pointer-events: none; }
-.deco { position: absolute; width: 74px; height: 74px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-.d-whisk { left: 4%; top: 34px; transform: rotate(-14deg); }
-.d-bowl { right: 4%; top: 30px; transform: rotate(8deg); }
-.d-croffle { left: 6%; bottom: 26px; transform: rotate(6deg); }
-.d-glass { right: 7%; bottom: 22px; transform: rotate(-8deg); }
-.deco .grid path { stroke-width: 1.2; opacity: .7; }
-.d-bean { width: 30px; height: 30px; right: 30%; bottom: 46px; transform: rotate(24deg); stroke-width: 3; }
-.story { padding-top: clamp(130px, 14vw, 170px); padding-bottom: clamp(130px, 14vw, 170px); }
 @media (min-width: 900px) {
-  .deco { width: 150px; height: 150px; stroke-width: 1.8; }
-  .d-whisk { left: 3%; top: 16%; }
-  .d-bowl { right: 3%; top: 14%; }
-  .d-croffle { left: 7%; top: auto; bottom: 14%; }
-  .d-glass { right: 8%; bottom: 12%; }
-  .d-bean { width: 40px; height: 40px; right: auto; left: 20%; bottom: auto; top: 12%; stroke-width: 2.6; }
+  .mots { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--line); text-align: center; }
+  .mots li { grid-template-columns: 1fr; justify-items: center; align-content: start; gap: 22px; padding: 40px 22px 36px; border-bottom: 0; }
+  .mots li + li { border-left: 1px solid var(--line); }
+  .mi { width: 64px; height: 64px; stroke-width: 1.8; }
+  .mots span { font-size: 20px; text-wrap: balance; }
 }
-/* each drawing traces itself once the note is on screen */
-html.js-note .deco path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
-html.js-note .story.in .deco path { animation: draw 1.4s cubic-bezier(.5,0,.3,1) forwards; }
-html.js-note .story.in .d-bowl path { animation-delay: .15s; }
-html.js-note .story.in .d-croffle path { animation-delay: .3s; }
-html.js-note .story.in .d-glass path { animation-delay: .45s; }
-html.js-note .story.in .d-bean path { animation-delay: .6s; }
-/* lines settle in, one after the other, when the note comes into view */
-html.js-note .msg span, html.js-note .msg-sub, html.js-note .story .sign { opacity: 0; transform: translateY(14px); }
-html.js-note .story.in .msg span, html.js-note .story.in .msg-sub, html.js-note .story.in .sign { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-html.js-note .story.in .msg span:nth-child(2) { transition-delay: .15s; }
-html.js-note .story.in .msg span:nth-child(3) { transition-delay: .3s; }
-html.js-note .story.in .msg-sub { transition-delay: .5s; }
-html.js-note .story.in .sign { transition-delay: .7s; }
+/* the drawings trace themselves one after the other when the section comes into view */
+html.js-note .mi path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.js-note .mots span, html.js-note .story .sign { opacity: 0; transform: translateY(10px); }
+html.js-note .story.in .mi path { animation: draw 1s cubic-bezier(.5,0,.3,1) forwards; }
+html.js-note .story.in .mots span, html.js-note .story.in .sign { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+html.js-note .story.in .mots li:nth-child(1) path { animation-delay: 0.00s; } html.js-note .story.in .mots li:nth-child(1) span { transition-delay: 0.20s; }
+html.js-note .story.in .mots li:nth-child(2) path { animation-delay: 0.18s; } html.js-note .story.in .mots li:nth-child(2) span { transition-delay: 0.38s; }
+html.js-note .story.in .mots li:nth-child(3) path { animation-delay: 0.36s; } html.js-note .story.in .mots li:nth-child(3) span { transition-delay: 0.56s; }
+html.js-note .story.in .mots li:nth-child(4) path { animation-delay: 0.54s; } html.js-note .story.in .mots li:nth-child(4) span { transition-delay: 0.74s; }
+html.js-note .story.in .mots li:nth-child(5) path { animation-delay: 0.72s; } html.js-note .story.in .mots li:nth-child(5) span { transition-delay: 0.92s; }
+html.js-note .story.in .sign { transition-delay: 1.2s; }
 
 /* ------------------------------------------------ faq */
 .faq { max-width: 900px; margin: 0 auto; padding: clamp(64px, 8vw, 112px) var(--pad); border-top: 1px solid var(--line); }
