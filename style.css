@@ -93,7 +93,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-heig
 @keyframes ovl { from { opacity: 0; transform: translateY(14px); } }
 .ov-links small { font-size: 12px; letter-spacing: .08em; color: #8F8A80; font-weight: 400; min-width: 20px; }
 .ov-links { border-top: 1px solid #2C2B29; }
-.ov-foot { margin-top: 36px; position: relative; }
+.ov-foot { margin-top: 36px; position: relative; text-align: center; }
+@media (min-width: 900px) { .ov-foot { text-align: left; } }
 .ov-lock { display: block; width: 128px; height: auto; margin: 0 auto 22px; color: #F4F1EA; }
 @media (min-width: 900px) { .ov-lock { margin: 0 4px 18px auto; } }
 .ov-foot p { margin: 20px 0 10px; font-size: 13px; color: #A9A49A; line-height: 1.7; }
