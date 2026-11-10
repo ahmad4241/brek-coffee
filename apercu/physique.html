@@ -16,8 +16,13 @@ a{color:inherit;text-decoration:none}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;box-shadow:inset 0 0 120px rgba(80,55,25,.18)}
 .top,.bottom{animation:fade 1s ease 2.6s both}@keyframes fade{from{opacity:0;transform:translateY(8px)}}
 .stage.grab{cursor:grabbing}
-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.hint{position:absolute;left:0;right:0;top:14px;text-align:center;font-size:13px;color:var(--muted);transition:opacity .8s;pointer-events:none;opacity:0;letter-spacing:.02em}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+.headline{position:absolute;left:18px;right:18px;top:22px;margin:0;z-index:2;pointer-events:none;font-weight:700;font-size:clamp(44px,12.4vw,104px);line-height:.94;letter-spacing:-.05em;color:#121212}
+.headline span{display:block;overflow:hidden;animation:hl 1.1s cubic-bezier(.2,.8,.2,1) both}.headline span:nth-child(2){animation-delay:.12s}
+.headline em{font-style:normal;color:var(--accent)}
+@keyframes hl{from{transform:translateY(105%);opacity:0;filter:blur(6px)}}
+@media (min-width:900px){.headline{left:50%;right:auto;transform:translateX(-50%);text-align:center;width:min(1000px,100%)}}
+.hint{position:absolute;left:0;right:0;bottom:calc(var(--wordh,120px) + 26px);top:auto;text-align:center;font-size:13px;color:var(--muted);transition:opacity .8s;pointer-events:none;opacity:0;letter-spacing:.02em}
 .bottom{position:relative;z-index:3;padding:14px 18px calc(18px + env(safe-area-inset-bottom));border-top:1.5px solid var(--ink)}
 .bottom p{margin:0 0 14px;font-size:15px;color:#33302B}
 .bottom p b{color:var(--ink);font-weight:500}
@@ -35,7 +40,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 </style></head><body>
 <section class="hero">
  <header class="top"><span class="kick">Coffee · Matcha · Croffles</span><span class="pill"><i></i>Ouvert · 17:00</span></header>
- <div class="stage" id="stage"><canvas id="c"></canvas><div class="hint" id="hint">Attrape ton BREK ↓</div></div>
+ <div class="stage" id="stage"><canvas id="c"></canvas><h1 class="headline" id="hl"><span>C’est l’heure</span><span>d’un BREK<em>.</em></span></h1><div class="hint" id="hint" hidden></div></div>
  <div class="bottom"><p><b>47 rue des Eaux-Vives, Genève.</b> Café de spécialité, matcha cérémonial bio, croffles minute. Commandez, on prépare.</p>
   <div class="btns"><a class="b bd" href="#carte">Commander</a><a class="b bl" href="#">Itinéraire</a></div></div>
 </section>
@@ -53,12 +58,12 @@ function layout(){
  var r=stage.getBoundingClientRect();dpr=Math.min(2,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
  var pad=Math.max(14,W*.04),ww=Math.min(W-2*pad,980);S=ww/CFG.vb[2];wordH=CFG.vb[3]*S;ox=(W-ww)/2-CFG.vb[0]*S;floorY=H-12;oy=floorY-wordH-CFG.vb[1]*S;
  var e=CFG.sw*S/2;rects=CFG.boxes.map(function(b){return [ox+b[0]*S-e,oy+b[1]*S-e,ox+b[2]*S+e,oy+b[3]*S+e]});
- U=Math.min(1.5,Math.max(.62,ww/400));
+ U=Math.min(1.5,Math.max(.62,ww/400));stage.style.setProperty('--wordh',(wordH+12)+'px');
 }
 // ---------------------------------------------------------------- rigid bodies (circles in a local frame)
 var bodies=[],parts=[],G=2400,shake=0,cur='#5E7F1E';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
-function glass(n,x,y){var w=88*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.33,w*.42],[-w*.3,h*.42,w*.12],[w*.3,h*.42,w*.12]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
+function glass(n,x,y){var w=100*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.33,w*.42],[-w*.3,h*.42,w*.12],[w*.3,h*.42,w*.12]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
 function ice(i,x,y){var w=(40+Math.random()*10)*U,m=1,r=w*.44;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
 function bean(x,y){var r=(9+Math.random()*3)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
 function wp(b,c){var co=Math.cos(b.a),si=Math.sin(b.a);return [b.x+c[0]*co-c[1]*si,b.y+c[0]*si+c[1]*co]}
@@ -103,7 +108,7 @@ function schedule(){
  for(var i=1;i<=5;i++)(function(i){q.push([1900+i*90,function(){bodies.push(ice(i,W*(.1+Math.random()*.8),-90))}])})(i);
  for(var j=0;j<18;j++)q.push([2300+j*55,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
- if(!RM){setTimeout(addBokeh,1200);setTimeout(addBokeh,2600);setTimeout(addBokeh,4400)}
+ 
  setTimeout(function(){hint.style.opacity=1},RM?0:3600);
 }
 // ---------------------------------------------------------------- drawing
@@ -151,7 +156,8 @@ function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.
   if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);else if(!down.b&&moved<10)bodies.push(bean(p[0],-20))}
  if(drag){drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>70)bodies.splice(3,bodies.length-70)}
 stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
-function openCard(n){var d=DRINKS[n];cur=COL[n];document.getElementById('cn').textContent=d[0];document.getElementById('cd').textContent=d[1];document.getElementById('cg').textContent='Commander · '+d[2];document.getElementById('card').classList.add('on')}
+function openCard(n){var d=DRINKS[n];cur=COL[n];tint();document.getElementById('cn').textContent=d[0];document.getElementById('cd').textContent=d[1];document.getElementById('cg').textContent='Commander · '+d[2];document.getElementById('card').classList.add('on')}
+var hl=document.getElementById('hl');function tint(){var e=hl.querySelector('em');e.style.color=cur}
 document.getElementById('cx').onclick=function(){document.getElementById('card').classList.remove('on')};
 addEventListener('resize',function(){var oW=W;layout();bodies.forEach(function(b){b.x*=W/oW})});
 layout();schedule();requestAnimationFrame(loop);
