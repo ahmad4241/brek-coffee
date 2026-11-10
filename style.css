@@ -100,7 +100,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-heig
 .ov-cta { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 0 8px 0 24px; border-radius: 999px; background: #F4F1EA; color: var(--ink); text-decoration: none; font-weight: 500; font-size: 16px; }
 .ov-cta i .ic { width: 18px; height: 18px; }
 .ov-cta i { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ink); color: #F4F1EA; font-style: normal; }
-.ov-ig { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #F4F1EA; text-underline-offset: 4px; }
+.ov-ig { margin-top: 18px; display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #F4F1EA; text-underline-offset: 4px; }
 html.ov-open { overflow: hidden; }
 html.ov-open .nav { background: var(--ink); box-shadow: none; }
 html.ov-open .nav .logo { color: #F4F1EA; }
