@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://naskon.com/demo/cafe/brek/">
 <link rel="icon" href="images/icon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/poppins-bold.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="style.css?v=1794347669">
+<link rel="stylesheet" href="style.css?v=1794347889">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -128,32 +128,31 @@
       <div id="ph-hint" hidden></div>
     </div>
     <div class="ph-bottom">
-      <p><b>47 rue des Eaux-Vives, Genève.</b> Café de spécialité, matcha cérémonial bio, croffles minute. Commandez, on prépare.</p>
-      <div class="btns"><a class="btn btn-dark" href="#carte">Commander</a><a class="btn btn-line" href="https://www.google.com/maps/dir/?api=1&amp;destination=BREK+Coffee+Rue+des+Eaux-Vives+47+1207+Gen%C3%A8ve" target="_blank" rel="noopener">Itinéraire</a></div>
+      <div class="ph-meta">
+        <span>47 rue des Eaux-Vives</span>
+        <span>1207 Genève</span>
+      </div>
+      <div class="ph-actions">
+        <a class="ph-go" href="#carte"><span>Commander</span><i aria-hidden="true">→</i></a>
+        <a class="ph-map" href="https://www.google.com/maps/dir/?api=1&amp;destination=BREK+Coffee+Rue+des+Eaux-Vives+47+1207+Gen%C3%A8ve" target="_blank" rel="noopener">Itinéraire <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
   </section>
   <div class="ph-card" id="ph-card" role="dialog" aria-live="polite"><div class="t"><b id="ph-cn">Vanilla Matcha</b><span id="ph-cd"></span></div><a class="go" href="#carte" id="ph-cg">Commander</a><button class="x" id="ph-cx" aria-label="Fermer">×</button></div>
 
   <!-- FAIT MAISON -->
   <section class="house" aria-labelledby="house-title">
-    <h2 id="house-title" class="visually-hidden">Fait maison</h2>
-    <ul>
-      <li>
-        <span class="num">01</span>
-        <h3>Sirops maison</h3>
-        <p>Vanille et cannelle, préparés ici, derrière le comptoir. Rien d’industriel dans vos lattes.</p>
-      </li>
-      <li>
-        <span class="num">02</span>
-        <h3>Matcha cérémonial bio</h3>
-        <p>Okumidori, fouetté à la commande. Chaud, glacé ou avec notre cold foam vanille.</p>
-      </li>
-      <li>
-        <span class="num">03</span>
-        <h3>Café single origin</h3>
-        <p>100&nbsp;% arabica, de l’espresso au latte. Lait d’avoine disponible sur toutes les boissons.</p>
-      </li>
-    </ul>
+    <div class="house-in">
+      <header class="house-head">
+        <p class="kicker">Fait maison</p>
+        <h2 id="house-title">Ce qu’on fait<br>nous-mêmes.</h2>
+      </header>
+      <ol class="house-list">
+        <li><span class="hn">01</span><span class="hi"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M21 4h6v6l3 4v28a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V14l3-4z"/><path d="M18 22h12M18 34h12"/></svg></span><div><h3>Sirops maison</h3><p>Vanille et cannelle, préparés ici, derrière le comptoir. Rien d’industriel dans vos lattes.</p></div></li>
+        <li><span class="hn">02</span><span class="hi"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44V28"/><path d="M20 44h8"/><path d="M24 28c-8 0-12-8-12-18M24 28c-4 0-6-8-6-20M24 28V6M24 28c4 0 6-8 6-20M24 28c8 0 12-8 12-18"/></svg></span><div><h3>Matcha cérémonial bio</h3><p>Okumidori, fouetté à la commande. Chaud, glacé ou avec notre cold foam vanille.</p></div></li>
+        <li><span class="hn">03</span><span class="hi"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="13" ry="18" transform="rotate(30 24 24)"/><path d="M15 34c6-4 4-10 9-14s8-6 9-10"/></svg></span><div><h3>Café single origin</h3><p>100&nbsp;% arabica, de l’espresso au latte. Lait d’avoine sur toutes les boissons.</p></div></li>
+      </ol>
+    </div>
   </section>
 
   <!-- CARTE (menu en anglais) -->
@@ -545,8 +544,8 @@
 </dialog>
 <!-- /ORDER -->
 
-<script src="site.js?v=1794347669" defer></script>
-<script src="order.js?v=1794347669" defer></script>
-<script src="phero.js?v=1794347669" defer></script>
+<script src="site.js?v=1794347889" defer></script>
+<script src="order.js?v=1794347889" defer></script>
+<script src="phero.js?v=1794347889" defer></script>
 </body>
 </html>
