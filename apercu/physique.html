@@ -63,9 +63,9 @@ function layout(){
 // ---------------------------------------------------------------- rigid bodies (circles in a local frame)
 var bodies=[],parts=[],G=2400,shake=0,cur='#121212';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
-function glass(n,x,y){var w=100*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.33,w*.42],[-w*.3,h*.42,w*.12],[w*.3,h*.42,w*.12]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
-function ice(i,x,y){var w=(40+Math.random()*10)*U,m=1,r=w*.44;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
-function bean(x,y){var r=(9+Math.random()*3)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
+function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.33,w*.42],[-w*.3,h*.42,w*.12],[w*.3,h*.42,w*.12]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
+function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.44;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
+function bean(x,y){var r=(7+Math.random()*2)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
 function wp(b,c){var co=Math.cos(b.a),si=Math.sin(b.a);return [b.x+c[0]*co-c[1]*si,b.y+c[0]*si+c[1]*co]}
 function impulse(b,nx,ny,px,py,e,mu){ // against static world
  var rx=px-b.x,ry=py-b.y,vx=b.vx-b.w*ry,vy=b.vy+b.w*rx,vn=vx*nx+vy*ny;if(vn>=0)return 0;
