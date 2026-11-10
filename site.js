@@ -48,21 +48,28 @@
   ov.addEventListener('click', function (e) { if (e.target.closest('a[href^="#"]')) menu(false); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) { menu(false); burger.focus(); } });
 
-  // ------------------------------------------------ footer: the bird draws itself on arrival
-  var brand = document.querySelector('.f-brand');
-  if (brand && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // ------------------------------------------------ the bird draws itself (footer on arrival, menu on open)
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     // one stroke per outline, so every line draws at once (browsers restart dashes per outline)
-    var dp = brand.querySelector('.draw'), g = document.createElementNS(dp.namespaceURI, 'g');
-    dp.getAttribute('d').split(/(?=M)/).forEach(function (d) {
-      var p = document.createElementNS(dp.namespaceURI, 'path');
-      p.setAttribute('d', d); p.setAttribute('pathLength', '1'); p.setAttribute('class', 'lnd'); g.appendChild(p);
+    [].forEach.call(document.querySelectorAll('svg.drw'), function (svg) {
+      var dp = svg.querySelector('.draw'), g = document.createElementNS(dp.namespaceURI, 'g');
+      dp.getAttribute('d').split(/(?=M)/).forEach(function (d) {
+        var p = document.createElementNS(dp.namespaceURI, 'path');
+        p.setAttribute('d', d); p.setAttribute('pathLength', '1'); p.setAttribute('class', 'lnd'); g.appendChild(p);
+      });
+      svg.appendChild(g);
     });
-    dp.parentNode.appendChild(g);
     document.documentElement.classList.add('js-draw');
+    var brand = document.querySelector('.f-brand');
     var io = new IntersectionObserver(function (es) {
-      if (es[0].isIntersecting) { brand.classList.add('in'); io.disconnect(); }
+      if (es[0].isIntersecting) { brand.classList.add('in'); brand.querySelector('.drw').classList.add('in'); io.disconnect(); }
     }, { threshold: 0.35 });
     io.observe(brand);
+    var ovLock = document.querySelector('.ov-lock');
+    burger.addEventListener('click', function () {
+      ovLock.classList.remove('in');
+      if (!ov.hidden) { void ovLock.getBoundingClientRect(); setTimeout(function () { ovLock.classList.add('in'); }, 250); }
+    });
   }
 
   // ------------------------------------------------ keep the page at 100 % on phones
