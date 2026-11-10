@@ -55,6 +55,8 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-heig
 .nav.scrolled { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
 .logo { display: flex; align-items: center; text-decoration: none; color: var(--ink); }
 .wm-nav { height: 25px; width: auto; }
+.lockup-nav { display: block; height: 54px; width: auto; color: var(--ink); }
+html.ov-open .lockup-nav { color: #F4F1EA; }
 .nav-r { display: flex; align-items: center; gap: 14px; margin-left: auto; min-width: 0; }
 .burger {
   flex: none; position: relative; width: 44px; height: 44px; border: 0; border-radius: 50%;
@@ -67,6 +69,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-heig
 @media (min-width: 900px) {
   .nav { height: 72px; }
   .wm-nav { height: 28px; }
+  .lockup-nav { height: 60px; }
   .burger { width: 48px; height: 48px; }
   .burger span { left: 15px; right: 15px; } .burger span:first-child { top: 20px; } .burger span:last-child { top: 26.4px; }
   .ov-links a { font-size: 40px; }
