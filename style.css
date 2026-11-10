@@ -43,28 +43,61 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.03em; line-heig
 
 /* ------------------------------------------------ nav */
 .nav {
-  position: sticky; top: 0; z-index: 10;
-  display: flex; align-items: center; gap: 28px;
-  padding: 14px var(--pad);
-  background: var(--bg);
-  border-bottom: 1px solid transparent;
+  position: sticky; top: 0; z-index: 20; height: 64px;
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 var(--pad);
+  background: transparent;
+  transition: background .3s, box-shadow .3s;
 }
-.nav.scrolled { border-bottom-color: var(--line); }
-.logo { display: flex; align-items: flex-end; gap: 8px; text-decoration: none; color: var(--ink); }
-.logo .sub { line-height: 1; margin-bottom: -1px; }
-.wm-nav { height: 26px; width: auto; }
-.logo .sub { font-size: 14px; color: var(--muted); }
-.links { display: flex; gap: 24px; margin-left: auto; }
-.links a { text-decoration: none; font-weight: 500; font-size: 15px; }
-.links a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.status {
-  min-width: 0; max-width: 62vw; overflow: hidden; text-overflow: ellipsis;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px;
-  font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap;
+.nav.scrolled { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
+.logo { display: flex; align-items: center; text-decoration: none; color: var(--ink); }
+.wm-nav { height: 25px; width: auto; }
+.nav-r { display: flex; align-items: center; gap: 14px; margin-left: auto; min-width: 0; }
+.burger {
+  flex: none; position: relative; width: 44px; height: 44px; border: 0; border-radius: 50%;
+  background: var(--ink); cursor: pointer; padding: 0;
 }
-.status .dot { width: 8px; height: 8px; border-radius: 50%; background: #B9B3A8; }
-.status.open .dot { background: var(--ink); box-shadow: 0 0 0 3px rgba(18,18,18,.12); }
+.burger span { position: absolute; left: 14px; right: 14px; height: 1.6px; border-radius: 2px; background: #F4F1EA; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.burger span:first-child { top: 18px; } .burger span:last-child { top: 24.4px; }
+.burger[aria-expanded="true"] span:first-child { transform: translateY(3.2px) rotate(45deg); }
+.burger[aria-expanded="true"] span:last-child { transform: translateY(-3.2px) rotate(-45deg); }
+@media (min-width: 900px) {
+  .nav { height: 72px; }
+  .wm-nav { height: 28px; }
+  .burger { width: 48px; height: 48px; }
+  .burger span { left: 15px; right: 15px; } .burger span:first-child { top: 20px; } .burger span:last-child { top: 26.4px; }
+  .ov-links a { font-size: clamp(44px, 6vw, 80px); }
+  .ov-foot { max-width: 440px; }
+}
+
+/* full-screen menu (phone) */
+.ov {
+  position: fixed; inset: 0; z-index: 15; display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(64px + 28px) var(--pad) calc(28px + env(safe-area-inset-bottom));
+  background: var(--ink); color: #F4F1EA; overflow-y: auto;
+  animation: ovin .35s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes ovin { from { opacity: 0; } }
+.ov-links { display: flex; flex-direction: column; }
+.ov-links a {
+  display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid #2C2B29;
+  color: #F4F1EA; text-decoration: none; font-size: clamp(30px, 9vw, 44px); font-weight: 500; letter-spacing: -.035em; line-height: 1.1;
+  animation: ovl .5s cubic-bezier(.2,.8,.2,1) both;
+}
+.ov-links a:nth-child(2) { animation-delay: .04s } .ov-links a:nth-child(3) { animation-delay: .08s }
+.ov-links a:nth-child(4) { animation-delay: .12s } .ov-links a:nth-child(5) { animation-delay: .16s }
+@keyframes ovl { from { opacity: 0; transform: translateY(14px); } }
+.ov-links small { font-size: 12px; letter-spacing: .1em; color: #8F8A80; font-weight: 400; min-width: 20px; }
+.ov-foot { margin-top: 36px; }
+.ov-foot p { margin: 18px 0 8px; font-size: 13px; color: #A9A49A; line-height: 1.7; }
+.ov-cta { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 0 8px 0 24px; border-radius: 999px; background: #F4F1EA; color: var(--ink); text-decoration: none; font-weight: 500; font-size: 16px; }
+.ov-cta i { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--ink); color: #F4F1EA; font-style: normal; }
+.ov-ig { font-size: 14px; color: #F4F1EA; text-underline-offset: 4px; }
+html.ov-open { overflow: hidden; }
+html.ov-open .nav { background: var(--ink); box-shadow: none; }
+html.ov-open .nav .logo { color: #F4F1EA; }
+html.ov-open .burger { background: #F4F1EA; }
+html.ov-open .burger span { background: var(--ink); }
 
 /* ------------------------------------------------ buttons */
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -81,7 +114,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.03em; line-heig
 .nowrap { white-space: nowrap; }
 
 /* ------------------------------------------------ hero: drinks fall on BREK. */
-.phero{position:relative;height:calc(100svh - 63px);min-height:560px;display:flex;flex-direction:column;overflow:hidden;isolation:isolate;
+.phero{position:relative;height:100svh;min-height:620px;margin-top:-64px;padding-top:64px;display:flex;flex-direction:column;overflow:hidden;isolation:isolate;
  background:radial-gradient(120% 70% at 50% 0%,#FBF6EC 0%,#F3EEE4 45%,#E9E1D2 100%)}
 .phero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;opacity:.18;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .4 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -136,7 +169,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.03em; line-heig
 
 /* ------------------------------------------------ menu: filters + cards */
 .filters {
-  position: sticky; top: 63px; z-index: 5;
+  position: sticky; top: 64px; z-index: 5;
   display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; touch-action: pan-x pan-y; overscroll-behavior-x: contain;
   margin: 0 calc(var(--pad) * -1) 8px; padding: 12px var(--pad);
   background: var(--bg);
@@ -294,8 +327,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 /* ------------------------------------------------ phone */
 @media (max-width: 900px) {
   .cards { grid-template-columns: repeat(3, 1fr); }
-  .links { display: none; }
-  .status { margin-left: auto; }
   .reviews, .visit { grid-template-columns: 1fr; }
   .score { text-align: left; }
 }
@@ -308,10 +339,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
   .add { width: 26px; height: 26px; font-size: 16px; }
   .sheet { width: 100vw; max-width: 100vw; max-height: 92vh; margin: auto 0 0; border-radius: 22px 22px 0 0; }
   .two { grid-template-columns: 1fr; }
-  .logo .sub { display: none; }
   .actions .btn { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+@media (min-width: 900px) { .phero { margin-top: -72px; padding-top: 72px; } .filters { top: 72px; } }

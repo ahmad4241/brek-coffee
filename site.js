@@ -14,6 +14,7 @@
   function status() {
     var now = genevaNow(), today = HOURS[now.day], el = document.getElementById('status'), txt = document.getElementById('status-text');
     var open = today && now.h >= today[0] && now.h < today[1];
+    if (el) {
     el.classList.toggle('open', !!open);
     if (open) { txt.textContent = 'Ouvert · jusqu’à ' + hh(today[1]); }
     else {
@@ -25,13 +26,27 @@
         }
       }
     }
+    }
     document.querySelectorAll('.hours tr').forEach(function (tr) { tr.classList.toggle('today', +tr.dataset.day === now.day); });
   }
   status(); setInterval(status, 60000);
 
   // ------------------------------------------------ nav border once scrolled
   var nav = document.querySelector('.nav');
-  addEventListener('scroll', function () { nav.classList.toggle('scrolled', scrollY > 8); }, { passive: true });
+  function onScroll() { nav.classList.toggle('scrolled', scrollY > 8); }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // ------------------------------------------------ phone menu (full screen)
+  var burger = document.getElementById('burger'), ov = document.getElementById('menu-ov');
+  function menu(open) {
+    ov.hidden = !open;
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Menu');
+    document.documentElement.classList.toggle('ov-open', open);
+  }
+  burger.addEventListener('click', function () { menu(ov.hidden); });
+  ov.addEventListener('click', function (e) { if (e.target.closest('a[href^="#"]')) menu(false); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) { menu(false); burger.focus(); } });
 
   // ------------------------------------------------ keep the page at 100 % on phones
   // Safari keeps a zoom level per tab (after a pinch or a focused field) and then the
