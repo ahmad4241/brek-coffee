@@ -27,7 +27,7 @@
       }
     }
     }
-    document.querySelectorAll('.hours tr').forEach(function (tr) { tr.classList.toggle('today', +tr.dataset.day === now.day); });
+    document.querySelectorAll('.hours tr').forEach(function (tr) { tr.classList.toggle('today', tr.dataset.day.split(' ').indexOf(String(now.day)) > -1); });
   }
   status(); setInterval(status, 60000);
 
