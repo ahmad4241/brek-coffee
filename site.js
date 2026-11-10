@@ -82,9 +82,7 @@
     }
     cf.addEventListener('click', function (e) {
       var b = e.target.closest('[data-order]');
-      if (b) { var card = document.querySelector('.card-btn[data-item="' + b.dataset.order + '"]'); if (card) card.click(); return; }
-      var go = e.target.closest('[data-filter-go]');
-      if (go) { var chip = document.querySelector('.chip[data-filter="' + go.dataset.filterGo + '"]'); if (chip) setTimeout(function () { chip.click(); }, 50); }
+      if (b && window.brekOpenItem) window.brekOpenItem(b.dataset.order);
     });
   }
 

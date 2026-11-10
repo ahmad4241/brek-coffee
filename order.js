@@ -55,11 +55,12 @@
       return '<label><input type="radio" name="' + name + '" value="' + esc(v) + '"' + (v === def ? ' checked' : '') + '><span>' + t + '</span></label>';
     }).join('') + '</div></fieldset>';
   }
+  window.brekOpenItem = function (id) { openItem(id); };
   function openItem(id) {
     var it = ITEMS[id]; cur = it; qty = 1;
     var c = DATA.cats[it.cat].color;
     $('is-pic').style.setProperty('--c', c);
-    $('is-pic').innerHTML = it.img ? '<img src="images/' + it.img + '-600.webp" alt="" width="600" height="474">'
+    $('is-pic').innerHTML = it.img ? '<img src="images/' + it.img + '-600.webp" alt=""' + (it.flat ? ' class="flat"' : '') + ' width="600" height="474">'
       : '<svg class="ph" aria-hidden="true"><use href="#mascot"/></svg>';
     $('is-name').innerHTML = esc(it.name) + ' <span class="is-price">' + it.price.toFixed(2) + '</span>';
     $('is-desc').textContent = it.desc + (it.size ? ' · ' + it.size : '');
