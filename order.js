@@ -193,4 +193,30 @@
   $('cs-new').addEventListener('click', function () { cart = []; save(); renderBar(); cs.close(); });
 
   renderBar();
+
+  // ------------------------------------------------ while a sheet is open, the page behind stays still (iOS too)
+  var lockY = 0, locked = false;
+  function lock(on) {
+    var b = document.body, h = document.documentElement;
+    if (on && !locked) {
+      lockY = scrollY; locked = true;
+      b.style.position = 'fixed'; b.style.top = -lockY + 'px'; b.style.left = '0'; b.style.right = '0'; b.style.width = '100%';
+    } else if (!on && locked) {
+      locked = false;
+      b.style.position = b.style.top = b.style.left = b.style.right = b.style.width = '';
+      var sb = h.style.scrollBehavior; h.style.scrollBehavior = 'auto'; scrollTo(0, lockY); h.style.scrollBehavior = sb;
+    }
+  }
+  var sheets = [].slice.call(document.querySelectorAll('dialog.sheet'));
+  new MutationObserver(function () { lock(sheets.some(function (d) { return d.open; })); })
+    .observe(document.body, { attributes: true, attributeFilter: ['open'], subtree: true });
+
+  // ------------------------------------------------ tap the photo in a sheet to see it big; tap again to close
+  var pic = $('is-pic');
+  pic.addEventListener('click', function () {
+    var im = pic.querySelector('img'); if (!im) return;
+    var on = pic.classList.toggle('zoom');
+    if (on && im.classList.contains('flat') && !im.dataset.big) { im.dataset.big = 1; im.src = im.src.replace('-600.webp', '-1400.webp'); }
+  });
+  sheet.addEventListener('close', function () { pic.classList.remove('zoom'); });
 })();
