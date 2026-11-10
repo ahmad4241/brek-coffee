@@ -4,20 +4,20 @@ var CFG={"vb": [0.0, 0.0, 1000.0, 281.3], "sw": 9.81, "letters": "M900.1 11.4 L8
 var DRINKS={'vanilla-matcha':['Vanilla Matcha','Glacé · cold foam vanille','7.50'],'cinnamon-latte':['Cinnamon Latte','Sirop cannelle maison','7.00'],'strawberry-matcha':['Strawberry Matcha','Glacé · fraise','8.00']};
 var COL={'vanilla-matcha':'#5E7F1E','cinnamon-latte':'#9A5B2A','strawberry-matcha':'#B8455F'};
 var cv=document.getElementById('ph-c'),ctx=cv.getContext('2d'),stage=document.getElementById('ph-stage'),hint=document.getElementById('ph-hint');
-var LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,wordH,rects=[],U=1;
+var XL=0,XR=0,LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,wordH,rects=[],U=1;
 var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var imgs={};['vanilla-matcha','cinnamon-latte','strawberry-matcha','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
 function layout(){
  var r=stage.getBoundingClientRect();W=r.width;dpr=Math.min(W>700?2:1.75,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
- var pad=Math.max(14,W*.04),ww=Math.min(W-2*pad,980);S=ww/CFG.vb[2];wordH=CFG.vb[3]*S;ox=(W-ww)/2-CFG.vb[0]*S;floorY=H-12;oy=floorY-wordH-CFG.vb[1]*S;
- var e=CFG.sw*S/2;rects=CFG.boxes.map(function(b){return [ox+b[0]*S-e,oy+b[1]*S-e,ox+b[2]*S+e,oy+b[3]*S+e]});
- U=Math.min(1.5,Math.max(.62,ww/400));stage.style.setProperty('--wordh',(wordH+12)+'px');
+ var pad=W<700?4:Math.max(14,W*.04),ww=Math.min(W-2*pad,980);S=ww/CFG.vb[2];wordH=CFG.vb[3]*S;ox=(W-ww)/2-CFG.vb[0]*S;floorY=H-12;oy=floorY-wordH-CFG.vb[1]*S;
+ var e=CFG.sw*S/2;rects=CFG.boxes.map(function(b){return [ox+b[0]*S-e,oy+b[1]*S-e+3,ox+b[2]*S+e,oy+b[3]*S+e]});
+ U=Math.min(1.5,Math.max(.62,ww/400));XL=ox+CFG.vb[0]*S-e;XR=ox+(CFG.vb[0]+CFG.vb[2])*S+e;stage.style.setProperty('--wordh',(wordH+12)+'px');
 }
 // ---------------------------------------------------------------- rigid bodies (circles in a local frame)
 var bodies=[],parts=[],G=2400,shake=0,cur='#121212';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
-function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.33,w*.42],[-w*.3,h*.42,w*.12],[w*.3,h*.42,w*.12]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
-function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.44;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
+function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.3,w*.42],[-w*.3,h*.462,w*.08],[w*.3,h*.462,w*.08]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
+function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.37;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
 function bean(x,y){var r=(7+Math.random()*2)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
 function wp(b,c){var co=Math.cos(b.a),si=Math.sin(b.a);return [b.x+c[0]*co-c[1]*si,b.y+c[0]*si+c[1]*co]}
 function impulse(b,nx,ny,px,py,e,mu){ // against static world
@@ -42,7 +42,7 @@ function stepWorld(h){
   b.c.forEach(function(c){var p=wp(b,c),r=c[2];
    rects.forEach(function(R){var o=circleRect(p[0],p[1],r,R);if(o){b.x+=o[0]*o[2];b.y+=o[1]*o[2];var j=impulse(b,o[0],o[1],o[3],o[4],.22,.45);if(o[1]<-.7)land(b,j,o[3],o[4]);p=wp(b,c)}});
    if(p[1]+r>floorY){var pen=p[1]+r-floorY;b.y-=pen;var j=impulse(b,0,-1,p[0],floorY,.2,.5);land(b,j,p[0],floorY);p=wp(b,c)}
-   if(p[0]-r<0){b.x+=r-p[0];impulse(b,1,0,0,p[1],.3,.2)}if(p[0]+r>W){b.x-=p[0]+r-W;impulse(b,-1,0,W,p[1],.3,.2)}});
+   if(p[0]-r<XL){b.x+=XL+r-p[0];impulse(b,1,0,XL,p[1],.3,.2)}if(p[0]+r>XR){b.x-=p[0]+r-XR;impulse(b,-1,0,XR,p[1],.3,.2)}});
  });
  for(var i=0;i<bodies.length;i++)for(var j=i+1;j<bodies.length;j++){var A=bodies[i],B=bodies[j],dx0=B.x-A.x,dy0=B.y-A.y,lim=(A.hh||A.r*2||60)+(B.hh||B.r*2||60);if(dx0*dx0+dy0*dy0>lim*lim)continue;
   for(var p=0;p<A.c.length;p++)for(var q=0;q<B.c.length;q++){var pa=wp(A,A.c[p]),pb=wp(B,B.c[q]),dx=pb[0]-pa[0],dy=pb[1]-pa[1],rr=A.c[p][2]+B.c[q][2],d2=dx*dx+dy*dy;if(d2>=rr*rr||d2<1e-6)continue;
