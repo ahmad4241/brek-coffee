@@ -107,13 +107,15 @@ if('IntersectionObserver' in window)new IntersectionObserver(function(e){visible
 // ---------------------------------------------------------------- input
 function hit(x,y){for(var i=bodies.length-1;i>=0;i--){var b=bodies[i];for(var k=0;k<b.c.length;k++){var p=wp(b,b.c[k]),dx=x-p[0],dy=y-p[1],r=b.c[k][2]+8;if(dx*dx+dy*dy<r*r)return b}}return null}
 function pos(e){var r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]}
+stage.addEventListener('touchstart',function(e){var t=e.touches[0],r=cv.getBoundingClientRect();if(hit(t.clientX-r.left,t.clientY-r.top))e.preventDefault()},{passive:false});
+stage.addEventListener('touchmove',function(e){if(drag)e.preventDefault()},{passive:false});
 stage.addEventListener('pointerdown',function(e){lastInput=now;wake();var p=pos(e),b=hit(p[0],p[1]);down={x:p[0],y:p[1],t:performance.now(),b:b};
  if(b){drag=b;b.tx=p[0];b.ty=p[1];stage.classList.add('grab');stage.setPointerCapture(e.pointerId)}hint.style.opacity=0});
 stage.addEventListener('pointermove',function(e){var p=pos(e);if(drag){lastInput=now;drag.tx=p[0];drag.ty=p[1]}else{var b=hit(p[0],p[1]);stage.style.cursor=b?'grab':''}});
 function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.y),quick=performance.now()-down.t<300;
   if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);else if(!down.b&&moved<10)bodies.push(bean(p[0],-20))}
  if(drag){drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>70)bodies.splice(3,bodies.length-70)}
-stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',function(){if(drag){drag=null;stage.classList.remove('grab')}down=null});
 var cardN=null;function openCard(n){cardN=n;var d=DRINKS[n];document.getElementById('ph-cn').textContent=d[0];document.getElementById('ph-cd').textContent=d[1];document.getElementById('ph-cg').textContent='Commander · '+d[2];document.getElementById('ph-card').classList.add('on')}
 var hl=document.getElementById('ph-hl');function tint(){var e=hl.querySelector('em');e.style.color=cur}
 document.getElementById('ph-cx').onclick=function(){document.getElementById('ph-card').classList.remove('on')};
