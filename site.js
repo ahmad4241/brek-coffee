@@ -1,23 +1,4 @@
 (function () {
-  // ------------------------------------------------ drink switcher (hero)
-  var NOTES = {
-    'vanilla-matcha': 'Matcha Okumidori bio, cold foam vanille maison · <b>CHF 7.50</b>',
-    'cinnamon-latte': 'Espresso 100 % arabica, sirop cannelle maison · <b>CHF 7.00</b>',
-    'strawberry-matcha': 'Matcha bio et fraise, servi glacé · <b>CHF 8.00</b>'
-  };
-  var body = document.body, note = document.getElementById('drink-note');
-  var tabs = [].slice.call(document.querySelectorAll('.switch button'));
-  var imgs = [].slice.call(document.querySelectorAll('.glass img'));
-  function pick(name) {
-    body.setAttribute('data-drink', name);
-    tabs.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.drink === name); });
-    imgs.forEach(function (im) { im.classList.toggle('on', im.dataset.for === name); });
-    note.innerHTML = NOTES[name];
-  }
-  tabs.forEach(function (b, i) {
-    b.addEventListener('click', function () { pick(b.dataset.drink); });
-  });
-
   // ------------------------------------------------ open / closed, Geneva time
   // day: 0 = Sunday ... 6 = Saturday; [open, close] in hours
   var HOURS = { 0: [10, 18], 1: null, 2: [8, 17], 3: [8, 17], 4: [8, 17], 5: [8, 17], 6: [10, 18] };
@@ -51,4 +32,21 @@
   // ------------------------------------------------ nav border once scrolled
   var nav = document.querySelector('.nav');
   addEventListener('scroll', function () { nav.classList.toggle('scrolled', scrollY > 8); }, { passive: true });
+
+  // ------------------------------------------------ keep the page at 100 % on phones
+  // Safari keeps a zoom level per tab (after a pinch or a focused field) and then the
+  // whole page slides left and right. Re-applying the viewport resets it to 1.
+  var vp = document.querySelector('meta[name=viewport]'), VP = vp.content;
+  function unzoom() {
+    if (window.visualViewport && visualViewport.scale <= 1.01) return;
+    vp.content = VP + ', user-scalable=no';
+    setTimeout(function () { vp.content = VP; }, 300);
+  }
+  addEventListener('pageshow', unzoom);
+  addEventListener('orientationchange', unzoom);
+  document.addEventListener('focusout', function (e) { if (/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) setTimeout(unzoom, 50); });
+  document.addEventListener('close', unzoom, true);
+  if (window.visualViewport) visualViewport.addEventListener('resize', function () { clearTimeout(unzoom.t); unzoom.t = setTimeout(unzoom, 400); });
+  // no pinch-zoom on the page itself (Safari ignores maximum-scale for pinch)
+  document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
 })();
