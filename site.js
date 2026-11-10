@@ -48,6 +48,23 @@
   ov.addEventListener('click', function (e) { if (e.target.closest('a[href^="#"]')) menu(false); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) { menu(false); burger.focus(); } });
 
+  // ------------------------------------------------ footer: the bird draws itself on arrival
+  var brand = document.querySelector('.f-brand');
+  if (brand && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // one stroke per outline, so every line draws at once (browsers restart dashes per outline)
+    var dp = brand.querySelector('.draw'), g = document.createElementNS(dp.namespaceURI, 'g');
+    dp.getAttribute('d').split(/(?=M)/).forEach(function (d) {
+      var p = document.createElementNS(dp.namespaceURI, 'path');
+      p.setAttribute('d', d); p.setAttribute('pathLength', '1'); p.setAttribute('class', 'lnd'); g.appendChild(p);
+    });
+    dp.parentNode.appendChild(g);
+    document.documentElement.classList.add('js-draw');
+    var io = new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { brand.classList.add('in'); io.disconnect(); }
+    }, { threshold: 0.35 });
+    io.observe(brand);
+  }
+
   // ------------------------------------------------ keep the page at 100 % on phones
   // Safari keeps a zoom level per tab (after a pinch or a focused field) and then the
   // whole page slides left and right. Re-applying the viewport resets it to 1.

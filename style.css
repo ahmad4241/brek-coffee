@@ -55,8 +55,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-heig
 .nav.scrolled { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
 .logo { display: flex; align-items: center; text-decoration: none; color: var(--ink); }
 .wm-nav { height: 25px; width: auto; }
-.lockup-nav { display: block; height: 54px; width: auto; color: var(--ink); }
-html.ov-open .lockup-nav { color: #F4F1EA; }
+
 .nav-r { display: flex; align-items: center; gap: 14px; margin-left: auto; min-width: 0; }
 .burger {
   flex: none; position: relative; width: 44px; height: 44px; border: 0; border-radius: 50%;
@@ -69,7 +68,6 @@ html.ov-open .lockup-nav { color: #F4F1EA; }
 @media (min-width: 900px) {
   .nav { height: 72px; }
   .wm-nav { height: 28px; }
-  .lockup-nav { height: 60px; }
   .burger { width: 48px; height: 48px; }
   .burger span { left: 15px; right: 15px; } .burger span:first-child { top: 20px; } .burger span:last-child { top: 26.4px; }
   .ov-links a { font-size: 40px; }
@@ -95,7 +93,8 @@ html.ov-open .lockup-nav { color: #F4F1EA; }
 @keyframes ovl { from { opacity: 0; transform: translateY(14px); } }
 .ov-links small { font-size: 12px; letter-spacing: .08em; color: #8F8A80; font-weight: 400; min-width: 20px; }
 .ov-links { border-top: 1px solid #2C2B29; }
-.ov-foot { margin-top: 36px; }
+.ov-foot { margin-top: 36px; position: relative; }
+.ov-lock { display: block; width: 120px; height: auto; margin: 0 4px 18px auto; color: #F4F1EA; animation: ovl .6s cubic-bezier(.2,.8,.2,1) .2s both; }
 .ov-foot p { margin: 20px 0 10px; font-size: 13px; color: #A9A49A; line-height: 1.7; }
 .ov-cta { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 0 8px 0 24px; border-radius: 999px; background: #F4F1EA; color: var(--ink); text-decoration: none; font-weight: 500; font-size: 16px; }
 .ov-cta i .ic { width: 18px; height: 18px; }
@@ -322,9 +321,17 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 /* ------------------------------------------------ footer: address, hours, links */
 .foot { background: var(--dark); color: #F4F1EA; scroll-margin-top: 64px; }
 .foot-in { max-width: var(--max); margin: 0 auto; padding: clamp(56px, 8vw, 96px) var(--pad) 40px; display: grid; gap: 0; }
-.f-brand { padding-bottom: 36px; }
-.lockup { display: block; width: 132px; height: auto; color: #F4F1EA; }
-.f-brand p { margin: 16px 0 0; font-size: 14px; color: #8F8A80; }
+.f-brand { padding-bottom: 40px; text-align: center; }
+.lockup { display: block; width: 170px; height: auto; margin: 0 auto; color: #F4F1EA; }
+.f-brand p { margin: 18px 0 0; font-size: 14px; color: #8F8A80; }
+/* the bird draws itself when the footer comes into view */
+html.js-draw .lockup .draw { fill-opacity: 0; }
+.lockup .lnd { fill: none; stroke: currentColor; stroke-width: 7; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.js-draw .f-brand p { opacity: 0; transform: translateY(8px); }
+html.js-draw .f-brand.in .draw { fill-opacity: 1; transition: fill-opacity .5s ease .85s; }
+html.js-draw .f-brand.in .lnd { animation: draw 1.1s cubic-bezier(.5,0,.3,1) forwards; opacity: 0; transition: opacity .4s ease 1.2s; }
+html.js-draw .f-brand.in p { opacity: 1; transform: none; transition: opacity .6s ease 1s, transform .6s ease 1s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
 .f-col { padding: 26px 0; border-top: 1px solid #2C2B29; }
 .f-k { margin: 0 0 14px; font-size: 12px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: #8F8A80; line-height: 1.4; }
 .f-big { margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -.02em; line-height: 1.3; }
@@ -338,9 +345,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .f-bottom { max-width: var(--max); margin: 0 auto; padding: 20px var(--pad) calc(24px + env(safe-area-inset-bottom)); display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid #2C2B29; font-size: 12px; color: #8F8A80; }
 .f-bottom a { color: #8F8A80; }
 @media (min-width: 900px) {
-  .foot-in { grid-template-columns: 1.1fr 1fr 1.2fr .7fr; gap: 48px; padding-bottom: 72px; }
-  .f-brand { padding: 0; }
-  .lockup { width: 150px; }
+  .foot-in { grid-template-columns: 1fr 1.2fr .7fr; column-gap: 48px; padding-bottom: 72px; }
+  .f-brand { grid-column: 1 / -1; padding-bottom: 56px; margin-bottom: 48px; border-bottom: 1px solid #2C2B29; }
+  .lockup { width: 190px; }
   .f-col { padding: 0; border-top: 0; }
   .f-bottom { width: calc(min(100%, var(--max)) - 2 * var(--pad)); padding-left: 0; padding-right: 0; }
 }
