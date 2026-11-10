@@ -1,0 +1,113 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><title>BREK · aperçu physique</title><style>
+@font-face{font-family:P;font-weight:400;src:url(../fonts/poppins-regular.woff)}@font-face{font-family:P;font-weight:500;src:url(../fonts/poppins-medium.woff)}@font-face{font-family:P;font-weight:700;src:url(../fonts/poppins-bold.woff)}
+:root{--bg:#F3EEE4;--ink:#121212;--muted:#6B665D;--accent:#5E7F1E}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 P,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.hero{position:relative;height:100svh;min-height:600px;display:flex;flex-direction:column;overflow:hidden}
+.top{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:16px 18px 0}
+.top .kick{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;background:#fff;border:1px solid #E3DCCD;border-radius:99px;padding:6px 12px}
+.pill i{width:7px;height:7px;border-radius:50%;background:#2E9B4F}
+.stage{position:relative;flex:1;min-height:0;touch-action:none;cursor:grab}
+.stage.grab{cursor:grabbing}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hint{position:absolute;left:0;right:0;top:14px;text-align:center;font-size:13px;color:var(--muted);transition:opacity .6s;pointer-events:none}
+.bottom{position:relative;z-index:3;padding:14px 18px calc(18px + env(safe-area-inset-bottom));border-top:1.5px solid var(--ink)}
+.bottom p{margin:0 0 14px;font-size:15px;color:#33302B}
+.bottom p b{color:var(--ink);font-weight:500}
+.btns{display:flex;gap:10px}.b{flex:1;display:inline-flex;justify-content:center;align-items:center;min-height:50px;border-radius:99px;font-weight:500;font-size:15px}
+.bd{background:var(--ink);color:#fff}.bl{border:1.5px solid var(--ink)}
+.card{position:fixed;left:12px;right:12px;bottom:12px;z-index:20;background:var(--ink);color:#fff;border-radius:22px;padding:16px 16px 16px 18px;display:flex;align-items:center;gap:14px;
+ transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1);box-shadow:0 20px 50px -18px rgba(0,0,0,.6)}
+.card.on{transform:none}
+.card .t{flex:1}.card b{display:block;font-size:17px;font-weight:500}.card span{font-size:12.5px;color:#bdb8ae}
+.card .go{background:#9CC45A;color:#121212;font-weight:500;border-radius:99px;padding:11px 16px;font-size:14px;white-space:nowrap}
+.card .x{background:none;border:0;color:#8f8a80;font-size:22px;padding:0 2px;cursor:pointer}
+.next{padding:48px 18px 120px}.next h2{font-size:44px;margin:0;letter-spacing:-.04em}
+@media (min-width:900px){.stage{width:min(1000px,100%);margin:0 auto}.bottom{width:min(1000px,100%);margin:0 auto;display:flex;align-items:center;gap:30px;padding:18px 0 26px}.bottom p{margin:0;flex:1}.btns{flex:none;width:420px}
+ .card{left:auto;right:24px;width:380px}}
+</style></head><body>
+<section class="hero">
+ <header class="top"><span class="kick">Coffee · Matcha · Croffles</span><span class="pill"><i></i>Ouvert · 17:00</span></header>
+ <div class="stage" id="stage"><canvas id="c"></canvas><div class="hint" id="hint">Attrape ton BREK ↓</div></div>
+ <div class="bottom"><p><b>47 rue des Eaux-Vives, Genève.</b> Café de spécialité, matcha cérémonial bio, croffles minute. Commandez, on prépare.</p>
+  <div class="btns"><a class="b bd" href="#carte">Commander</a><a class="b bl" href="#">Itinéraire</a></div></div>
+</section>
+<div class="card" id="card"><div class="t"><b id="cn">Vanilla Matcha</b><span id="cd">Glacé · cold foam vanille</span></div><a class="go" href="#carte" id="cg">Commander · 7.50</a><button class="x" id="cx" aria-label="Fermer">×</button></div>
+<section class="next" id="carte"><p style="color:#6B665D;text-transform:uppercase;letter-spacing:.08em;font-size:12px">La carte</p><h2>Menu</h2><p>Aperçu du hero seulement.</p></section>
+<script>
+var CFG={"vb": [0.0, 0.0, 1000.0, 281.3], "sw": 9.81, "letters": "M900.1 11.4 L897.0 10.3 L889.3 10.0 L860.2 10.4 L841.3 9.7 L810.2 9.9 L806.7 10.9 L805.6 14.7 L805.4 96.3 L804.6 100.5 L803.1 103.5 L800.6 105.8 L797.9 106.5 L795.2 105.9 L793.0 104.1 L791.1 98.1 L790.9 16.1 L789.7 11.4 L786.7 10.3 L714.2 10.0 L698.4 10.4 L695.4 11.0 L693.7 12.2 L692.5 16.8 L693.1 51.1 L692.5 122.9 L693.2 145.0 L693.2 265.8 L693.7 271.1 L695.9 274.2 L698.4 275.3 L781.1 275.3 L786.3 274.9 L789.7 273.4 L790.8 271.6 L791.2 268.3 L790.8 193.3 L792.5 185.4 L794.9 183.1 L797.9 182.3 L800.9 183.1 L803.4 185.4 L804.9 188.8 L805.8 193.3 L805.6 269.7 L806.7 273.8 L809.8 274.8 L818.9 275.6 L885.5 275.6 L903.7 274.3 L907.1 273.1 L909.4 271.2 L911.0 267.6 L912.0 258.1 L911.3 244.5 L904.5 208.8 L895.8 178.6 L890.8 168.8 L882.5 158.3 L873.9 150.4 L862.6 144.8 L860.7 142.5 L860.1 140.1 L860.5 137.7 L862.3 135.1 L872.5 127.0 L879.3 119.4 L885.2 109.6 L891.0 97.0 L894.8 83.4 L897.3 70.8 L901.0 43.4 L902.2 17.2 L901.7 13.5Z M471.3 9.8 L470.0 11.7 L469.6 135.2 L469.0 191.2 L468.1 209.1 L469.3 243.4 L469.0 267.2 L469.8 270.1 L472.6 271.6 L479.5 272.4 L534.5 273.6 L558.0 275.2 L591.2 276.0 L652.5 276.0 L664.8 275.4 L669.4 273.7 L671.2 271.6 L672.1 268.6 L673.5 250.8 L673.5 189.5 L672.8 185.0 L670.9 181.5 L668.9 180.2 L666.5 179.7 L577.2 181.0 L573.7 180.3 L570.8 178.7 L568.9 176.4 L568.2 173.4 L568.9 170.6 L571.1 167.9 L574.1 166.3 L577.6 165.5 L659.2 164.7 L662.1 164.2 L664.0 162.6 L665.7 155.9 L665.9 136.6 L665.3 120.9 L664.5 118.3 L663.1 116.8 L657.8 115.9 L577.9 116.2 L574.5 115.5 L571.9 114.0 L570.2 111.7 L569.8 109.3 L570.5 106.9 L572.2 105.0 L577.6 102.9 L592.3 102.3 L666.2 102.0 L669.7 100.9 L671.1 98.0 L672.8 87.9 L675.2 43.1 L672.7 17.9 L670.8 12.2 L668.5 10.3 L665.5 9.1 L650.8 8.4 L475.0 8.8Z M239.6 8.7 L237.7 11.6 L237.0 15.8 L237.8 230.8 L236.9 270.3 L237.6 272.9 L241.3 274.5 L257.4 275.0 L330.9 274.5 L333.5 273.4 L334.4 271.3 L334.8 266.2 L334.7 189.1 L335.3 175.8 L337.2 170.1 L339.5 168.1 L341.9 167.4 L344.2 167.9 L346.3 169.5 L347.7 171.7 L348.4 174.8 L349.5 202.5 L349.6 269.7 L350.7 273.9 L353.1 274.8 L362.2 275.3 L441.0 275.2 L448.0 274.2 L452.7 271.9 L455.1 268.6 L455.7 263.4 L454.6 227.7 L453.5 218.6 L451.7 211.2 L445.5 192.6 L439.0 179.3 L430.1 167.2 L417.1 153.0 L415.2 148.9 L415.9 145.8 L418.0 143.2 L428.0 139.4 L432.5 136.3 L434.6 132.4 L436.1 125.0 L437.1 100.9 L436.0 16.5 L434.8 11.3 L432.5 10.0 L410.2 7.8 L247.6 7.0 L242.4 7.4Z M342.6 78.7 L346.9 80.4 L349.7 84.8 L350.8 91.8 L351.3 106.5 L350.3 117.7 L349.1 122.6 L346.3 126.1 L342.2 127.4 L338.0 125.6 L335.8 121.2 L335.9 85.1 L337.2 82.1 L339.5 79.7Z M10.2 6.4 L8.7 8.2 L7.8 11.6 L6.7 28.4 L7.0 110.0 L4.9 245.9 L5.6 264.8 L7.3 271.7 L9.0 273.0 L11.2 273.4 L46.6 272.9 L101.2 274.1 L124.3 273.3 L143.6 274.8 L204.6 273.4 L214.0 271.6 L218.9 269.6 L220.8 267.1 L221.6 263.7 L222.4 243.1 L221.7 175.1 L220.2 151.0 L218.2 146.5 L214.0 142.4 L205.6 138.6 L193.7 136.5 L190.6 134.0 L189.5 130.6 L190.2 127.6 L192.4 125.2 L203.5 121.8 L207.0 119.0 L209.6 113.5 L211.9 100.9 L212.6 91.4 L212.6 64.4 L211.4 42.4 L208.0 15.8 L204.4 8.6 L201.3 6.1 L196.8 5.6 L13.7 5.3Z M113.1 156.4 L117.3 158.1 L119.7 162.5 L121.4 179.0 L121.5 195.1 L119.1 216.4 L116.7 220.1 L112.8 221.5 L110.4 220.9 L108.4 219.3 L106.5 214.4 L106.5 163.6 L107.4 160.1 L109.8 157.4Z M113.5 76.9 L117.7 78.6 L119.9 82.0 L121.9 105.8 L120.9 109.6 L119.1 112.4 L115.9 114.4 L113.1 115.1 L108.6 113.4 L106.1 109.3 L105.8 92.5 L107.4 80.6 L109.6 78.1Z", "dot": "M932.7 202.6 L931.4 204.7 L930.9 208.4 L931.0 269.0 L932.7 274.4 L935.3 275.8 L942.9 276.3 L984.9 276.2 L990.5 275.7 L993.2 274.5 L994.4 272.7 L994.8 270.0 L994.7 206.0 L993.7 203.3 L989.1 201.4 L975.5 201.1 L936.3 201.5Z", "boxes": [[4.9, 5.3, 222.4, 274.8], [335.8, 78.7, 351.3, 127.4], [236.9, 7.0, 455.7, 275.3], [468.1, 8.4, 675.2, 276.0], [692.5, 9.7, 912.0, 275.6], [930.9, 201.1, 994.8, 276.3]]};
+var DRINKS={'vanilla-matcha':['Vanilla Matcha','Glacé · cold foam vanille','7.50'],'cinnamon-latte':['Cinnamon Latte','Sirop cannelle maison','7.00'],'strawberry-matcha':['Strawberry Matcha','Glacé · fraise','8.00']};
+var cv=document.getElementById('c'),ctx=cv.getContext('2d'),stage=document.getElementById('stage');
+var LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,rects=[];
+var imgs={};['vanilla-matcha','cinnamon-latte','strawberry-matcha','ice1','ice2','ice3','ice4','ice5'].forEach(function(n){var i=new Image();i.src='phys/'+n+'.png';imgs[n]=i});
+function layout(){
+ var r=stage.getBoundingClientRect();dpr=Math.min(2,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
+ var pad=Math.max(14,W*.04),ww=W-2*pad;S=ww/CFG.vb[2];var wh=CFG.vb[3]*S;ox=pad-CFG.vb[0]*S;floorY=H-10;oy=floorY-wh-CFG.vb[1]*S;
+ var e=CFG.sw*S/2;rects=CFG.boxes.map(function(b){return [ox+b[0]*S-e,oy+b[1]*S-e,ox+b[2]*S+e,oy+b[3]*S+e]});
+ U=Math.min(1.25,Math.max(.62,W/430));
+}
+var U=1,bodies=[],G=2200;
+function glass(n,x,y){var w=92*U,h=w*346/180;return {k:'g',n:n,x:x,y:y,vx:0,vy:0,a:0,va:0,w:w,h:h,m:3,c:[[0,-h*.27,w*.42],[0,h*.12,w*.46],[0,h*.38,w*.4]]}}
+function ice(i,x,y){var w=(38+Math.random()*10)*U;return {k:'i',n:'ice'+i,x:x,y:y,vx:(Math.random()-.5)*80,vy:0,a:Math.random()*6,va:(Math.random()-.5)*6,w:w,h:w*.88,m:1,c:[[0,0,w*.44]]}}
+function bean(x,y){var r=(9+Math.random()*3)*U;return {k:'b',x:x,y:y,vx:(Math.random()-.5)*120,vy:0,a:Math.random()*6,va:(Math.random()-.5)*10,r:r,m:.4,c:[[0,0,r]]}}
+function spawnAll(){
+ var q=[],n=['vanilla-matcha','cinnamon-latte','strawberry-matcha'];
+ [.2,.5,.8].forEach(function(f,i){q.push(function(){bodies.push(glass(n[i],W*f+(Math.random()-.5)*20,-160*U))})});
+ for(var i=1;i<=5;i++)(function(i){q.push(function(){bodies.push(ice(i,W*(.1+Math.random()*.8),-80))})})(i);
+ for(var j=0;j<16;j++)q.push(function(){bodies.push(bean(W*(.08+Math.random()*.84),-40))});
+ q.sort(function(){return Math.random()-.5});q.unshift(q.splice(q.findIndex(function(f){return 1}),1)[0]);
+ q.forEach(function(f,i){setTimeout(f,250+i*110)});
+}
+function circleRect(px,py,r,R){var cx=Math.max(R[0],Math.min(px,R[2])),cy=Math.max(R[1],Math.min(py,R[3])),dx=px-cx,dy=py-cy,d2=dx*dx+dy*dy;
+ if(d2>r*r)return null;var d=Math.sqrt(d2);if(d<1e-4){var l=px-R[0],ri=R[2]-px,t=py-R[1],m=Math.min(l,ri,t);return m===t?[0,-1,r+t]:m===l?[-1,0,r+l]:[1,0,r+ri]}return [dx/d,dy/d,r-d]}
+function resolve(b,nx,ny,pen,ix,iy){b.x+=nx*pen;b.y+=ny*pen;var vn=b.vx*nx+b.vy*ny;if(vn<0){var e=vn<-250?.28:0;b.vx-=(1+e)*vn*nx;b.vy-=(1+e)*vn*ny;
+ var tx=-ny,ty=nx,vt=b.vx*tx+b.vy*ty;b.vx-=vt*tx*.12;b.vy-=vt*ty*.12;if(b.k!=='g')b.va=vt/((b.r||b.w*.44))*.9}}
+var drag=null,down=null;
+function step(dt){
+ for(var s=0;s<4;s++){var h=dt/4;
+  bodies.forEach(function(b){if(b===drag){var k=26;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k}else b.vy+=G*h;
+   b.vx*=.999;b.x+=b.vx*h;b.y+=b.vy*h;if(b.k==='g'){var hw=b.w*.5;if(b.x<hw){b.x=hw;b.vx=Math.abs(b.vx)*.3}if(b.x>W-hw){b.x=W-hw;b.vx=-Math.abs(b.vx)*.3}}b.a+=b.va*h;b.va*=.995;
+   b.c.forEach(function(c){var px=b.x+c[0],py=b.y+c[1],r=c[2];
+    rects.forEach(function(R){var o=circleRect(px,py,r,R);if(o){resolve(b,o[0],o[1],o[2]);px=b.x+c[0];py=b.y+c[1]}});
+    if(py+r>floorY)resolve(b,0,-1,py+r-floorY);
+    if(px-r<0)resolve(b,1,0,r-px);if(px+r>W)resolve(b,-1,0,px+r-W);});});
+  for(var i=0;i<bodies.length;i++)for(var j=i+1;j<bodies.length;j++){var A=bodies[i],B=bodies[j];
+   A.c.forEach(function(ca){B.c.forEach(function(cb){var dx=B.x+cb[0]-A.x-ca[0],dy=B.y+cb[1]-A.y-ca[1],rr=ca[2]+cb[2],d2=dx*dx+dy*dy;if(d2>=rr*rr||d2<1e-6)return;
+    var d=Math.sqrt(d2),nx=dx/d,ny=dy/d,p=rr-d,ia=A===drag?0:1/A.m,ib=B===drag?0:1/B.m,t=ia+ib;if(!t)return;
+    A.x-=nx*p*ia/t;A.y-=ny*p*ia/t;B.x+=nx*p*ib/t;B.y+=ny*p*ib/t;
+    var rv=(B.vx-A.vx)*nx+(B.vy-A.vy)*ny;if(rv<0){var j2=-(1.15)*rv/t;A.vx-=j2*ia*nx;A.vy-=j2*ia*ny;B.vx+=j2*ib*nx;B.vy+=j2*ib*ny}})})}
+ }
+}
+function draw(){
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+ ctx.save();ctx.translate(ox,oy);ctx.scale(S,S);ctx.lineJoin='round';ctx.lineWidth=CFG.sw;ctx.fillStyle=ctx.strokeStyle='#121212';ctx.fill(LET,'evenodd');ctx.stroke(LET);
+ ctx.fillStyle=ctx.strokeStyle=cur;ctx.fill(DOT);ctx.stroke(DOT);ctx.restore();
+ bodies.forEach(function(b){ctx.save();ctx.translate(b.x,b.y);
+  if(b.k==='g'){ctx.rotate(Math.max(-.18,Math.min(.18,b.vx/2400)));var im=imgs[b.n];if(im.complete)ctx.drawImage(im,-b.w/2,-b.h/2,b.w,b.h);if(b===hover){}}
+  else if(b.k==='i'){ctx.rotate(b.a);var im=imgs[b.n];if(im.complete)ctx.drawImage(im,-b.w/2,-b.h/2,b.w,b.h)}
+  else{ctx.rotate(b.a);ctx.fillStyle='#4a2c17';ctx.beginPath();ctx.ellipse(0,0,b.r,b.r*.74,0,0,7);ctx.fill();ctx.strokeStyle='#2a170b';ctx.lineWidth=1.6*U;ctx.beginPath();ctx.moveTo(-b.r*.7,-b.r*.1);ctx.quadraticCurveTo(0,b.r*.35,b.r*.7,-b.r*.1);ctx.stroke();
+   ctx.fillStyle='rgba(255,255,255,.18)';ctx.beginPath();ctx.ellipse(-b.r*.3,-b.r*.35,b.r*.35,b.r*.15,-.4,0,7);ctx.fill()}
+  ctx.restore()});
+}
+var cur='#5E7F1E',hover=null,last=performance.now();
+function loop(t){var dt=Math.min(.033,(t-last)/1000);last=t;step(dt);draw();requestAnimationFrame(loop)}
+function hit(x,y){for(var i=bodies.length-1;i>=0;i--){var b=bodies[i];for(var k=0;k<b.c.length;k++){var c=b.c[k],dx=x-b.x-c[0],dy=y-b.y-c[1];if(dx*dx+dy*dy<(c[2]+8)*(c[2]+8))return b}}return null}
+function pos(e){var r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]}
+stage.addEventListener('pointerdown',function(e){var p=pos(e),b=hit(p[0],p[1]);down={x:p[0],y:p[1],t:performance.now(),b:b};
+ if(b){drag=b;b.tx=p[0];b.ty=p[1];stage.classList.add('grab');stage.setPointerCapture(e.pointerId)}document.getElementById('hint').style.opacity=0});
+stage.addEventListener('pointermove',function(e){if(!drag)return;var p=pos(e);drag.tx=p[0];drag.ty=p[1]});
+function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.y),quick=performance.now()-down.t<300;
+  if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);
+  else if(!down.b&&moved<10)bodies.push(bean(p[0],-20));}
+ if(drag){drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>60)bodies.splice(3,bodies.length-60)}
+stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+var COL={'vanilla-matcha':'#5E7F1E','cinnamon-latte':'#9A5B2A','strawberry-matcha':'#B8455F'};
+function openCard(n){var d=DRINKS[n];cur=COL[n];document.getElementById('cn').textContent=d[0];document.getElementById('cd').textContent=d[1];document.getElementById('cg').textContent='Commander · '+d[2];document.getElementById('card').classList.add('on')}
+document.getElementById('cx').onclick=function(){document.getElementById('card').classList.remove('on')};
+addEventListener('resize',function(){var oldW=W;layout();bodies.forEach(function(b){b.x*=W/oldW})});
+layout();
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){G=2200}
+spawnAll();requestAnimationFrame(loop);
+</script></body></html>
