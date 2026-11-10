@@ -72,6 +72,14 @@
     });
   }
 
+  // ------------------------------------------------ the note: lines settle in on arrival
+  var story = document.querySelector('.story');
+  if (story && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js-note');
+    var nio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { story.classList.add('in'); nio.disconnect(); } }, { threshold: 0.3 });
+    nio.observe(story);
+  }
+
   // ------------------------------------------------ keep the page at 100 % on phones
   // Safari keeps a zoom level per tab (after a pinch or a focused field) and then the
   // whole page slides left and right. Re-applying the viewport resets it to 1.
