@@ -46,8 +46,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.03em; line-heig
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; gap: 28px;
   padding: 14px var(--pad);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: var(--bg);
   border-bottom: 1px solid transparent;
 }
 .nav.scrolled { border-bottom-color: var(--line); }
@@ -59,6 +58,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.03em; line-heig
 .links a { text-decoration: none; font-weight: 500; font-size: 15px; }
 .links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .status {
+  min-width: 0; max-width: 62vw; overflow: hidden; text-overflow: ellipsis;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px;
   font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap;
@@ -124,7 +124,7 @@ figcaption { position: relative; z-index: 1; display: grid; justify-items: cente
 /* ------------------------------------------------ hero: drinks fall on BREK. */
 .phero{position:relative;height:calc(100svh - 63px);min-height:560px;display:flex;flex-direction:column;overflow:hidden;isolation:isolate;
  background:radial-gradient(120% 70% at 50% 0%,#FBF6EC 0%,#F3EEE4 45%,#E9E1D2 100%)}
-.phero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;opacity:.35;mix-blend-mode:multiply;
+.phero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;opacity:.18;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .45 0 0 0 0 .4 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .phero::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;box-shadow:inset 0 0 120px rgba(80,55,25,.16)}
 .ph-stage{position:relative;flex:1;min-height:0;touch-action:none}
@@ -171,7 +171,7 @@ figcaption { position: relative; z-index: 1; display: grid; justify-items: cente
   position: sticky; top: 63px; z-index: 5;
   display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
   margin: 0 calc(var(--pad) * -1) 8px; padding: 12px var(--pad);
-  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: var(--bg);
 }
 .filters::-webkit-scrollbar { display: none; }
 .chip {

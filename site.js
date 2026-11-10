@@ -39,7 +39,7 @@
       for (var k = 0; k < 8; k++) {
         var d = (now.day + k) % 7, hs = HOURS[d];
         if (hs && (k > 0 || now.h < hs[0])) {
-          txt.textContent = 'Fermé · ouvre ' + (k === 0 ? 'à ' : k === 1 ? 'demain à ' : DAYS[d] + ' à ') + hh(hs[0]);
+          txt.textContent = 'Fermé · ' + (k === 0 ? '' : k === 1 ? 'demain ' : DAYS[d] + ' ') + hh(hs[0]);
           break;
         }
       }
