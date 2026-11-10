@@ -72,12 +72,20 @@
     });
   }
 
-  // ------------------------------------------------ the note: lines settle in on arrival
-  var story = document.querySelector('.story');
-  if (story && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.add('js-note');
-    var nio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { story.classList.add('in'); nio.disconnect(); } }, { threshold: 0.3 });
-    nio.observe(story);
+  // ------------------------------------------------ le croffle: labels draw in; a slice or a name opens its order
+  var cf = document.querySelector('.croffle');
+  if (cf) {
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-cf');
+      var cio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cf.classList.add('in'); cio.disconnect(); } }, { threshold: 0.3 });
+      cio.observe(cf);
+    }
+    cf.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-order]');
+      if (b) { var card = document.querySelector('.card-btn[data-item="' + b.dataset.order + '"]'); if (card) card.click(); return; }
+      var go = e.target.closest('[data-filter-go]');
+      if (go) { var chip = document.querySelector('.chip[data-filter="' + go.dataset.filterGo + '"]'); if (chip) setTimeout(function () { chip.click(); }, 50); }
+    });
   }
 
   // ------------------------------------------------ keep the page at 100 % on phones

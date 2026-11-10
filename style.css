@@ -168,6 +168,59 @@ html.ov-open .burger span { background: var(--ink); }
 .house-list p{margin:0;color:#A9A49A;font-size:15px;max-width:32em}
 @media (min-width:900px){.house-in{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}.house-head h2{margin:0}}
 
+/* ------------------------------------------------ le croffle: one croffle, four slices, labelled like a poster */
+.croffle { max-width: 1100px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) var(--pad) clamp(64px, 8vw, 104px); text-align: center; }
+.cf-head h2 { font-size: clamp(38px, 7vw, 68px); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
+.cf-sub { margin: 18px auto 0; max-width: 30em; font-size: clamp(15px, 1.5vw, 17px); color: var(--muted); text-wrap: balance; }
+.cf-plate { position: relative; max-width: 860px; margin: clamp(28px, 4vw, 44px) auto 0; }
+.cf-pic { position: relative; margin: 0 calc(var(--pad) * -.6); }
+.cf-pic img { width: 100%; height: auto;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+          mask-composite: intersect; }
+/* a pin per slice: a hairline from the top edge down to the slice, ending in its number */
+.cf-pin { position: absolute; top: 0; left: var(--x); width: 15%; height: 84%; transform: translateX(-50%); padding: 0; border: 0; background: none; cursor: pointer; }
+.cf-line { position: absolute; left: 50%; top: 0; width: 1px; height: calc(var(--top) * 100 / 84); background: var(--ink); opacity: .5; transform-origin: top; }
+.cf-dot { position: absolute; left: 50%; top: calc(var(--top) * 100 / 84); transform: translate(-50%, -50%); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--ink); font-size: 10px; font-weight: 500; letter-spacing: .02em; color: var(--ink); }
+/* phones: names live in the legend below, so the top row is hidden */
+.cf-tags { display: none; }
+.cf-list { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--ink); text-align: left; }
+.cf-list button { width: 100%; display: grid; grid-template-columns: 30px 1fr auto 28px; align-items: center; gap: 12px; padding: 14px 0; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--ink); font: inherit; cursor: pointer; text-align: left; }
+.cf-list .cf-n { font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+.cf-txt { display: flex; flex-direction: column; gap: 2px; }
+.cf-txt b { font-size: 16px; font-weight: 500; letter-spacing: -.01em; }
+.cf-txt span { font-size: 13px; color: var(--muted); line-height: 1.35; }
+.cf-list .cf-p { font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cf-add { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 17px; line-height: 1; }
+.cf-go { display: inline-flex; align-items: center; gap: 18px; min-height: 54px; margin-top: 28px; padding: 0 8px 0 24px; border-radius: 999px; background: var(--ink); color: #F4F1EA; text-decoration: none; font-weight: 500; font-size: 15px; }
+.cf-go i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #F4F1EA; color: var(--ink); }
+.cf-go i .ic { width: 17px; height: 17px; }
+/* tablets and up: the poster — names on top, lines down to each slice, words underneath */
+@media (min-width: 760px) {
+  .cf-pic { margin: 0; }
+  .cf-tags { display: block; position: relative; height: 118px; }
+  .cf-tag.up { bottom: 44px; }
+  .cf-tag.up::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 44px; background: var(--ink); opacity: .5; }
+  .cf-tag { position: absolute; bottom: 0; left: var(--x); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 0 10px; border: 0; background: none; color: var(--ink); font: inherit; cursor: pointer; white-space: nowrap; }
+  .cf-tag b { font-size: 12.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+  .cf-tag .cf-n, .cf-tag .cf-p { font-size: 11px; color: var(--muted); letter-spacing: .08em; }
+  .cf-tag:hover b { text-decoration: underline; text-underline-offset: 5px; }
+  .cf-dot { width: 7px; height: 7px; font-size: 0; background: var(--ink); }
+  .cf-list { position: relative; height: 92px; margin: 0; border: 0; }
+  .cf-list li { position: absolute; top: 0; left: var(--x); width: 15%; transform: translateX(-50%); }
+  .cf-list button { display: block; padding: 0; border: 0; text-align: center; }
+  .cf-list .cf-n, .cf-list .cf-p, .cf-add, .cf-txt b { display: none; }
+  .cf-txt span { font-size: 13.5px; line-height: 1.5; text-wrap: balance; }
+  .cf-list button:hover .cf-txt span { color: var(--ink); }
+}
+/* lines draw down, labels settle, when the poster comes into view */
+html.js-cf .cf-line { transform: scaleY(0); }
+html.js-cf .cf-dot, html.js-cf .cf-tag, html.js-cf .cf-list li { opacity: 0; }
+html.js-cf .croffle.in .cf-line { transform: none; transition: transform .9s cubic-bezier(.2,.8,.2,1) .2s; }
+html.js-cf .croffle.in .cf-dot, html.js-cf .croffle.in .cf-tag, html.js-cf .croffle.in .cf-list li { opacity: 1; transition: opacity .6s ease .7s; }
+html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
+
 /* ------------------------------------------------ menu */
 .menu, .story, .reviews { max-width: var(--max); margin: 0 auto; padding: clamp(64px, 8vw, 112px) var(--pad); }
 .section-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 40px; }
@@ -296,35 +349,6 @@ blockquote p { margin: 0 0 12px; font-size: clamp(22px, 2.6vw, 34px); font-weigh
 blockquote footer { font-size: 14px; color: var(--muted); }
 .reviews .quote > .muted { max-width: 34em; }
 .link { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; text-underline-offset: 4px; }
-
-/* ------------------------------------------------ un mot de nous: five short lines, each with its own little drawing */
-.story { max-width: var(--max); text-align: center; border-top: 1px solid var(--line); }
-.story .kicker { margin-bottom: 14px; }
-.msg { font-size: clamp(44px, 9vw, 88px); font-weight: 500; letter-spacing: -.045em; line-height: 1; margin: 0 0 clamp(36px, 5vw, 64px); }
-.mots { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); text-align: left; }
-.mots li { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-.mi { width: 44px; height: 44px; fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
-.mots span { font-size: clamp(19px, 4.8vw, 22px); font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
-.story .sign { display: inline-flex; align-items: center; gap: 10px; margin: 32px 0 0; font-size: 14px; color: var(--muted); }
-.wm-inline { height: 15px; width: auto; color: var(--ink); }
-@media (min-width: 900px) {
-  .mots { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--line); text-align: center; }
-  .mots li { grid-template-columns: 1fr; justify-items: center; align-content: start; gap: 22px; padding: 40px 22px 36px; border-bottom: 0; }
-  .mots li + li { border-left: 1px solid var(--line); }
-  .mi { width: 64px; height: 64px; stroke-width: 1.8; }
-  .mots span { font-size: 20px; text-wrap: balance; }
-}
-/* the drawings trace themselves one after the other when the section comes into view */
-html.js-note .mi path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
-html.js-note .mots span, html.js-note .story .sign { opacity: 0; transform: translateY(10px); }
-html.js-note .story.in .mi path { animation: draw 1s cubic-bezier(.5,0,.3,1) forwards; }
-html.js-note .story.in .mots span, html.js-note .story.in .sign { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
-html.js-note .story.in .mots li:nth-child(1) path { animation-delay: 0.00s; } html.js-note .story.in .mots li:nth-child(1) span { transition-delay: 0.20s; }
-html.js-note .story.in .mots li:nth-child(2) path { animation-delay: 0.18s; } html.js-note .story.in .mots li:nth-child(2) span { transition-delay: 0.38s; }
-html.js-note .story.in .mots li:nth-child(3) path { animation-delay: 0.36s; } html.js-note .story.in .mots li:nth-child(3) span { transition-delay: 0.56s; }
-html.js-note .story.in .mots li:nth-child(4) path { animation-delay: 0.54s; } html.js-note .story.in .mots li:nth-child(4) span { transition-delay: 0.74s; }
-html.js-note .story.in .mots li:nth-child(5) path { animation-delay: 0.72s; } html.js-note .story.in .mots li:nth-child(5) span { transition-delay: 0.92s; }
-html.js-note .story.in .sign { transition-delay: 1.2s; }
 
 /* ------------------------------------------------ faq */
 .faq { max-width: 900px; margin: 0 auto; padding: clamp(64px, 8vw, 112px) var(--pad); border-top: 1px solid var(--line); }
