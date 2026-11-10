@@ -1,0 +1,6 @@
+# HTML always fresh; CSS/JS/images are versioned (?v=...) so they can be cached
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
