@@ -20,7 +20,7 @@
   list.parentNode.insertBefore(more, list.nextSibling);
   more.addEventListener('click', function () { show(shown + MORE); });
   function card(i) {
-    return '<li class="av-card"><div class="av-stars" aria-label="' + i.rating + ' sur 5">' + stars(i.rating) + '</div>' +
+    return '<li class="av-card' + (i.pinned ? ' pinned' : '') + '"><div class="av-stars" aria-label="' + i.rating + ' sur 5">' + stars(i.rating) + '</div>' +
       '<p>' + esc(i.text) + '</p><footer><b>' + esc(i.name) + '</b><span>' + when(i.date) + '</span></footer></li>';
   }
   function show(n) {

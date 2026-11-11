@@ -16,8 +16,14 @@ function clean($s, $max) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $db = read_store();
   $list = array_values(array_filter($db['items'], fn($i) => ($i['status'] ?? '') === 'published'));
-  usort($list, fn($a, $b) => $b['created'] <=> $a['created']);
-  $list = array_map(fn($i) => ['name' => $i['name'], 'rating' => $i['rating'], 'text' => $i['text'], 'date' => date('Y-m-d', $i['created'])], array_slice($list, 0, 60));
+  // pinned messages first (in the order they were pinned), then the newest
+  usort($list, function ($a, $b) {
+    $pa = $a['pinned'] ?? 0; $pb = $b['pinned'] ?? 0;
+    if ($pa && $pb) return $pa <=> $pb;
+    if ($pa || $pb) return $pa ? -1 : 1;
+    return $b['created'] <=> $a['created'];
+  });
+  $list = array_map(fn($i) => ['name' => $i['name'], 'rating' => $i['rating'], 'text' => $i['text'], 'date' => date('Y-m-d', $i['created']), 'pinned' => !empty($i['pinned'])], array_slice($list, 0, 60));
   out(200, ['items' => $list]);
 }
 
