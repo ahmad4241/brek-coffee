@@ -18,7 +18,7 @@
 <meta property="og:url" content="https://naskon.com/demo/cafe/brek/">
 <link rel="icon" href="images/icon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/poppins-medium.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="style.css?v=1794360776">
+<link rel="stylesheet" href="style.css?v=1794360873">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -361,7 +361,9 @@
       <h3 id="cs-title">Ma commande</h3>
       <ul class="lines" id="cs-lines"></ul>
       <div class="opt">
-        <label class="lbl" for="cs-slot">Retrait</label>
+        <span class="lbl" id="cs-day-l">Jour de retrait</span>
+        <div class="days" id="cs-days" role="group" aria-labelledby="cs-day-l"></div>
+        <label class="lbl" for="cs-slot" style="margin-top:14px">Heure</label>
         <p class="closed-note" id="cs-closed" hidden></p>
         <select id="cs-slot"></select>
       </div>
@@ -378,16 +380,16 @@
       <button type="button" class="btn btn-line" id="cs-new">Nouvelle commande</button>
     </div>
     <div class="sheet-foot" id="cs-foot">
-      <div class="tot"><span class="muted">Total · à payer au comptoir</span><b id="cs-total">CHF 0.00</b></div>
+      <div class="tot"><span class="muted">À payer au comptoir</span><b id="cs-total">CHF 0.00</b></div>
       <button type="button" class="btn btn-dark send-btn" id="cs-send"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4.1-4.8-4.3-.1-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.6l.9 2.2c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.7-.1l.9-1.1c.2-.3.5-.2.7-.1l2.1 1c.3.2.5.2.6.4.1.1.1.7-.1 1.3Z"/></svg>Envoyer la commande</button>
     </div>
   </div>
 </dialog>
 <!-- /ORDER -->
 
-<script src="site.js?v=1794360776" defer></script>
-<script src="order.js?v=1794360776" defer></script>
-<script src="avis.js?v=1794360776" defer></script>
-<script src="phero.js?v=1794360776" defer></script>
+<script src="site.js?v=1794360873" defer></script>
+<script src="order.js?v=1794360873" defer></script>
+<script src="avis.js?v=1794360873" defer></script>
+<script src="phero.js?v=1794360873" defer></script>
 </body>
 </html>

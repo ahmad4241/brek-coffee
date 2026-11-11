@@ -154,23 +154,40 @@
     return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday), min: (+p.hour % 24) * 60 + (+p.minute) };
   }
   function hm(m) { var h = Math.floor(m / 60), mm = m % 60; return (h < 10 ? '0' : '') + h + ':' + (mm < 10 ? '0' : '') + mm; }
-  function slots() {
-    var now = genevaNow();
-    for (var k = 0; k < 8; k++) {
+  // the next open days (up to a week), each with its pickup times
+  var FMT = new Intl.DateTimeFormat('fr-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'long' });
+  var FMTS = new Intl.DateTimeFormat('fr-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'short' });
+  function days() {
+    var now = genevaNow(), out = [];
+    for (var k = 0; k < 8 && out.length < 6; k++) {
       var d = (now.day + k) % 7, hs = HOURS[d];
       if (!hs) continue;
       var open = hs[0] * 60, last = hs[1] * 60 - STEP_MIN;
       var start = k === 0 ? Math.max(open + STEP_MIN, now.min + LEAD_MIN) : open + STEP_MIN;
       start = Math.ceil(start / STEP_MIN) * STEP_MIN;
       if (start > last) continue;
-      var dayLabel = k === 0 ? 'Aujourd’hui' : k === 1 ? 'Demain' : DAYS[d].charAt(0).toUpperCase() + DAYS[d].slice(1);
-      var list = [];
-      for (var m = start; m <= last; m += STEP_MIN) list.push({ v: dayLabel + ' ' + hm(m), t: dayLabel + ' à ' + hm(m) });
+      var date = FMT.format(new Date(Date.now() + k * 864e5));
+      var name = DAYS[d].charAt(0).toUpperCase() + DAYS[d].slice(1);
+      var short = k === 0 ? 'Aujourd’hui' : k === 1 ? 'Demain' : name.slice(0, 3) + '.';
+      var full = (k === 0 ? 'Aujourd’hui, ' : k === 1 ? 'Demain, ' : '') + name.toLowerCase() + ' ' + date;
       var openNow = k === 0 && now.min >= open && now.min < hs[1] * 60;
+      var list = [];
+      for (var m = start; m <= last; m += STEP_MIN) list.push({ v: full + ' à ' + hm(m), t: hm(m) });
       if (openNow) list[0].t = 'Dès que possible (vers ' + hm(start) + ')';
-      return { list: list, closed: !openNow, label: dayLabel };
+      out.push({ short: short, date: FMTS.format(new Date(Date.now() + k * 864e5)), full: full, list: list, today: k === 0, openNow: openNow });
     }
-    return { list: [], closed: true, label: '' };
+    return out;
+  }
+  var DAYLIST = [], DAYI = 0;
+  function renderDays() {
+    $('cs-days').innerHTML = DAYLIST.map(function (d, i) {
+      return '<button type="button" class="day" aria-pressed="' + (i === DAYI) + '" data-i="' + i + '"><b>' + d.short + '</b><small>' + d.date + '</small></button>';
+    }).join('');
+    var d = DAYLIST[DAYI];
+    $('cs-slot').innerHTML = d ? d.list.map(function (o) { return '<option value="' + o.v + '">' + o.t + '</option>'; }).join('') : '';
+    var closedNow = !DAYLIST.length || !DAYLIST[0].openNow;
+    $('cs-closed').hidden = !(closedNow && DAYI === 0);
+    $('cs-closed').textContent = 'Nous sommes fermés pour le moment : choisissez un jour et une heure de retrait.';
   }
 
   // --------------------------------------------------------------- cart sheet
@@ -194,15 +211,13 @@
   });
   function openCart() {
     $('cs-main').hidden = false; $('cs-foot').hidden = false; $('cs-done').hidden = true; $('cs-err').textContent = '';
-    var s = slots();
-    $('cs-slot').innerHTML = s.list.map(function (o) { return '<option value="' + o.v + '">' + o.t + '</option>'; }).join('');
-    $('cs-closed').hidden = !s.closed;
-    $('cs-closed').textContent = s.closed ? 'Nous sommes fermés pour le moment : votre commande sera prête ' + s.label.toLowerCase() + '.' : '';
+    DAYLIST = days(); DAYI = 0; renderDays();
     try { $('cs-name').value = localStorage.getItem('brek-name') || $('cs-name').value; $('cs-phone').value = localStorage.getItem('brek-phone') || $('cs-phone').value; } catch (e) {}
     renderCart();
     cs.showModal();
   }
   $('cb-open').addEventListener('click', openCart);
+  $('cs-days').addEventListener('click', function (e) { var b = e.target.closest('.day'); if (!b) return; DAYI = +b.dataset.i; renderDays(); });
 
   function message(name, phone, slot) {
     var lines = cart.map(function (l) {
