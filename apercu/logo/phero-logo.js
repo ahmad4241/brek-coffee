@@ -6,7 +6,7 @@ var DRINKS={'vanilla-latte':['Vanilla Latte','Sirop vanille maison · glacé','6
 var cv=document.getElementById('ph-c'),ctx=cv.getContext('2d'),stage=document.getElementById('ph-stage'),hint=document.getElementById('ph-hint');
 var HLB=0,XL=0,XR=0,LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,wordH,rects=[],U=1;
 var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-var MODE=document.documentElement.dataset.logo||'drop',BADGE=document.documentElement.dataset.badge==='light'?'badge-bird-light':'badge-bird';
+var MODE=document.documentElement.dataset.logo||'drop',BADGE=document.documentElement.dataset.badge==='light'?'badge-bird-line':'badge-bird';
 var imgs={};[BADGE,'vanilla-latte','cinnamon-latte','iced-latte','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
 function layout(){
  var r=stage.getBoundingClientRect();W=r.width;dpr=Math.min(W>700?2:1.75,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
