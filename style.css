@@ -496,3 +496,23 @@ html.js-draw .f-brand.in p { opacity: 1; transform: none; transition: opacity .6
 .day[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .day[aria-pressed="true"] small { color: #CFCAC0; }
 .tot { flex: none; white-space: nowrap; }
+
+/* avis: the Google card in black, the guest-book form light, so the section doesn't end black right before the black footer */
+.av-google { background: var(--ink); border-color: var(--ink); color: #F4F1EA; }
+.av-google .avg-top { border-bottom-color: #2C2B29; }
+.av-google .avg-meta { color: #A9A49A; }
+.av-google .avg-meta .stars { color: #F4F1EA; }
+.av-google .avg-quote p { color: #F4F1EA; }
+.av-google .avg-go { background: #F4F1EA; color: var(--ink); }
+.av-google .avg-go .avg-st { color: var(--ink); }
+.av-google .avg-go i { background: var(--ink); color: #F4F1EA; }
+.av-form { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.av-rate button { color: #D9D2C5; }
+.av-rate button.on { color: var(--ink); }
+.av-form input, .av-form textarea { background: var(--bg); border-color: var(--line); color: var(--ink); }
+.av-form input::placeholder, .av-form textarea::placeholder { color: #9A948A; }
+.av-form input:focus, .av-form textarea:focus { outline-color: var(--ink); }
+.av-count { color: #9A948A; }
+.av-form .btn { background: var(--ink); color: #F4F1EA; }
+.av-msg { color: #B3261E; }
+.av-msg.ok { color: var(--ink); }
