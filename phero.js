@@ -70,9 +70,8 @@ function schedule(){
   return (spot('l')+spot('r'))/2}
  if(MODE==='hang'){HANG={x:spot('c'),y:-30,len:0};HANG.len=(oy-HANG.y)-78*U-18*U;var bb=badge(spot('c')+40*U,-200*U);bb.vx=-60;q.push([150,function(){bodies.push(bb)}])}
  else q.push([150,function(){bodies.push(badge(spot('c'),-180*U))}]);
- // two beans keep walking along the top of the word, end to end and back
- q.push([1300,function(){var B=CFG.boxes,w1=bean(ox+B[0][0]*S+14*U,-40);w1.walk=1;w1.vx=0;w1.w=0;var w2=bean(ox+B[4][2]*S-60*U,-40);w2.walk=-1;w2.vx=0;w2.w=0;bodies.push(w1,w2)}]);
- for(var j=0;j<10;j++)q.push([1000+j*60,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
+ // three beans keep walking along the top of the word, end to end and back
+ q.push([1300,function(){var B=CFG.boxes,w1=bean(ox+B[0][0]*S+14*U,-40);w1.walk=1;w1.vx=0;w1.w=0;var w2=bean(ox+B[4][2]*S-60*U,-40);w2.walk=-1;w2.vx=0;w2.w=0;var w3=bean((ox+B[0][0]*S+ox+B[4][2]*S)/2,-40);w3.walk=1;w3.vx=0;w3.w=0;bodies.push(w1,w2,w3)}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
  setTimeout(function(){hint.style.opacity=1},RM?0:2400);
