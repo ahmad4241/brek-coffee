@@ -7,7 +7,7 @@ var cv=document.getElementById('ph-c'),ctx=cv.getContext('2d'),stage=document.ge
 var HLB=0,XL=0,XR=0,LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,wordH,rects=[],U=1;
 var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var MODE='hang';
-var imgs={};['badge-bird','vanilla-latte','cinnamon-latte','iced-latte','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
+var imgs={};['badge-bird-line','vanilla-latte','cinnamon-latte','iced-latte','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
 function layout(){
  var r=stage.getBoundingClientRect();W=r.width;dpr=Math.min(W>700?2:1.75,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
  var pad=W<700?4:Math.max(14,W*.04),ww=Math.min(W-2*pad,980);S=ww/CFG.vb[2];wordH=CFG.vb[3]*S;ox=(W-ww)/2-CFG.vb[0]*S;floorY=H-12;oy=floorY-wordH-CFG.vb[1]*S;
@@ -18,7 +18,7 @@ function layout(){
 var bodies=[],parts=[],G=2400,shake=0,cur='#121212';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
 function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.3,w*.42],[-w*.3,h*.462,w*.08],[w*.3,h*.462,w*.08]],{n:n,ww:w,hh:h,a:0,w:0})}
-function badge(x,y){var r=(HANG?78:90)*U,m=4;return mk('L',x,y,m,m*r*r*.5,[[0,0,r]],{n:'badge-bird',r:r,ww:2*r,hh:2*r})}
+function badge(x,y){var r=(HANG?78:90)*U,m=4;return mk('L',x,y,m,m*r*r*.5,[[0,0,r]],{n:'badge-bird-line',r:r,ww:2*r,hh:2*r})}
 var HANG=null;
 function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.37;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
 function bean(x,y){var r=(7+Math.random()*2)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
@@ -42,6 +42,7 @@ function stepWorld(h){
   if(b===drag){var k=30;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k;b.w*=.9}else b.vy+=G*h;
   if((b.k==='g'||(b.k==='L'&&!HANG))&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0;b.vx=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h;if(!b.thrown)b.vx*=Math.pow(.0005,h)}}       // keeps glasses upright: wobble, then settle
   b.x+=b.vx*h;b.y+=b.vy*h;b.a+=b.w*h;b.w*=.998;
+  if(b.walk&&b!==drag&&b.y<oy+6*U&&b.y>oy-40*U){var B=CFG.boxes,lo=ox+B[0][0]*S+b.r+6*U,hi=ox+B[4][2]*S-b.r-12*U;if(b.x>hi){b.walk=-1;if(b.x>hi+4*U){b.x=hi+4*U;b.vx=Math.min(b.vx,0)}}else if(b.x<lo){b.walk=1;if(b.x<lo-4*U){b.x=lo-4*U;b.vx=Math.max(b.vx,0)}}b.st=Math.abs(b.vx)<10*U?(b.st||0)+h:0;if(b.st>.35){b.walk=-b.walk;b.st=0;b.vx=b.walk*30*U}b.vx+=(b.walk*55*U-b.vx)*Math.min(1,5*h)}
   if(b.k==='L'&&HANG&&b!==drag){var ax=HANG.x,ay=HANG.y,dx=b.x-ax,dy=b.y-ay,d=Math.hypot(dx,dy),L=HANG.len;if(d>L){var nx=dx/d,ny=dy/d;b.x=ax+nx*L;b.y=ay+ny*L;var vr=b.vx*nx+b.vy*ny;if(vr>0){b.vx-=vr*nx*1.35;b.vy-=vr*ny*1.35}}b.vx*=Math.pow(.55,h);b.a=-Math.atan2(dx,dy);b.w=0}
   if(b.k==='L'&&HANG&&b===drag){var ex=b.x-HANG.x,ey=b.y-HANG.y,ed=Math.hypot(ex,ey);if(ed>HANG.len){b.x=HANG.x+ex/ed*HANG.len;b.y=HANG.y+ey/ed*HANG.len}b.a=-Math.atan2(b.x-HANG.x,b.y-HANG.y)}
   b.c.forEach(function(c){var p=wp(b,c),r=c[2];
@@ -67,7 +68,9 @@ function schedule(){
   return (spot('l')+spot('r'))/2}
  if(MODE==='hang'){HANG={x:spot('c'),y:-30,len:0};HANG.len=(oy-HANG.y)-78*U-18*U;var bb=badge(spot('c')+40*U,-200*U);bb.vx=-60;q.push([150,function(){bodies.push(bb)}])}
  else q.push([150,function(){bodies.push(badge(spot('c'),-180*U))}]);
- for(var j=0;j<12;j++)q.push([1000+j*60,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
+ // two beans keep walking along the top of the word, end to end and back
+ q.push([1300,function(){var B=CFG.boxes,w1=bean(ox+B[0][0]*S+14*U,-40);w1.walk=1;w1.vx=0;w1.w=0;var w2=bean(ox+B[4][2]*S-60*U,-40);w2.walk=-1;w2.vx=0;w2.w=0;bodies.push(w1,w2)}]);
+ for(var j=0;j<10;j++)q.push([1000+j*60,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
  setTimeout(function(){hint.style.opacity=1},RM?0:2400);
@@ -78,7 +81,7 @@ function shadowFor(b){var top=floorY;for(var i=0;i<rects.length;i++){var R=rects
  var bottom=b.y+(b.hh?b.hh*.5:b.r||10),dist=Math.max(0,top-bottom),al=Math.max(0,.6-dist/350);if(al<=0)return;var wid=(b.ww||b.r*2)*(1.3+dist/300);
  ctx.globalAlpha=al;ctx.drawImage(SH,b.x-wid/2,top-6*U,wid,12*U);ctx.globalAlpha=1}
 function drawBody(b,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.translate(b.x,b.y);ctx.rotate(b.a);
- if(b.k==='L'){var im=imgs['badge-bird'];if(im.complete)ctx.drawImage(im,-b.r,-b.r,2*b.r,2*b.r)}
+ if(b.k==='L'){var im=imgs['badge-bird-line'];if(im.complete)ctx.drawImage(im,-b.r,-b.r,2*b.r,2*b.r)}
  else if(b.k==='g'||b.k==='i'){var im=imgs[b.n];if(im.complete)ctx.drawImage(im,-b.ww/2,-b.hh/2,b.ww,b.hh);
 }
  else{var im=imgs[b.n],d=b.r*2.5;if(im&&im.complete){var ar=im.naturalHeight/im.naturalWidth;ctx.scale(b.fl||1,1);ctx.drawImage(im,-d/2,-d*ar/2,d,d*ar)}}
@@ -111,7 +114,7 @@ function loop(t){if(!visible){running=false;return}if(T0===null)T0=t;if(last===n
  parts.forEach(function(p){p.t+=dt;p.vy+=G*.5*dt;p.x+=p.vx*dt;p.y+=p.vy*dt});parts=parts.filter(function(p){return p.t<p.life});
  bokeh.forEach(function(k){k.y+=k.v*raw;k.a+=k.w*raw});bokeh=bokeh.filter(function(k){return k.y<H+120});
  shake*=Math.pow(.02,raw);draw();
- var active=drag||parts.length||now<4200||now-lastInput<4000,moving=active||(now<7000&&bodies.some(function(b){return Math.abs(b.vx)+Math.abs(b.vy)>30||Math.abs(b.w)>.3}));
+ var active=(!RM&&bodies.some(function(b){return b.walk}))||drag||parts.length||now<4200||now-lastInput<4000,moving=active||(now<7000&&bodies.some(function(b){return Math.abs(b.vx)+Math.abs(b.vy)>30||Math.abs(b.w)>.3}));
  quiet=moving?0:quiet+1;if(quiet>30){running=false;return}requestAnimationFrame(loop)}
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){visible=e[0].isIntersecting;if(visible)wake()}).observe(stage);
 // ---------------------------------------------------------------- input
@@ -124,7 +127,7 @@ stage.addEventListener('pointerdown',function(e){lastInput=now;wake();var p=pos(
 stage.addEventListener('pointermove',function(e){var p=pos(e);if(drag){lastInput=now;drag.tx=p[0];drag.ty=p[1]}else{var b=hit(p[0],p[1]);stage.style.cursor=b?'grab':''}});
 function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.y),quick=performance.now()-down.t<300;
   if(down.b&&down.b.k==='L'&&moved<10&&quick){var c=document.getElementById('carte');if(c)c.scrollIntoView({behavior:'smooth'})}else if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);else if(!down.b&&moved<10)bodies.push(bean(p[0],-20))}
- if(drag){drag.thrown=1;drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>70)bodies.splice(1,bodies.length-70)}
+ if(drag){drag.thrown=1;drag=null;stage.classList.remove('grab')}down=null;for(var i=0;bodies.length>70&&i<bodies.length;)if(bodies[i].k!=='L'&&!bodies[i].walk)bodies.splice(i,1);else i++}
 stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',function(){if(drag){drag=null;stage.classList.remove('grab')}down=null});
 var cardN=null;function openCard(n){cardN=n;var d=DRINKS[n];document.getElementById('ph-cn').textContent=d[0];document.getElementById('ph-cd').textContent=d[1];document.getElementById('ph-cg').textContent='Commander · '+d[2];document.getElementById('ph-card').classList.add('on')}
 var hl=document.getElementById('ph-hl');function tint(){var e=hl.querySelector('em');e.style.color=cur}
