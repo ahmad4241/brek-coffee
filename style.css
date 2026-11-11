@@ -33,7 +33,7 @@ body {
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
-h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; }
+h1, h2, h3, h4 { margin: 0; font-weight: 500; letter-spacing: -0.025em; line-height: 1.12; }
 .sr, .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .muted { color: var(--muted); }
 .kicker { margin: 0 0 14px; font-size: 13px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -158,7 +158,7 @@ html.ov-open .burger span { background: var(--ink); }
 .house{background:var(--dark);color:#F4F1EA}
 .house-in{max-width:var(--max);margin:0 auto;padding:clamp(56px,8vw,104px) var(--pad)}
 .house .kicker{color:#8F8A80}
-.house-head h2{font-weight:500;font-size:clamp(34px,5vw,60px);line-height:1.05;letter-spacing:-.035em;margin:0 0 clamp(28px,4vw,48px)}
+.house-head h2{font-weight:500;font-size:clamp(34px,5vw,60px);line-height:1.12;letter-spacing:-.03em;margin:0 0 clamp(28px,4vw,48px)}
 .house-list{list-style:none;margin:0;padding:0;border-top:1px solid #2C2B29}
 .house-list li{display:grid;grid-template-columns:auto 44px 1fr;gap:18px;align-items:start;padding:24px 0;border-bottom:1px solid #2C2B29}
 .hn{font-size:12px;letter-spacing:.1em;color:#8F8A80;padding-top:6px;min-width:22px}
@@ -169,7 +169,7 @@ html.ov-open .burger span { background: var(--ink); }
 
 /* ------------------------------------------------ le croffle: one croffle, four slices, labelled like a poster */
 .croffle { max-width: 1100px; margin: 0 auto; padding: clamp(72px, 9vw, 120px) var(--pad) clamp(64px, 8vw, 104px); text-align: center; }
-.cf-head h2 { font-size: clamp(38px, 7vw, 68px); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
+.cf-head h2 { font-size: clamp(38px, 7vw, 68px); font-weight: 500; letter-spacing: -.03em; line-height: 1.12; }
 .cf-sub { margin: 18px auto 0; max-width: 30em; font-size: clamp(15px, 1.5vw, 17px); color: var(--muted); text-wrap: balance; }
 .cf-plate { position: relative; max-width: 860px; margin: clamp(28px, 4vw, 44px) auto 0; }
 .cf-pic { position: relative; }
@@ -345,7 +345,7 @@ html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
 
 /* ------------------------------------------------ avis: the Google score, one real quote, then the guest book */
 .avis { max-width: var(--max); margin: 0 auto; padding: clamp(72px, 9vw, 120px) var(--pad); border-top: 1px solid var(--line); }
-.av-head h2 { font-size: clamp(36px, 6vw, 64px); font-weight: 500; letter-spacing: -.045em; line-height: 1; }
+.av-head h2 { font-size: clamp(36px, 6vw, 64px); font-weight: 500; letter-spacing: -.03em; line-height: 1.12; }
 .av-google { margin: clamp(28px, 4vw, 44px) 0 0; padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: 22px; background: #fff; }
 .avg-top { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .avg-num { font-size: 40px; font-weight: 500; letter-spacing: -.04em; line-height: 1; }
