@@ -13,11 +13,32 @@
   function when(d) { var p = d.split('-'); return (+p[2]) + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0]; }
   function stars(n) { var s = ''; for (var i = 1; i <= 5; i++) s += '<span class="' + (i <= n ? 'on' : '') + '">' + STAR + '</span>'; return s; }
 
+  // only the newest few, then "Voir plus" adds a few more at a time
+  var all = [], shown = 0, FIRST = 3, MORE = 6;
+  var more = document.createElement('button');
+  more.type = 'button'; more.className = 'av-more-btn'; more.hidden = true;
+  list.parentNode.insertBefore(more, list.nextSibling);
+  more.addEventListener('click', function () { show(shown + MORE); });
+  function card(i) {
+    return '<li class="av-card"><div class="av-stars" aria-label="' + i.rating + ' sur 5">' + stars(i.rating) + '</div>' +
+      '<p>' + esc(i.text) + '</p><footer><b>' + esc(i.name) + '</b><span>' + when(i.date) + '</span></footer></li>';
+  }
+  function show(n) {
+    shown = Math.min(n, all.length);
+    list.innerHTML = all.slice(0, shown).map(card).join('');
+    var left = all.length - shown;
+    more.hidden = left <= 0;
+    more.textContent = 'Voir plus de messages (' + left + ')';
+  }
   function render(items) {
+    all = items;
     if (!items.length) {
+      more.hidden = true;
       list.innerHTML = '<li class="av-empty">Soyez le premier à laisser un mot.</li>';
       return;
     }
+    show(Math.max(FIRST, shown));
+    return;
     list.innerHTML = items.map(function (i) {
       return '<li class="av-card"><div class="av-stars" aria-label="' + i.rating + ' sur 5">' + stars(i.rating) + '</div>' +
         '<p>' + esc(i.text) + '</p><footer><b>' + esc(i.name) + '</b><span>' + when(i.date) + '</span></footer></li>';
