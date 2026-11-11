@@ -161,7 +161,7 @@ html.ov-open .burger span { background: var(--ink); }
 .house .kicker{color:#8F8A80}
 .house-head h2{font-weight:500;font-size:clamp(34px,5vw,60px);line-height:1.12;letter-spacing:-.03em;margin:0 0 clamp(28px,4vw,48px)}
 .house-list{list-style:none;margin:0;padding:0;border-top:1px solid #2C2B29}
-.house-list li{display:grid;grid-template-columns:auto 44px 1fr;gap:18px;align-items:start;padding:24px 0;border-bottom:1px solid #2C2B29}
+.house-list li{display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:start;padding:24px 0;border-bottom:1px solid #2C2B29}
 .hn{font-size:12px;letter-spacing:.1em;color:#8F8A80;padding-top:6px;min-width:22px}
 .hi svg{width:40px;height:40px;fill:none;stroke:#F4F1EA;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .house-list h3{font-weight:500;font-size:clamp(20px,2vw,24px);letter-spacing:-.02em;line-height:1.15;margin:4px 0 6px}
