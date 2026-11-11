@@ -60,13 +60,13 @@ function schedule(){
   if(k==='l')return ox+B[0][0]*S-e+gw/2+2;
   if(k==='r')return ox+B[4][2]*S+e-gw/2-2;
   return (spot('l')+spot('r'))/2}
- q.push([900,function(){bodies.push(glass(n[0],spot('c'),-200*U))}]);
- q.push([1500,function(){bodies.push(glass(n[1],spot('l'),-200*U))}]);
- q.push([1750,function(){bodies.push(glass(n[2],spot('r'),-200*U))}]);
- for(var j=0;j<12;j++)q.push([2100+j*70,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
+ q.push([150,function(){bodies.push(glass(n[0],spot('c'),-140*U))}]);
+ q.push([380,function(){bodies.push(glass(n[1],spot('l'),-140*U))}]);
+ q.push([560,function(){bodies.push(glass(n[2],spot('r'),-140*U))}]);
+ for(var j=0;j<12;j++)q.push([1000+j*60,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
- setTimeout(function(){hint.style.opacity=1},RM?0:3600);
+ setTimeout(function(){hint.style.opacity=1},RM?0:2400);
 }
 // ---------------------------------------------------------------- drawing
 var SH=(function(){var c=document.createElement('canvas');c.width=128;c.height=32;var x=c.getContext('2d'),g=x.createRadialGradient(64,16,0,64,16,64);g.addColorStop(0,'rgba(40,25,10,.55)');g.addColorStop(1,'rgba(40,25,10,0)');x.setTransform(1,0,0,.25,0,12);x.fillStyle=g;x.fillRect(0,0,128,128);return c})();
@@ -83,7 +83,7 @@ function draw(){
  var sh=shake*shake*5*U;ctx.translate((Math.random()-.5)*sh,(Math.random()-.5)*sh);
  var intro=Math.min(1,now/2600),z=1+.05*(1-easeOut(intro));ctx.translate(W/2,floorY);ctx.scale(z,z);ctx.translate(-W/2,-floorY);
  // word rising out of the floor
- var k=easeOut(Math.min(1,Math.max(0,(now-150)/900)));ctx.save();ctx.beginPath();ctx.rect(0,0,W,floorY+2);ctx.clip();
+ var k=easeOut(Math.min(1,Math.max(0,now/600)));ctx.save();ctx.beginPath();ctx.rect(0,0,W,floorY+2);ctx.clip();
  ctx.translate(0,(1-k)*wordH*1.05);
  ctx.save();ctx.translate(ox,oy);ctx.scale(S,S);ctx.lineJoin='round';ctx.lineWidth=CFG.sw;ctx.fillStyle=ctx.strokeStyle='#121212';ctx.fill(LET,'evenodd');ctx.stroke(LET);ctx.fillStyle=ctx.strokeStyle=cur;ctx.fill(DOT);ctx.stroke(DOT);ctx.restore();
  ctx.restore();
@@ -100,7 +100,7 @@ var running=false,visible=true,quiet=0,lastInput=-1e9;
 function wake(){if(!running&&visible){running=true;last=null;requestAnimationFrame(loop)}}
 function loop(t){if(!visible){running=false;return}if(T0===null)T0=t;if(last===null)last=t;var raw=Math.min(.033,(t-last)/1000);last=t;now=t-T0;
  // slow motion while the first glasses fall, real time once they land
- timeScale=RM?1:(now<900?1:now<2100?.42+.58*Math.pow((now-900)/1200,2):1);
+ timeScale=RM?1:(now<150?1:now<1000?.55+.45*Math.pow((now-150)/850,2):1);
  var dt=raw*timeScale;for(var s=0;s<4;s++)stepWorld(dt/4);
  parts.forEach(function(p){p.t+=dt;p.vy+=G*.5*dt;p.x+=p.vx*dt;p.y+=p.vy*dt});parts=parts.filter(function(p){return p.t<p.life});
  bokeh.forEach(function(k){k.y+=k.v*raw;k.a+=k.w*raw});bokeh=bokeh.filter(function(k){return k.y<H+120});
