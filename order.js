@@ -21,8 +21,12 @@
       var f = c.dataset.filter;
       chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c); });
       groups.forEach(function (g) { g.hidden = f !== 'all' && g.dataset.cat !== f; });
-      var top = document.querySelector('.filters').getBoundingClientRect().top;
-      if (top < 0 || top > 120) document.querySelector('.filters').scrollIntoView({ block: 'start' });
+      // stay put: if the tabs are stuck at the top, keep them exactly there after the switch
+      var bar = document.querySelector('.filters'), before = bar.getBoundingClientRect().top;
+      requestAnimationFrame(function () {
+        var after = bar.getBoundingClientRect().top;
+        if (Math.abs(after - before) > 1) window.scrollBy({ top: after - before, behavior: 'instant' });
+      });
     });
   });
 

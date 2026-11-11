@@ -226,17 +226,26 @@ html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
 .m-lead { margin: 14px 0 0; max-width: 28em; font-size: 15px; color: var(--muted); }
 .allergens { margin: 28px 0 0; font-size: 13px; color: var(--muted); }
 
-/* category tabs: plain words, the active one underlined */
-.filters { position: sticky; top: 64px; z-index: 5; display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; touch-action: pan-x pan-y; overscroll-behavior-x: contain;
-  margin: 28px calc(var(--pad) * -1) 0; padding: 14px var(--pad) 0; background: var(--bg); border-bottom: 1px solid var(--line); }
+/* category tabs: a segmented control — they read as buttons, the active one in black */
+.filters { position: sticky; top: 64px; z-index: 5; margin: 28px calc(var(--pad) * -1) 0; padding: 10px var(--pad); background: var(--bg); }
+.filters-in, .filters { scrollbar-width: none; }
+.filters { display: flex; }
 .filters::-webkit-scrollbar { display: none; }
-.chip { flex: none; padding: 0 0 12px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; color: var(--muted); font: 500 15px var(--font); cursor: pointer; transition: color var(--t), border-color var(--t); }
-.chip:hover { color: var(--ink); }
-.chip[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.filters { gap: 0; }
+.filters > .chip:first-child { margin-left: 0; }
+.filters { --seg: #EEE9E0; }
+.filters::before { content: none; }
+.chip { flex: 1 1 0; min-width: 0; height: 44px; padding: 0 4px; letter-spacing: -.01em; border: 1px solid var(--line); background: #fff; color: var(--ink); font: 500 14px var(--font); white-space: nowrap; cursor: pointer; transition: background var(--t), color var(--t), border-color var(--t); }
+.chip + .chip { margin-left: -1px; }
+.chip:first-child { border-radius: 999px 0 0 999px; }
+.chip:last-child { border-radius: 0 999px 999px 0; }
+.chip:hover { background: #F4F1EA; }
+.chip[aria-pressed="true"] { position: relative; z-index: 1; background: var(--ink); border-color: var(--ink); color: #fff; }
+@media (min-width: 900px) { .filters { justify-content: flex-start; } .chip { flex: 0 0 auto; padding: 0 26px; } }
 
 .groups { display: grid; gap: 0; }
 .group { padding-top: 24px; scroll-margin-top: 130px; }
-@media (max-width: 899px) { .chip[data-filter="all"] { display: none; } }
+@media (max-width: 899px) { .chip[data-filter="all"] { display: none; } .chip[data-filter="coffee"] { border-radius: 999px 0 0 999px; } }
 .group[hidden] { display: none; }
 
 /* the favourite: one black card with the real photo */
