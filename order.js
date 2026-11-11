@@ -26,6 +26,18 @@
     });
   });
 
+  // phones: one category at a time (no "Tout"), so the menu stays about one screen long
+  function setFilter(f) {
+    chips.forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.filter === f); });
+    groups.forEach(function (g) { g.hidden = f !== 'all' && g.dataset.cat !== f; });
+  }
+  var phone = matchMedia('(max-width: 899px)');
+  function fit() {
+    var cur = (chips.filter(function (x) { return x.getAttribute('aria-pressed') === 'true'; })[0] || {}).dataset;
+    if (phone.matches && cur && cur.filter === 'all') setFilter(chips[1].dataset.filter);
+  }
+  fit(); phone.addEventListener('change', fit);
+
   // --------------------------------------------------------------- cart (kept in this browser only)
   var cart = [];
   try { cart = JSON.parse(localStorage.getItem('brek-cart') || '[]').filter(function (l) { return ITEMS[l.id]; }); } catch (e) { cart = []; }

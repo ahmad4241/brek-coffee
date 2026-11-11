@@ -235,7 +235,8 @@ html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
 .chip[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 
 .groups { display: grid; gap: 0; }
-.group { padding-top: 40px; scroll-margin-top: 130px; }
+.group { padding-top: 24px; scroll-margin-top: 130px; }
+@media (max-width: 899px) { .chip[data-filter="all"] { display: none; } }
 .group[hidden] { display: none; }
 
 /* the favourite: one black card with the real photo */
@@ -249,14 +250,14 @@ html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
 .m-feat-btn img { width: 150%; max-width: none; margin: -10% 0 -16% -18%; }
 
 /* a category opens with one big picture, then the rows */
-.m-vis { position: relative; margin: 0; height: 250px; border-radius: 22px; overflow: hidden; background: radial-gradient(90% 80% at 70% 40%, #FFFFFF 0%, #F1ECE3 70%, #E8E1D5 100%); }
+.m-vis { position: relative; margin: 0; height: 168px; border-radius: 22px; overflow: hidden; background: radial-gradient(90% 80% at 70% 40%, #FFFFFF 0%, #F1ECE3 70%, #E8E1D5 100%); }
 .m-vis img { position: absolute; right: -16%; bottom: -16%; height: 112%; width: auto; max-width: none; filter: drop-shadow(0 24px 30px rgba(60,45,30,.18)); }
 .m-vis figcaption { position: absolute; left: 22px; top: 20px; bottom: 20px; display: flex; flex-direction: column; }
 .m-vis .m-no { font-size: 12px; color: var(--muted); letter-spacing: .08em; }
-.m-cat { margin-top: auto; font-size: 34px; font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
+.m-cat { margin-top: auto; font-size: 30px; font-weight: 500; letter-spacing: -.035em; line-height: 1.05; }
 .m-cnote { margin-top: 6px; font-size: 12.5px; color: var(--muted); max-width: 13em; }
 .m-ph { position: absolute; right: 8%; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #B9B1A3; }
-.m-ph svg { width: 92px; height: 92px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.m-ph svg { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .m-ph small { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
 .m-vis.is-ph { background: repeating-linear-gradient(135deg, #F3EEE6 0 12px, #EFE9E0 12px 24px); }
 .m-head { display: flex; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
