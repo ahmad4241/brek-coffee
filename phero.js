@@ -16,7 +16,7 @@ function layout(){
 // ---------------------------------------------------------------- rigid bodies (circles in a local frame)
 var bodies=[],parts=[],G=2400,shake=0,cur='#121212';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
-function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.3,w*.42],[-w*.3,h*.462,w*.08],[w*.3,h*.462,w*.08]],{n:n,ww:w,hh:h,a:(Math.random()-.5)*.35,w:(Math.random()-.5)*.8})}
+function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.3,w*.42],[-w*.3,h*.462,w*.08],[w*.3,h*.462,w*.08]],{n:n,ww:w,hh:h,a:0,w:0})}
 function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.37;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
 function bean(x,y){var r=(7+Math.random()*2)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
 function wp(b,c){var co=Math.cos(b.a),si=Math.sin(b.a);return [b.x+c[0]*co-c[1]*si,b.y+c[0]*si+c[1]*co]}
@@ -37,7 +37,7 @@ var drag=null,down=null,now=0;
 function stepWorld(h){
  bodies.forEach(function(b){
   if(b===drag){var k=30;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k;b.w*=.9}else b.vy+=G*h;
-  if(b.k==='g'&&b!==drag){b.w+=(-Math.sin(b.a)*190-b.w*9)*h}       // keeps glasses upright: wobble, then settle
+  if(b.k==='g'&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h}}       // keeps glasses upright: wobble, then settle
   b.x+=b.vx*h;b.y+=b.vy*h;b.a+=b.w*h;b.w*=.998;
   b.c.forEach(function(c){var p=wp(b,c),r=c[2];
    rects.forEach(function(R){var o=circleRect(p[0],p[1],r,R);if(o){b.x+=o[0]*o[2];b.y+=o[1]*o[2];var j=impulse(b,o[0],o[1],o[3],o[4],.22,.45);if(o[1]<-.7)land(b,j,o[3],o[4]);p=wp(b,c)}});
@@ -58,8 +58,7 @@ function schedule(){
  q.push([900,function(){bodies.push(glass(n[0],W*.5,-200*U))}]);
  q.push([1500,function(){bodies.push(glass(n[1],W*.18,-200*U))}]);
  q.push([1750,function(){bodies.push(glass(n[2],W*.82,-200*U))}]);
- for(var i=1;i<=5;i++)(function(i){q.push([1900+i*90,function(){bodies.push(ice(i,W*(.1+Math.random()*.8),-90))}])})(i);
- for(var j=0;j<18;j++)q.push([2300+j*55,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
+ for(var j=0;j<28;j++)q.push([2100+j*45,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
  setTimeout(function(){hint.style.opacity=1},RM?0:3600);
