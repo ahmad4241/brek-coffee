@@ -513,3 +513,9 @@ html.js-draw .f-brand.in p { opacity: 1; transform: none; transition: opacity .6
 .av-form .btn { background: var(--ink); color: #F4F1EA; }
 .av-msg { color: #B3261E; }
 .av-msg.ok { color: var(--ink); }
+
+/* hero : statut ouvert / fermé */
+.ph-meta .ph-st { display: inline-flex; align-items: center; gap: 7px; }
+.ph-st i { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; flex: none; }
+.ph-st.open { color: var(--ink); }
+.ph-st.open i { background: var(--ink); border-color: var(--ink); box-shadow: 0 0 0 3px rgba(18,18,18,.12); }
