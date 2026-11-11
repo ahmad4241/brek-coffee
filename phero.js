@@ -37,7 +37,7 @@ var drag=null,down=null,now=0;
 function stepWorld(h){
  bodies.forEach(function(b){
   if(b===drag){var k=30;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k;b.w*=.9}else b.vy+=G*h;
-  if(b.k==='g'&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h}}       // keeps glasses upright: wobble, then settle
+  if(b.k==='g'&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0;b.vx=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h;if(!b.thrown)b.vx*=Math.pow(.0005,h)}}       // keeps glasses upright: wobble, then settle
   b.x+=b.vx*h;b.y+=b.vy*h;b.a+=b.w*h;b.w*=.998;
   b.c.forEach(function(c){var p=wp(b,c),r=c[2];
    rects.forEach(function(R){var o=circleRect(p[0],p[1],r,R);if(o){b.x+=o[0]*o[2];b.y+=o[1]*o[2];var j=impulse(b,o[0],o[1],o[3],o[4],.22,.45);if(o[1]<-.7)land(b,j,o[3],o[4]);p=wp(b,c)}});
@@ -55,9 +55,14 @@ var bokeh=[];function addBokeh(){var side=Math.random()<.5;bokeh.push({x:side?Ma
 var T0=null,wordK=0,timeScale=1;
 function schedule(){
  var n=['cinnamon-latte','vanilla-latte','iced-latte'],q=[];
- q.push([900,function(){bodies.push(glass(n[0],W*.5,-200*U))}]);
- q.push([1500,function(){bodies.push(glass(n[1],W*.18,-200*U))}]);
- q.push([1750,function(){bodies.push(glass(n[2],W*.82,-200*U))}]);
+ // three glasses, placed on purpose: far left on the B, dead centre on the E, far right on the K
+ function spot(k){var gw=80*U*1.1,B=CFG.boxes,e=CFG.sw*S/2;
+  if(k==='l')return ox+B[0][0]*S-e+gw/2+2;
+  if(k==='r')return ox+B[4][2]*S+e-gw/2-2;
+  return (spot('l')+spot('r'))/2}
+ q.push([900,function(){bodies.push(glass(n[0],spot('c'),-200*U))}]);
+ q.push([1500,function(){bodies.push(glass(n[1],spot('l'),-200*U))}]);
+ q.push([1750,function(){bodies.push(glass(n[2],spot('r'),-200*U))}]);
  for(var j=0;j<12;j++)q.push([2100+j*70,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
@@ -113,7 +118,7 @@ stage.addEventListener('pointerdown',function(e){lastInput=now;wake();var p=pos(
 stage.addEventListener('pointermove',function(e){var p=pos(e);if(drag){lastInput=now;drag.tx=p[0];drag.ty=p[1]}else{var b=hit(p[0],p[1]);stage.style.cursor=b?'grab':''}});
 function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.y),quick=performance.now()-down.t<300;
   if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);else if(!down.b&&moved<10)bodies.push(bean(p[0],-20))}
- if(drag){drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>70)bodies.splice(3,bodies.length-70)}
+ if(drag){drag.thrown=1;drag=null;stage.classList.remove('grab')}down=null;if(bodies.length>70)bodies.splice(3,bodies.length-70)}
 stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',function(){if(drag){drag=null;stage.classList.remove('grab')}down=null});
 var cardN=null;function openCard(n){cardN=n;var d=DRINKS[n];document.getElementById('ph-cn').textContent=d[0];document.getElementById('ph-cd').textContent=d[1];document.getElementById('ph-cg').textContent='Commander · '+d[2];document.getElementById('ph-card').classList.add('on')}
 var hl=document.getElementById('ph-hl');function tint(){var e=hl.querySelector('em');e.style.color=cur}
