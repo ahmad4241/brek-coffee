@@ -277,6 +277,13 @@ html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
 .m-tag::before { content: "· "; }
 .m-price { font-size: 16px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .m-add { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--ink); font-size: 17px; line-height: 1; transition: background var(--t), color var(--t); }
+.has-q { position: relative; }
+.qstep { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; height: 34px; border-radius: 999px; background: var(--ink); color: #fff; }
+.qstep button { width: 34px; height: 34px; border: 0; background: none; color: #fff; font: 400 19px/1 var(--font); cursor: pointer; }
+.qstep output { min-width: 16px; text-align: center; font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.in-cart .m-add, .in-cart .cf-add { visibility: hidden; }
+.in-cart .m-row { grid-template-columns: 1fr auto 84px; }
+.in-cart .cf-list button, .cf-list .in-cart > button { grid-template-columns: 52px 1fr auto 84px; }
 .m-row:hover .m-add, .m-row:focus-visible .m-add { background: var(--ink); color: #fff; }
 .m-row:hover .m-name { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 

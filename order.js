@@ -61,6 +61,36 @@
     bar.hidden = n === 0;
     $('cb-n').textContent = n;
     $('cb-total').textContent = chf(total());
+    renderSteps();
+  }
+
+  // --------------------------------------------------------------- quick − n + right on the menu rows
+  // Once an item is in the order, its row shows a stepper: change the quantity without opening anything.
+  var steps = [];
+  document.querySelectorAll('.m-list > li, .cf-list > li').forEach(function (li) {
+    var b = li.querySelector('[data-item],[data-order]'); if (!b) return;
+    var id = b.dataset.item || b.dataset.order;
+    var s = document.createElement('div');
+    s.className = 'qstep'; s.hidden = true;
+    s.innerHTML = '<button type="button" data-d="-1" aria-label="Retirer un">−</button><output>0</output><button type="button" data-d="1" aria-label="Ajouter un">+</button>';
+    li.classList.add('has-q'); li.appendChild(s);
+    s.addEventListener('click', function (e) {
+      var d = e.target.closest('button'); if (!d) return;
+      var lines = cart.filter(function (l) { return l.id === id; }), last = lines[lines.length - 1];
+      if (!last) return;
+      last.qty += +d.dataset.d;
+      if (last.qty <= 0) cart.splice(cart.indexOf(last), 1);
+      if (last.qty > 20) last.qty = 20;
+      save(); renderBar();
+    });
+    steps.push({ li: li, s: s, id: id });
+  });
+  function renderSteps() {
+    steps.forEach(function (x) {
+      var n = cart.reduce(function (t, l) { return t + (l.id === x.id ? l.qty : 0); }, 0);
+      x.s.hidden = !n; x.li.classList.toggle('in-cart', !!n);
+      x.s.querySelector('output').textContent = n;
+    });
   }
 
   // --------------------------------------------------------------- item sheet
