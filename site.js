@@ -77,8 +77,27 @@
   if (cf) {
     if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('js-cf');
-      var cio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { cf.classList.add('in'); cio.disconnect(); } }, { threshold: 0.3 });
-      cio.observe(cf);
+      // the four slices start scattered and land together; the names come in as they land
+      var box = cf.querySelector('.cf-pieces'), DUR = 1500, anims = [];
+      var FROM = [[-.2, -.3, -16], [-.06, .34, 11], [.07, -.36, -9], [.21, .28, 14]];
+      if (box && box.animate) {
+        var w = box.clientWidth, h = box.clientHeight;
+        anims = [].map.call(box.querySelectorAll('.cf-s'), function (el, i) {
+          var f = FROM[i], a = el.animate([
+            { transform: 'translate(' + f[0] * w + 'px,' + f[1] * h + 'px) rotate(' + f[2] + 'deg)' },
+            { transform: 'none' }], { duration: DUR, delay: i * 70, easing: 'cubic-bezier(.2,1.12,.35,1)', fill: 'both' });
+          a.pause();
+          return a;
+        });
+      }
+      var cio = new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting) return;
+        cio.disconnect();
+        if (!anims.length) { cf.classList.add('in'); return; }
+        anims.forEach(function (a) { a.play(); });
+        setTimeout(function () { cf.classList.add('in'); }, DUR * .62);
+      }, { threshold: box ? 0.6 : 0.3 });
+      cio.observe(box || cf);
     }
     cf.addEventListener('click', function (e) {
       var b = e.target.closest('[data-order]');

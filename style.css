@@ -174,11 +174,9 @@ html.ov-open .burger span { background: var(--ink); }
 .cf-sub { margin: 18px auto 0; max-width: 30em; font-size: clamp(15px, 1.5vw, 17px); color: var(--muted); text-wrap: balance; }
 .cf-plate { position: relative; max-width: 860px; margin: clamp(28px, 4vw, 44px) auto 0; }
 .cf-pic { position: relative; }
-.cf-pic img { width: 100%; height: auto;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-  -webkit-mask-composite: source-in;
-          mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-          mask-composite: intersect; }
+.cf-pieces { position: relative; aspect-ratio: 1024 / 650; }
+.cf-s { position: absolute; top: 0; height: 100%; will-change: transform; }
+.cf-s + .cf-s { margin-left: -1px; }
 /* the poster: name on top, a hairline down to the slice, a short line of text underneath */
 .cf-tags { position: relative; height: 40px; }
 .cf-tag { position: absolute; bottom: 0; left: var(--x); transform: translateX(-50%); padding: 0 0 12px; border: 0; background: none; color: var(--ink); font: inherit; cursor: pointer; text-align: center; }
@@ -216,9 +214,8 @@ html.ov-open .burger span { background: var(--ink); }
 /* lines draw down, labels settle, when the poster comes into view */
 html.js-cf .cf-line { transform: scaleY(0); }
 html.js-cf .cf-dot, html.js-cf .cf-tag, html.js-cf .cf-notes p { opacity: 0; }
-html.js-cf .croffle.in .cf-line { transform: none; transition: transform .9s cubic-bezier(.2,.8,.2,1) .2s; }
-html.js-cf .croffle.in .cf-dot, html.js-cf .croffle.in .cf-tag, html.js-cf .croffle.in .cf-notes p { opacity: 1; transition: opacity .6s ease .7s; }
-html.js-cf .croffle.in .cf-tag { transition-delay: .05s; }
+html.js-cf .croffle.in .cf-line { transform: none; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+html.js-cf .croffle.in .cf-dot, html.js-cf .croffle.in .cf-tag, html.js-cf .croffle.in .cf-notes p { opacity: 1; transition: opacity .35s ease .15s; }
 
 /* ------------------------------------------------ menu: a printed-menu feel — type, hairlines, one black favourite */
 .menu { max-width: var(--max); margin: 0 auto; padding: clamp(72px, 9vw, 120px) var(--pad); }
