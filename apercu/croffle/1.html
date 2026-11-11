@@ -50,8 +50,8 @@
 .cf-s{position:absolute;top:0;height:100%;will-change:transform}
 html.js-cf .croffle.in:not(.built) .cf-line{transform:scaleY(0);transition:none}
 html.js-cf .croffle.in:not(.built) .cf-dot,html.js-cf .croffle.in:not(.built) .cf-tag,html.js-cf .croffle.in:not(.built) .cf-notes p{opacity:0;transition:none}
-html.js-cf .croffle.built .cf-line{transition-delay:0s}
-html.js-cf .croffle.built .cf-dot,html.js-cf .croffle.built .cf-tag,html.js-cf .croffle.built .cf-notes p{transition-delay:.45s}
+html.js-cf .croffle.built .cf-line{transition:transform .5s cubic-bezier(.2,.8,.2,1) 0s}
+html.js-cf .croffle.built .cf-dot,html.js-cf .croffle.built .cf-tag,html.js-cf .croffle.built .cf-notes p{transition:opacity .35s ease .15s}
 .cf-again{display:block;margin:14px auto 0;padding:8px 16px;border:1px solid var(--line);border-radius:99px;background:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer}
 .cf-badge{position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:30;padding:5px 12px;border-radius:99px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;letter-spacing:.04em;white-space:nowrap;pointer-events:none}
 </style>
@@ -402,7 +402,7 @@ html.js-cf .croffle.built .cf-dot,html.js-cf .croffle.built .cf-tag,html.js-cf .
 <script src="site.js?v=1794361760" defer></script>
 <script src="order.js?v=1794361760" defer></script>
 <script src="avis.js?v=1794361760" defer></script>
-<script src="apercu/croffle/cf-anim.js?v=2" defer></script>
+<script src="apercu/croffle/cf-anim.js?v=3" defer></script>
 <script src="phero.js?v=1794361760" defer></script>
 </body>
 </html>

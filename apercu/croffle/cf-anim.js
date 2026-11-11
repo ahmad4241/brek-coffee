@@ -18,8 +18,7 @@
     anims = P.map(function (el, i) {
       var f = FROM[i];
       var k = [
-        { transform: 'translate(' + f[0] * w + 'px,' + f[1] * h + 'px) rotate(' + f[2] + 'deg)', opacity: MODE === 'fan' ? 1 : 0, offset: 0 },
-        { opacity: 1, offset: MODE === 'fan' ? 0 : .35 },
+        { transform: 'translate(' + f[0] * w + 'px,' + f[1] * h + 'px) rotate(' + f[2] + 'deg)', opacity: 1, offset: 0 },
         { transform: 'none', opacity: 1, offset: 1 }];
       var a = el.animate(k, { duration: DUR, delay: MODE === 'scroll' ? 0 : i * 70, easing: MODE === 'scroll' ? 'linear' : EASE, fill: 'both' });
       a.pause();
@@ -49,7 +48,7 @@
   function play() {
     sec.classList.remove('built');
     anims.forEach(function (a) { a.currentTime = 0; a.play(); });
-    setTimeout(done, DUR + 3 * 70 - 150);
+    setTimeout(done, MODE === 'fan' ? DUR * .7 : DUR * .62);
   }
   var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); play(); } }, { threshold: .6 });
   io.observe(box);
