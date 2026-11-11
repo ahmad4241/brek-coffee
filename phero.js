@@ -58,7 +58,7 @@ function schedule(){
  q.push([900,function(){bodies.push(glass(n[0],W*.5,-200*U))}]);
  q.push([1500,function(){bodies.push(glass(n[1],W*.18,-200*U))}]);
  q.push([1750,function(){bodies.push(glass(n[2],W*.82,-200*U))}]);
- for(var j=0;j<28;j++)q.push([2100+j*45,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
+ for(var j=0;j<12;j++)q.push([2100+j*70,function(){bodies.push(bean(W*(.06+Math.random()*.88),-40))}]);
  q.forEach(function(e){setTimeout(e[1],RM?0:e[0])});
  
  setTimeout(function(){hint.style.opacity=1},RM?0:3600);
