@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://naskon.com/demo/cafe/brek/">
 <link rel="icon" href="images/icon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/poppins-medium.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="style.css?v=1794356487">
+<link rel="stylesheet" href="style.css?v=1794356707">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -155,15 +155,9 @@
       <button type="button" class="chip" aria-pressed="true" data-filter="all">Tout</button><button type="button" class="chip" aria-pressed="false" data-filter="coffee">Coffee</button><button type="button" class="chip" aria-pressed="false" data-filter="signature">Signature</button><button type="button" class="chip" aria-pressed="false" data-filter="matcha">Matcha</button><button type="button" class="chip" aria-pressed="false" data-filter="noncoffee">Non coffee</button>
     </nav>
     <div class="groups" lang="en">
-      <div class="group m-feat" data-cat="__fav">
-        <button type="button" class="card-btn m-feat-btn" data-item="vanilla-matcha" aria-label="Vanilla Matcha, CHF 7.50. Ajouter à la commande">
-          <span class="m-feat-txt"><span class="m-feat-k">Le préféré de nos avis</span><span class="m-feat-n">Vanilla Matcha</span><span class="m-feat-d" lang="fr">Matcha bio, cold foam à la vanille maison.</span><span class="m-feat-p">CHF 7.50<i aria-hidden="true">+</i></span></span>
-          <img src="images/vanilla-matcha-600.webp" alt="" width="600" height="474" loading="lazy">
-        </button>
-      </div>
       <div class="group" data-cat="coffee">
-        <header class="m-head"><span class="m-no">01</span><h3 id="cat-coffee">Coffee</h3><span class="m-count">4</span></header>
-        <p class="m-note">Single origin · 100 % Arabica</p>
+        <figure class="m-vis is-ph" aria-hidden="true"><span class="m-ph"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 26h30v9a15 15 0 0 1-30 0zM44 29h4a6 6 0 0 1 0 12h-5M9 56h40M24 19c-4-5 4-8 0-13M34 19c-4-5 4-8 0-13"/></svg><small>Photo à venir · Cortado</small></span><figcaption><span class="m-no">01</span><span class="m-cat">Coffee</span><span class="m-cnote">Single origin · 100 % Arabica</span></figcaption></figure>
+        <h3 class="sr" id="cat-coffee">Coffee</h3>
         <ul class="m-list" aria-labelledby="cat-coffee">
         <li><button type="button" class="card-btn m-row" data-item="espresso" aria-label="Ristretto / Espresso, CHF 3.90. Ajouter à la commande">
           <span class="m-main"><span class="m-name">Ristretto / Espresso</span><span class="m-desc" lang="fr">Court et intense. <span class="m-tag">Hot</span></span></span>
@@ -184,8 +178,8 @@
         </ul>
       </div>
       <div class="group" data-cat="signature">
-        <header class="m-head"><span class="m-no">02</span><h3 id="cat-signature">Signature</h3><span class="m-count">3</span></header>
-        <p class="m-note">Sirops faits maison</p>
+        <figure class="m-vis" aria-hidden="true"><img src="images/cinnamon-latte-600.webp" alt="" width="600" height="474" loading="lazy"><figcaption><span class="m-no">02</span><span class="m-cat">Signature</span><span class="m-cnote">Sirops faits maison</span></figcaption></figure>
+        <h3 class="sr" id="cat-signature">Signature</h3>
         <ul class="m-list" aria-labelledby="cat-signature">
         <li><button type="button" class="card-btn m-row" data-item="cinnamon-latte" aria-label="Cinnamon Latte, CHF 7.00. Ajouter à la commande">
           <span class="m-main"><span class="m-name">Cinnamon Latte</span><span class="m-desc" lang="fr">Sirop cannelle fait maison. <span class="m-tag">Iced ou hot</span></span></span>
@@ -202,8 +196,8 @@
         </ul>
       </div>
       <div class="group" data-cat="matcha">
-        <header class="m-head"><span class="m-no">03</span><h3 id="cat-matcha">Matcha</h3><span class="m-count">4</span></header>
-        <p class="m-note">Cérémonial · Okumidori bio</p>
+        <figure class="m-vis" aria-hidden="true"><img src="images/vanilla-matcha-600.webp" alt="" width="600" height="474" loading="lazy"><figcaption><span class="m-no">03</span><span class="m-cat">Matcha</span><span class="m-cnote">Cérémonial · Okumidori bio</span></figcaption></figure>
+        <h3 class="sr" id="cat-matcha">Matcha</h3>
         <ul class="m-list" aria-labelledby="cat-matcha">
         <li><button type="button" class="card-btn m-row" data-item="matcha-latte" aria-label="Matcha Latte, CHF 7.00. Ajouter à la commande">
           <span class="m-main"><span class="m-name">Matcha Latte</span><span class="m-desc" lang="fr">Matcha cérémonial bio, fouetté à la commande. <span class="m-tag">Iced ou hot</span></span></span>
@@ -224,9 +218,8 @@
         </ul>
       </div>
       <div class="group" data-cat="noncoffee">
-        <header class="m-head"><span class="m-no">04</span><h3 id="cat-noncoffee">Non coffee</h3><span class="m-count">4</span></header>
-        
-        <ul class="m-list" aria-labelledby="cat-noncoffee">
+        <figure class="m-vis is-ph" aria-hidden="true"><span class="m-ph"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 26h30v9a15 15 0 0 1-30 0zM44 29h4a6 6 0 0 1 0 12h-5M9 56h40M24 19c-4-5 4-8 0-13M34 19c-4-5 4-8 0-13"/></svg><small>Photo à venir · Choco Latte</small></span><figcaption><span class="m-no">04</span><span class="m-cat">Non coffee</span></figcaption></figure>
+        <h3 class="sr" id="cat-noncoffee">Non coffee</h3><ul class="m-list" aria-labelledby="cat-noncoffee">
         <li><button type="button" class="card-btn m-row" data-item="choco-latte" aria-label="Choco Latte, CHF 5.50. Ajouter à la commande">
           <span class="m-main"><span class="m-name">Choco Latte</span><span class="m-desc" lang="fr">Chocolat au lait.</span></span>
           <span class="m-price">5.50</span><span class="m-add" aria-hidden="true">+</span>
@@ -387,9 +380,9 @@
 </dialog>
 <!-- /ORDER -->
 
-<script src="site.js?v=1794356487" defer></script>
-<script src="order.js?v=1794356487" defer></script>
-<script src="avis.js?v=1794356487" defer></script>
-<script src="phero.js?v=1794356487" defer></script>
+<script src="site.js?v=1794356707" defer></script>
+<script src="order.js?v=1794356707" defer></script>
+<script src="avis.js?v=1794356707" defer></script>
+<script src="phero.js?v=1794356707" defer></script>
 </body>
 </html>
