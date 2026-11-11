@@ -42,7 +42,9 @@ function stepWorld(h){
   if(b===drag){var k=30;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k;b.w*=.9}else b.vy+=G*h;
   if((b.k==='g'||(b.k==='L'&&!HANG))&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0;b.vx=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h;if(!b.thrown)b.vx*=Math.pow(.0005,h)}}       // keeps glasses upright: wobble, then settle
   b.x+=b.vx*h;b.y+=b.vy*h;b.a+=b.w*h;b.w*=.998;
-  if(b.walk&&b!==drag&&b.y<oy+6*U&&b.y>oy-40*U){var B=CFG.boxes,lo=ox+B[0][0]*S+b.r+6*U,hi=ox+B[4][2]*S-b.r-12*U;if(b.x>hi){b.walk=-1;if(b.x>hi+4*U){b.x=hi+4*U;b.vx=Math.min(b.vx,0)}}else if(b.x<lo){b.walk=1;if(b.x<lo-4*U){b.x=lo-4*U;b.vx=Math.max(b.vx,0)}}b.st=Math.abs(b.vx)<10*U?(b.st||0)+h:0;if(b.st>.35){b.walk=-b.walk;b.st=0;b.vx=b.walk*30*U}b.vx+=(b.walk*55*U-b.vx)*Math.min(1,5*h)}
+  if(b.walk&&b!==drag&&b.y<oy+6*U&&b.y>oy-40*U){var B=CFG.boxes,lo=ox+B[0][0]*S+b.r+6*U,hi=ox+B[4][2]*S-b.r-12*U;if(b.x>hi){b.walk=-1;if(b.x>hi+4*U){b.x=hi+4*U;b.vx=Math.min(b.vx,0)}}else if(b.x<lo){b.walk=1;if(b.x<lo-4*U){b.x=lo-4*U;b.vx=Math.max(b.vx,0)}}b.st=Math.abs(b.vx)<10*U?(b.st||0)+h:0;if(b.st>.35){b.walk=-b.walk;b.st=0;b.vx=b.walk*30*U}b.vx+=(b.walk*55*U-b.vx)*Math.min(1,5*h);
+   // grinding: a little coffee dust behind the bean as it walks
+   if(Math.abs(b.vx)>15*U&&Math.random()<h*30)parts.push({x:b.x-Math.sign(b.vx)*b.r*.5,y:b.y+b.r*.5,vx:-b.vx*.15+(Math.random()-.5)*30,vy:-15-Math.random()*35,r:(3+Math.random()*4)*U,life:.6,t:0,c:'rgba(150,118,84,.28)',dust:1})}
   if(b.k==='L'&&HANG&&b!==drag){var ax=HANG.x,ay=HANG.y,dx=b.x-ax,dy=b.y-ay,d=Math.hypot(dx,dy),L=HANG.len;if(d>L){var nx=dx/d,ny=dy/d;b.x=ax+nx*L;b.y=ay+ny*L;var vr=b.vx*nx+b.vy*ny;if(vr>0){b.vx-=vr*nx*1.35;b.vy-=vr*ny*1.35}}b.vx*=Math.pow(.55,h);b.a=-Math.atan2(dx,dy);b.w=0}
   if(b.k==='L'&&HANG&&b===drag){var ex=b.x-HANG.x,ey=b.y-HANG.y,ed=Math.hypot(ex,ey);if(ed>HANG.len){b.x=HANG.x+ex/ed*HANG.len;b.y=HANG.y+ey/ed*HANG.len}b.a=-Math.atan2(b.x-HANG.x,b.y-HANG.y)}
   b.c.forEach(function(c){var p=wp(b,c),r=c[2];
