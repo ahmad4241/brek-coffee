@@ -55,7 +55,8 @@
         if (!r.ok) throw new Error(r.d.error || 'Oups, réessayez plus tard.');
         form.reset(); setRate(5); count.textContent = '0 / 500';
         msg.className = 'av-msg ok';
-        msg.textContent = 'Merci ' + name + ' ! Votre mot apparaîtra ici après validation.';
+        msg.textContent = 'Merci ' + name + ' ! Votre mot est publié.';
+        load();
       })
       .catch(function (err) { msg.textContent = err.message || 'Oups, réessayez plus tard.'; })
       .then(function () { btn.disabled = false; });

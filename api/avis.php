@@ -1,6 +1,6 @@
 <?php
 // GET  -> published comments (newest first)
-// POST -> a new comment, kept hidden until the shop approves it in /admin
+// POST -> a new comment, shown at once; the shop can hide or delete it in /admin
 require __DIR__ . '/store.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -45,11 +45,11 @@ $res = with_store(function (&$db) use ($ip, $name, $text, $rating) {
   $hits = array_values(array_filter($db['rate'][$ip] ?? [], fn($t) => $t > $now - 86400));
   if ($hits && end($hits) > $now - 60) return 'wait';
   if (count($hits) >= 5) return 'day';
-  $pending = count(array_filter($db['items'], fn($i) => $i['status'] === 'pending'));
-  if ($pending >= 200) return 'full';
+  $today = count(array_filter($db['items'], fn($i) => $i['created'] > $now - 86400));
+  if ($today >= 100) return 'full';
   $hits[] = $now; $db['rate'][$ip] = $hits;
   foreach ($db['rate'] as $k => $v) if (max($v) < $now - 86400) unset($db['rate'][$k]);
-  $db['items'][] = ['id' => bin2hex(random_bytes(6)), 'name' => $name, 'rating' => $rating, 'text' => $text, 'created' => $now, 'status' => 'pending'];
+  $db['items'][] = ['id' => bin2hex(random_bytes(6)), 'name' => $name, 'rating' => $rating, 'text' => $text, 'created' => $now, 'status' => 'published'];
   return 'ok';
 });
 if ($res === 'wait') out(429, ['error' => 'Merci ! Attendez une minute avant un nouveau message.']);

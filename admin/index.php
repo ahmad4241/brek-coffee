@@ -55,14 +55,14 @@ button.publish{background:var(--ink);color:#fff}button.delete{border-color:#B326
 .login{max-width:340px;margin:20vh auto}.login input{width:100%;font-size:16px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;margin:14px 0}.login button{width:100%;background:var(--ink);color:#fff;padding:12px}.err{color:#B3261E}
 </style></head><body><main>
 <?php if (!$ok): ?>
-  <form class="login" method="post"><h1>BREK.</h1><p style="color:var(--muted)">Messages des visiteurs</p>
+  <form class="login" method="post"><h1>BREK.</h1><p style="color:var(--muted)">Messages des visiteurs : ils s’affichent tout de suite, vous pouvez les masquer ou les supprimer.</p>
   <input type="password" name="key" placeholder="Clé" autocomplete="current-password" autofocus><button>Entrer</button>
   <?php if (!empty($err)) echo '<p class="err">' . e($err) . '</p>'; ?></form>
 <?php else: ?>
   <div class="top"><h1>Messages</h1><a href="?logout">Quitter</a></div>
-  <h2>À valider (<?= count($pending) ?>)</h2>
-  <ul><?php echo $pending ? implode('', array_map(fn($i) => row($i, ['publish' => 'Publier', 'delete' => 'Supprimer']), $pending)) : '<li class="empty">Aucun nouveau message.</li>'; ?></ul>
   <h2>Publiés (<?= count($published) ?>)</h2>
   <ul><?php echo $published ? implode('', array_map(fn($i) => row($i, ['hide' => 'Masquer', 'delete' => 'Supprimer']), $published)) : '<li class="empty">Rien pour l’instant.</li>'; ?></ul>
+  <h2>Masqués (<?= count($pending) ?>)</h2>
+  <ul><?php echo $pending ? implode('', array_map(fn($i) => row($i, ['publish' => 'Republier', 'delete' => 'Supprimer']), $pending)) : '<li class="empty">Aucun message masqué.</li>'; ?></ul>
 <?php endif; ?>
 </main></body></html>
