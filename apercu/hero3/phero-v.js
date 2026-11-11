@@ -18,16 +18,11 @@ function layout(){
 var bodies=[],parts=[],G=2400,shake=0,cur='#121212';
 function mk(k,x,y,m,I,c,extra){var b={k:k,x:x,y:y,vx:0,vy:0,a:0,w:0,m:m,I:I,c:c,born:now};for(var p in extra)b[p]=extra[p];return b}
 function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)/12,[[0,-h*.3,w*.4],[0,0,w*.45],[0,h*.3,w*.42],[-w*.3,h*.462,w*.08],[w*.3,h*.462,w*.08]],{n:n,ww:w,hh:h,a:0,w:0})}
-function pinY(){return HLB+24*U}
-function badgeR(){return HANG?Math.min(66*U,Math.max(44*U,(oy-pinY()-48*U)/2)):90*U}
+function pinY(){return HLB+16*U}
+function badgeR(){return HANG?Math.min((W<700?56:66)*U,Math.max(44*U,(oy-pinY()-48*U)/2)):90*U}
 function badge(x,y){var r=badgeR(),m=4;return mk('L',x,y,m,m*r*r*.5,[[0,0,r]],{n:'badge-bird-line',r:r,ww:2*r,hh:2*r})}
-var HANG=null,WALK=true,CR=-.6,CRV=0;
-// the strap hangs from the axle of a grinder handle, drawn in the same line style as the badge; it turns while the beans grind
-function drawCrank(){var x=HANG.x,y=HANG.y,L=30*U,lw=2.2*U,ex=x+Math.cos(CR)*L,ey=y+Math.sin(CR)*L*.42;
- ctx.save();ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle='#121212';ctx.fillStyle='#FAF8F3';
- ctx.lineWidth=7*U+2*lw;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.stroke();ctx.lineWidth=7*U;ctx.strokeStyle='#FAF8F3';ctx.stroke();
- ctx.strokeStyle='#121212';ctx.lineWidth=lw;var kw=10*U,kh=17*U;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(ex-kw/2,ey-kh,kw,kh,kw/2);else ctx.rect(ex-kw/2,ey-kh,kw,kh);ctx.fill();ctx.stroke();
- ctx.beginPath();ctx.arc(x,y,7.5*U,0,7);ctx.fill();ctx.stroke();ctx.fillStyle='#121212';ctx.beginPath();ctx.arc(x,y,2.6*U,0,7);ctx.fill();ctx.restore()}
+var HANG=null,WALK=true;
+
 function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.37;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
 function bean(x,y){var r=(7+Math.random()*2)*U,m=.4;return mk('b',x,y,m,m*r*r*.5,[[0,0,r]],{r:r,n:'bean3',fl:Math.random()<.5?-1:1,a:Math.random()*6,w:(Math.random()-.5)*14,vx:(Math.random()-.5)*140})}
 function wp(b,c){var co=Math.cos(b.a),si=Math.sin(b.a);return [b.x+c[0]*co-c[1]*si,b.y+c[0]*si+c[1]*co]}
@@ -45,7 +40,7 @@ function circleRect(px,py,r,R){var cx=Math.max(R[0],Math.min(px,R[2])),cy=Math.m
 function land(b,j,x,y){ if((b.k==='g'||b.k==='L')&&j>900*b.m&&now-b.born>200){shake=Math.min(1,shake+j/(5200*b.m));for(var i=0;i<9;i++)parts.push({x:x+(Math.random()-.5)*b.ww*.6,y:y-b.hh*.48,vx:(Math.random()-.5)*260,vy:-180-Math.random()*320,r:(1.2+Math.random()*2.4)*U,life:.7+Math.random()*.4,t:0,c:'#FFFDF6'})}
  else if(j>220*b.m&&Math.random()<.5){for(var i=0;i<3;i++)parts.push({x:x,y:y,vx:(Math.random()-.5)*90,vy:-40-Math.random()*60,r:(3+Math.random()*4)*U,life:.45,t:0,c:'rgba(140,110,80,.18)',dust:1})}}
 var drag=null,down=null,now=0;
-function stepWorld(h){CRV+=((WALK&&!RM?2.2:0)-CRV)*Math.min(1,h*2.5);CR+=CRV*h;
+function stepWorld(h){
  bodies.forEach(function(b){
   if(b===drag){var k=30;b.vx=(drag.tx-b.x)*k;b.vy=(drag.ty-b.y)*k;b.w*=.9}else b.vy+=G*h;
   if((b.k==='g'||(b.k==='L'&&!HANG))&&b!==drag){if(b.vy>40&&!b.landed){b.a=0;b.w=0;b.vx=0}else{b.landed=1;b.w+=(-Math.sin(b.a)*320-b.w*14)*h;if(!b.thrown)b.vx*=Math.pow(.0005,h)}}       // keeps glasses upright: wobble, then settle
@@ -106,7 +101,7 @@ function draw(){
  ctx.save();ctx.translate(ox,oy);ctx.scale(S,S);ctx.lineJoin='round';ctx.lineWidth=CFG.sw;ctx.fillStyle=ctx.strokeStyle='#121212';ctx.fill(LET,'evenodd');ctx.stroke(LET);ctx.fillStyle=ctx.strokeStyle=cur;ctx.fill(DOT);ctx.stroke(DOT);ctx.restore();
  ctx.restore();
  
- if(HANG)bodies.forEach(function(b){if(b.k!=='L')return;var co=Math.cos(b.a),si=Math.sin(b.a),tx=b.x+si*b.r*.96,ty=b.y-co*b.r*.96,wd=11*U;ctx.save();ctx.strokeStyle='#121212';ctx.lineCap='butt';ctx.lineWidth=wd;ctx.beginPath();ctx.moveTo(HANG.x,HANG.y);ctx.lineTo(tx,ty);ctx.stroke();ctx.lineWidth=1.2*U;ctx.strokeStyle='rgba(250,248,243,.45)';ctx.setLineDash([4*U,4*U]);ctx.beginPath();var px=-(ty-HANG.y),py=tx-HANG.x,pl=Math.hypot(px,py)||1;px*=wd*.3/pl;py*=wd*.3/pl;ctx.moveTo(HANG.x+px,HANG.y+py);ctx.lineTo(tx+px,ty+py);ctx.moveTo(HANG.x-px,HANG.y-py);ctx.lineTo(tx-px,ty-py);ctx.stroke();ctx.setLineDash([]);drawCrank();ctx.restore()});
+ if(HANG)bodies.forEach(function(b){if(b.k!=='L')return;var co=Math.cos(b.a),si=Math.sin(b.a),tx=b.x+si*b.r*.96,ty=b.y-co*b.r*.96,wd=11*U;ctx.save();ctx.strokeStyle='#121212';ctx.lineCap='butt';ctx.lineWidth=wd;ctx.beginPath();ctx.moveTo(HANG.x,HANG.y);ctx.lineTo(tx,ty);ctx.stroke();ctx.lineWidth=1.2*U;ctx.strokeStyle='rgba(250,248,243,.45)';ctx.setLineDash([4*U,4*U]);ctx.beginPath();var px=-(ty-HANG.y),py=tx-HANG.x,pl=Math.hypot(px,py)||1;px*=wd*.3/pl;py*=wd*.3/pl;ctx.moveTo(HANG.x+px,HANG.y+py);ctx.lineTo(tx+px,ty+py);ctx.moveTo(HANG.x-px,HANG.y-py);ctx.lineTo(tx-px,ty-py);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(60,40,20,.18)';ctx.beginPath();ctx.ellipse(HANG.x+2*U,HANG.y+3*U,8*U,6*U,0,0,7);ctx.fill();ctx.fillStyle='#121212';ctx.beginPath();ctx.arc(HANG.x,HANG.y,7.5*U,0,7);ctx.fill();ctx.fillStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.arc(HANG.x-2.4*U,HANG.y-2.4*U,2.2*U,0,7);ctx.fill();ctx.restore()});
  bodies.forEach(shadowFor);
  bodies.forEach(function(b){var sp=Math.hypot(b.vx,b.vy);if(b.k==='g'&&sp>1100&&b!==drag){var dt=.012;for(var g=3;g>0;g--){var gb={};for(var p in b)gb[p]=b[p];gb.x=b.x-b.vx*dt*g;gb.y=b.y-b.vy*dt*g;drawBody(gb,.07)}}});
  bodies.forEach(function(b){drawBody(b,1)});
@@ -124,7 +119,7 @@ function loop(t){if(!visible){running=false;return}if(T0===null)T0=t;if(last===n
  parts.forEach(function(p){p.t+=dt;p.vy+=G*.5*dt;p.x+=p.vx*dt;p.y+=p.vy*dt});parts=parts.filter(function(p){return p.t<p.life});
  bokeh.forEach(function(k){k.y+=k.v*raw;k.a+=k.w*raw});bokeh=bokeh.filter(function(k){return k.y<H+120});
  shake*=Math.pow(.02,raw);draw();
- var active=(!RM&&WALK&&bodies.some(function(b){return b.walk}))||CRV>.05||drag||parts.length||now<4200||now-lastInput<4000,moving=active||(now<7000&&bodies.some(function(b){return Math.abs(b.vx)+Math.abs(b.vy)>30||Math.abs(b.w)>.3}));
+ var active=(!RM&&WALK&&bodies.some(function(b){return b.walk}))||drag||parts.length||now<4200||now-lastInput<4000,moving=active||(now<7000&&bodies.some(function(b){return Math.abs(b.vx)+Math.abs(b.vy)>30||Math.abs(b.w)>.3}));
  quiet=moving?0:quiet+1;if(quiet>30){running=false;return}requestAnimationFrame(loop)}
 if('IntersectionObserver' in window)new IntersectionObserver(function(e){visible=e[0].isIntersecting;if(visible)wake()}).observe(stage);
 // ---------------------------------------------------------------- input
