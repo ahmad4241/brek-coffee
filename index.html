@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://naskon.com/demo/cafe/brek/">
 <link rel="icon" href="images/icon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/poppins-medium.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="style.css?v=1794356359">
+<link rel="stylesheet" href="style.css?v=1794356487">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -146,187 +146,107 @@
 
   <!-- CARTE (menu en anglais) -->
   <section class="menu" id="carte" aria-labelledby="menu-title">
-    <div class="section-head">
-      <p class="kicker">La carte · commande à emporter</p>
-      <h2 id="menu-title">Menu</h2>
-      <p class="muted">Commandez maintenant, récupérez au comptoir. Prix en CHF.</p>
-    </div>
-    <div class="filters" role="group" aria-label="Filtrer la carte">
-      <button type="button" class="chip" aria-pressed="true" data-filter="all">Tout</button><button type="button" class="chip" aria-pressed="false" data-filter="coffee"><i style="--c:#6B4A2E"></i>Coffee</button><button type="button" class="chip" aria-pressed="false" data-filter="signature"><i style="--c:#9A5B2A"></i>Signature</button><button type="button" class="chip" aria-pressed="false" data-filter="matcha"><i style="--c:#5E7F1E"></i>Matcha</button><button type="button" class="chip" aria-pressed="false" data-filter="noncoffee"><i style="--c:#7A6A58"></i>Non coffee</button>
-    </div>
+    <header class="m-top">
+      <p class="kicker">La carte · à emporter</p>
+      <h2 id="menu-title">Menu.</h2>
+      <p class="m-lead">Commandez ici, récupérez au comptoir. Prix en CHF, payés sur place.</p>
+    </header>
+    <nav class="filters" aria-label="Filtrer la carte">
+      <button type="button" class="chip" aria-pressed="true" data-filter="all">Tout</button><button type="button" class="chip" aria-pressed="false" data-filter="coffee">Coffee</button><button type="button" class="chip" aria-pressed="false" data-filter="signature">Signature</button><button type="button" class="chip" aria-pressed="false" data-filter="matcha">Matcha</button><button type="button" class="chip" aria-pressed="false" data-filter="noncoffee">Non coffee</button>
+    </nav>
     <div class="groups" lang="en">
-    <div class="group" data-cat="coffee">
-      <h3 class="group-title" id="cat-coffee">Coffee <span class="cat-note">Single origin · 100% Arabica</span></h3>
-      <ul class="cards" aria-labelledby="cat-coffee">
-      <li class="card" data-cat="coffee">
-        <button type="button" class="card-btn" data-item="espresso" aria-label="Ristretto / Espresso, CHF 3.90. Ajouter à la commande">
-          <span class="pic" style="--c:#6B4A2E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Ristretto / Espresso</span>
-            <span class="desc" lang="fr">Court et intense.</span>
-            <span class="meta"><span class="tags">Hot</span><b class="price">3.90</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
+      <div class="group m-feat" data-cat="__fav">
+        <button type="button" class="card-btn m-feat-btn" data-item="vanilla-matcha" aria-label="Vanilla Matcha, CHF 7.50. Ajouter à la commande">
+          <span class="m-feat-txt"><span class="m-feat-k">Le préféré de nos avis</span><span class="m-feat-n">Vanilla Matcha</span><span class="m-feat-d" lang="fr">Matcha bio, cold foam à la vanille maison.</span><span class="m-feat-p">CHF 7.50<i aria-hidden="true">+</i></span></span>
+          <img src="images/vanilla-matcha-600.webp" alt="" width="600" height="474" loading="lazy">
         </button>
-      </li>
-      <li class="card" data-cat="coffee">
-        <button type="button" class="card-btn" data-item="cortado" aria-label="Cortado, CHF 4.90. Ajouter à la commande">
-          <span class="pic" style="--c:#6B4A2E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Cortado</span>
-            <span class="desc" lang="fr">Espresso et un nuage de lait.</span>
-            <span class="meta"><span class="tags">Hot</span><b class="price">4.90</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="coffee">
-        <button type="button" class="card-btn" data-item="cappuccino" aria-label="Cappuccino, CHF 5.50. Ajouter à la commande">
-          <span class="pic" style="--c:#6B4A2E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Cappuccino</span>
-            <span class="desc" lang="fr">Espresso, lait mousseux.</span>
-            <span class="meta"><span class="tags">Hot</span><b class="price">5.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="coffee">
-        <button type="button" class="card-btn" data-item="latte" aria-label="Latte, CHF 6.00. Ajouter à la commande">
-          <span class="pic" style="--c:#6B4A2E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Latte</span>
-            <span class="desc" lang="fr">Espresso et beaucoup de lait.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">6.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      </ul>
+      </div>
+      <div class="group" data-cat="coffee">
+        <header class="m-head"><span class="m-no">01</span><h3 id="cat-coffee">Coffee</h3><span class="m-count">4</span></header>
+        <p class="m-note">Single origin · 100 % Arabica</p>
+        <ul class="m-list" aria-labelledby="cat-coffee">
+        <li><button type="button" class="card-btn m-row" data-item="espresso" aria-label="Ristretto / Espresso, CHF 3.90. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Ristretto / Espresso</span><span class="m-desc" lang="fr">Court et intense. <span class="m-tag">Hot</span></span></span>
+          <span class="m-price">3.90</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="cortado" aria-label="Cortado, CHF 4.90. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Cortado</span><span class="m-desc" lang="fr">Espresso et un nuage de lait. <span class="m-tag">Hot</span></span></span>
+          <span class="m-price">4.90</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="cappuccino" aria-label="Cappuccino, CHF 5.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Cappuccino</span><span class="m-desc" lang="fr">Espresso, lait mousseux. <span class="m-tag">Hot</span></span></span>
+          <span class="m-price">5.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="latte" aria-label="Latte, CHF 6.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Latte</span><span class="m-desc" lang="fr">Espresso et beaucoup de lait. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">6.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        </ul>
+      </div>
+      <div class="group" data-cat="signature">
+        <header class="m-head"><span class="m-no">02</span><h3 id="cat-signature">Signature</h3><span class="m-count">3</span></header>
+        <p class="m-note">Sirops faits maison</p>
+        <ul class="m-list" aria-labelledby="cat-signature">
+        <li><button type="button" class="card-btn m-row" data-item="cinnamon-latte" aria-label="Cinnamon Latte, CHF 7.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Cinnamon Latte</span><span class="m-desc" lang="fr">Sirop cannelle fait maison. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">7.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="coco-latte" aria-label="Coco Latte, CHF 7.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Coco Latte</span><span class="m-desc" lang="fr">Latte à la noix de coco. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">7.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="vanilla-latte" aria-label="Vanilla Latte, CHF 6.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Vanilla Latte</span><span class="m-desc" lang="fr">Sirop vanille fait maison. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">6.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        </ul>
+      </div>
+      <div class="group" data-cat="matcha">
+        <header class="m-head"><span class="m-no">03</span><h3 id="cat-matcha">Matcha</h3><span class="m-count">4</span></header>
+        <p class="m-note">Cérémonial · Okumidori bio</p>
+        <ul class="m-list" aria-labelledby="cat-matcha">
+        <li><button type="button" class="card-btn m-row" data-item="matcha-latte" aria-label="Matcha Latte, CHF 7.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Matcha Latte</span><span class="m-desc" lang="fr">Matcha cérémonial bio, fouetté à la commande. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">7.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="vanilla-matcha" aria-label="Vanilla Matcha, CHF 7.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Vanilla Matcha<span class="m-fav">Favori</span></span><span class="m-desc" lang="fr">Le préféré de nos avis Google. <span class="m-tag">Iced ou hot</span></span></span>
+          <span class="m-price">7.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="strawberry-matcha" aria-label="Strawberry Matcha, CHF 8.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Strawberry Matcha</span><span class="m-desc" lang="fr">Matcha et fraise, servi glacé. <span class="m-tag">Iced</span></span></span>
+          <span class="m-price">8.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="coco-matcha" aria-label="Coco Matcha, CHF 8.00. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Coco Matcha</span><span class="m-desc" lang="fr">Matcha et noix de coco, servi glacé. <span class="m-tag">Iced</span></span></span>
+          <span class="m-price">8.00</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        </ul>
+      </div>
+      <div class="group" data-cat="noncoffee">
+        <header class="m-head"><span class="m-no">04</span><h3 id="cat-noncoffee">Non coffee</h3><span class="m-count">4</span></header>
+        
+        <ul class="m-list" aria-labelledby="cat-noncoffee">
+        <li><button type="button" class="card-btn m-row" data-item="choco-latte" aria-label="Choco Latte, CHF 5.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Choco Latte</span><span class="m-desc" lang="fr">Chocolat au lait.</span></span>
+          <span class="m-price">5.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="mint-tea" aria-label="Mint Tea, CHF 4.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Mint Tea</span><span class="m-desc" lang="fr">Thé à la menthe.</span></span>
+          <span class="m-price">4.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="apple-juice" aria-label="Apple Juice, CHF 3.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Apple Juice</span><span class="m-desc" lang="fr">Jus de pomme suisse. <span class="m-tag">Ramseier, 5 dl</span></span></span>
+          <span class="m-price">3.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        <li><button type="button" class="card-btn m-row" data-item="sparkling-water" aria-label="Sparkling Water, CHF 3.50. Ajouter à la commande">
+          <span class="m-main"><span class="m-name">Sparkling Water</span><span class="m-desc" lang="fr">Eau gazeuse. <span class="m-tag">3.3 dl</span></span></span>
+          <span class="m-price">3.50</span><span class="m-add" aria-hidden="true">+</span>
+        </button></li>
+        </ul>
+      </div>
     </div>
-    <div class="group" data-cat="signature">
-      <h3 class="group-title" id="cat-signature">Signature <span class="cat-note">Homemade syrups</span></h3>
-      <ul class="cards" aria-labelledby="cat-signature">
-      <li class="card" data-cat="signature">
-        <button type="button" class="card-btn" data-item="cinnamon-latte" aria-label="Cinnamon Latte, CHF 7.00. Ajouter à la commande">
-          <span class="pic" style="--c:#9A5B2A"><img src="images/cinnamon-latte-600.webp" alt="" width="600" height="474" loading="lazy"></span>
-          <span class="info">
-            <span class="name">Cinnamon Latte</span>
-            <span class="desc" lang="fr">Sirop cannelle fait maison.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">7.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="signature">
-        <button type="button" class="card-btn" data-item="coco-latte" aria-label="Coco Latte, CHF 7.00. Ajouter à la commande">
-          <span class="pic" style="--c:#9A5B2A"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Coco Latte</span>
-            <span class="desc" lang="fr">Latte à la noix de coco.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">7.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="signature">
-        <button type="button" class="card-btn" data-item="vanilla-latte" aria-label="Vanilla Latte, CHF 6.50. Ajouter à la commande">
-          <span class="pic" style="--c:#9A5B2A"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Vanilla Latte</span>
-            <span class="desc" lang="fr">Sirop vanille fait maison.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">6.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      </ul>
-    </div>
-    <div class="group" data-cat="matcha">
-      <h3 class="group-title" id="cat-matcha">Matcha <span class="cat-note">Ceremonial · Okumidori, organic</span></h3>
-      <ul class="cards" aria-labelledby="cat-matcha">
-      <li class="card" data-cat="matcha">
-        <button type="button" class="card-btn" data-item="matcha-latte" aria-label="Matcha Latte, CHF 7.00. Ajouter à la commande">
-          <span class="pic" style="--c:#5E7F1E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Matcha Latte</span>
-            <span class="desc" lang="fr">Matcha cérémonial bio, fouetté à la commande.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">7.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="matcha">
-        <button type="button" class="card-btn" data-item="vanilla-matcha" aria-label="Vanilla Matcha, CHF 7.50. Ajouter à la commande">
-          <span class="pic" style="--c:#5E7F1E"><img src="images/vanilla-matcha-600.webp" alt="" width="600" height="474" loading="lazy"><span class="badge">Favori</span></span>
-          <span class="info">
-            <span class="name">Vanilla Matcha</span>
-            <span class="desc" lang="fr">Le préféré de nos avis Google.</span>
-            <span class="meta"><span class="tags">Iced · Hot</span><b class="price">7.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="matcha">
-        <button type="button" class="card-btn" data-item="strawberry-matcha" aria-label="Strawberry Matcha, CHF 8.00. Ajouter à la commande">
-          <span class="pic" style="--c:#5E7F1E"><img src="images/strawberry-matcha-600.webp" alt="" width="600" height="474" loading="lazy"></span>
-          <span class="info">
-            <span class="name">Strawberry Matcha</span>
-            <span class="desc" lang="fr">Matcha et fraise, servi glacé.</span>
-            <span class="meta"><span class="tags">Iced</span><b class="price">8.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="matcha">
-        <button type="button" class="card-btn" data-item="coco-matcha" aria-label="Coco Matcha, CHF 8.00. Ajouter à la commande">
-          <span class="pic" style="--c:#5E7F1E"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Coco Matcha</span>
-            <span class="desc" lang="fr">Matcha et noix de coco, servi glacé.</span>
-            <span class="meta"><span class="tags">Iced</span><b class="price">8.00</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      </ul>
-    </div>
-    <div class="group" data-cat="noncoffee">
-      <h3 class="group-title" id="cat-noncoffee">Non coffee </h3>
-      <ul class="cards" aria-labelledby="cat-noncoffee">
-      <li class="card" data-cat="noncoffee">
-        <button type="button" class="card-btn" data-item="choco-latte" aria-label="Choco Latte, CHF 5.50. Ajouter à la commande">
-          <span class="pic" style="--c:#7A6A58"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Choco Latte</span>
-            <span class="desc" lang="fr">Chocolat au lait.</span>
-            <span class="meta"><span class="tags"></span><b class="price">5.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="noncoffee">
-        <button type="button" class="card-btn" data-item="mint-tea" aria-label="Mint Tea, CHF 4.50. Ajouter à la commande">
-          <span class="pic" style="--c:#7A6A58"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Mint Tea</span>
-            <span class="desc" lang="fr">Thé à la menthe.</span>
-            <span class="meta"><span class="tags"></span><b class="price">4.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="noncoffee">
-        <button type="button" class="card-btn" data-item="apple-juice" aria-label="Apple Juice, CHF 3.50. Ajouter à la commande">
-          <span class="pic" style="--c:#7A6A58"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Apple Juice</span>
-            <span class="desc" lang="fr">Jus de pomme suisse.</span>
-            <span class="meta"><span class="tags">Ramseier, 5 dl</span><b class="price">3.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      <li class="card" data-cat="noncoffee">
-        <button type="button" class="card-btn" data-item="sparkling-water" aria-label="Sparkling Water, CHF 3.50. Ajouter à la commande">
-          <span class="pic" style="--c:#7A6A58"><svg class="ph" aria-hidden="true" focusable="false"><use href="#mascot"/></svg></span>
-          <span class="info">
-            <span class="name">Sparkling Water</span>
-            <span class="desc" lang="fr">Eau gazeuse.</span>
-            <span class="meta"><span class="tags">3.3 dl</span><b class="price">3.50</b><span class="add" aria-hidden="true">+</span></span>
-          </span>
-        </button>
-      </li>
-      </ul>
-    </div>
-    </div>
-    <p class="allergens" lang="en">Allergens: please ask the staff.</p>
+    <p class="allergens" lang="fr">Lait d’avoine ou cold foam vanille : +0.50. Allergènes : demandez-nous.</p>
   </section>
 
   <!-- AVIS + LIVRE D’OR -->
@@ -467,9 +387,9 @@
 </dialog>
 <!-- /ORDER -->
 
-<script src="site.js?v=1794356359" defer></script>
-<script src="order.js?v=1794356359" defer></script>
-<script src="avis.js?v=1794356359" defer></script>
-<script src="phero.js?v=1794356359" defer></script>
+<script src="site.js?v=1794356487" defer></script>
+<script src="order.js?v=1794356487" defer></script>
+<script src="avis.js?v=1794356487" defer></script>
+<script src="phero.js?v=1794356487" defer></script>
 </body>
 </html>
