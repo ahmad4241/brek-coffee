@@ -7,7 +7,7 @@ var cv=document.getElementById('ph-c'),ctx=cv.getContext('2d'),stage=document.ge
 var HLB=0,XL=0,XR=0,LET=new Path2D(CFG.letters),DOT=new Path2D(CFG.dot),W,H,dpr,S,ox,oy,floorY,wordH,rects=[],U=1;
 var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var MODE='hang';
-var imgs={};['badge-bird-line','vanilla-latte','cinnamon-latte','iced-latte','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
+var imgs={};['badge-bird-only','vanilla-latte','cinnamon-latte','iced-latte','ice1','ice2','ice3','ice4','ice5','bean1','bean2','bean3','bean4','bean5','bean7'].forEach(function(n){var i=new Image();i.src='images/phys/'+n+'.png';imgs[n]=i});
 function layout(){
  var r=stage.getBoundingClientRect();W=r.width;dpr=Math.min(W>700?2:1.75,devicePixelRatio||1);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;
  var pad=W<700?4:Math.max(14,W*.04),ww=Math.min(W-2*pad,980);S=ww/CFG.vb[2];wordH=CFG.vb[3]*S;ox=(W-ww)/2-CFG.vb[0]*S;floorY=H-12;oy=floorY-wordH-CFG.vb[1]*S;
@@ -22,7 +22,7 @@ function glass(n,x,y){var w=80*U,h=w*346/180,m=3;return mk('g',x,y,m,m*(w*w+h*h)
 function hangG(){var r=(W<700?60:68)*U,clear=30*U,top=HLB+18*U;var py=oy-clear-2.75*r;if(py<top){r=Math.max(40*U,(oy-clear-top)/2.75);py=oy-clear-2.75*r}return {r:r,py:py,len:1.75*r}}
 function pinY(){return hangG().py}
 function badgeR(){return HANG?hangG().r:90*U}
-function badge(x,y){var r=badgeR(),m=4;return mk('L',x,y,m,m*r*r*.5,[[0,0,r]],{n:'badge-bird-line',r:r,ww:2*r,hh:2*r})}
+function badge(x,y){var r=badgeR(),m=4;return mk('L',x,y,m,m*r*r*.5,[[0,0,r]],{n:'badge-bird-only',r:r,ww:2*r,hh:2*r})}
 var HANG=null,WALK=true;
 
 function ice(i,x,y){var w=(31+Math.random()*7)*U,m=1,r=w*.37;return mk('i',x,y,m,m*r*r*.6,[[0,0,r]],{n:'ice'+i,ww:w,hh:w*.88,a:Math.random()*6,w:(Math.random()-.5)*8,vx:(Math.random()-.5)*90})}
@@ -88,7 +88,7 @@ function shadowFor(b){var top=floorY;for(var i=0;i<rects.length;i++){var R=rects
  var bottom=b.y+(b.hh?b.hh*.5:b.r||10),dist=Math.max(0,top-bottom),al=Math.max(0,.6-dist/350);if(al<=0)return;var wid=(b.ww||b.r*2)*(1.3+dist/300);
  ctx.globalAlpha=al;ctx.drawImage(SH,b.x-wid/2,top-6*U,wid,12*U);ctx.globalAlpha=1}
 function drawBody(b,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.translate(b.x,b.y);ctx.rotate(b.a);
- if(b.k==='L'){var im=imgs['badge-bird-line'];if(im.complete)ctx.drawImage(im,-b.r,-b.r,2*b.r,2*b.r)}
+ if(b.k==='L'){var im=imgs['badge-bird-only'],lw=Math.max(2,b.r*.044);if(im.complete)ctx.drawImage(im,-b.r,-b.r,2*b.r,2*b.r);ctx.lineWidth=lw;ctx.strokeStyle='#121212';ctx.beginPath();ctx.arc(0,0,b.r-lw/2,0,Math.PI*2);ctx.stroke()}
  else if(b.k==='g'||b.k==='i'){var im=imgs[b.n];if(im.complete)ctx.drawImage(im,-b.ww/2,-b.hh/2,b.ww,b.hh);
 }
  else{var im=imgs[b.n],d=b.r*2.5;if(im&&im.complete){var ar=im.naturalHeight/im.naturalWidth;ctx.scale(b.fl||1,1);ctx.drawImage(im,-d/2,-d*ar/2,d,d*ar)}}
