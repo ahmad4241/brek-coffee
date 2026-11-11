@@ -70,7 +70,7 @@ function shadowFor(b){var top=floorY;for(var i=0;i<rects.length;i++){var R=rects
  ctx.globalAlpha=al;ctx.drawImage(SH,b.x-wid/2,top-6*U,wid,12*U);ctx.globalAlpha=1}
 function drawBody(b,alpha){ctx.save();ctx.globalAlpha=alpha;ctx.translate(b.x,b.y);ctx.rotate(b.a);
  if(b.k==='g'||b.k==='i'){var im=imgs[b.n];if(im.complete)ctx.drawImage(im,-b.ww/2,-b.hh/2,b.ww,b.hh);
-  if(b.k==='g'&&alpha===1){var sw=((now/1000+b.born/700)%5)/5;if(sw<.25){var xx=(-.7+sw*7)*b.ww;ctx.globalCompositeOperation='lighter';var gr=ctx.createLinearGradient(xx-20,0,xx+20,0);gr.addColorStop(0,'rgba(255,255,255,0)');gr.addColorStop(.5,'rgba(255,255,255,.18)');gr.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=gr;ctx.fillRect(-b.ww*.36,-b.hh*.46,b.ww*.72,b.hh*.86)}}}
+}
  else{var im=imgs[b.n],d=b.r*2.5;if(im&&im.complete){var ar=im.naturalHeight/im.naturalWidth;ctx.scale(b.fl||1,1);ctx.drawImage(im,-d/2,-d*ar/2,d,d*ar)}}
  ctx.restore()}
 function draw(){
