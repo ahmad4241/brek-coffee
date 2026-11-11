@@ -1,0 +1,37 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="robots" content="noindex">
+<title>Aperçu · Le point</title>
+<style>
+@font-face{font-family:"Poppins";font-weight:400;src:url(../../fonts/poppins-regular.woff) format("woff")}
+@font-face{font-family:"Poppins";font-weight:500;src:url(../../fonts/poppins-medium.woff) format("woff")}
+*{box-sizing:border-box}html,body{margin:0;overflow-x:clip}body{font:400 16px/1.5 "Poppins",-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+.wordmark path{stroke-linejoin:round;stroke-width:9.81;fill:currentColor;stroke:currentColor}
+.tag{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);z-index:50;padding:6px 12px;border-radius:99px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;letter-spacing:.04em;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 16px}
+.nav .wordmark{height:24px;width:auto}.burger{width:44px;height:44px;border-radius:50%;display:grid;place-items:center}.burger i{display:block;width:16px;height:1.6px;box-shadow:0 -3.2px 0 currentColor,0 3.2px 0 currentColor}
+.go{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:360px;height:58px;padding:0 8px 0 24px;border-radius:99px;text-decoration:none;font-weight:500;font-size:16px}
+.go i{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;font-style:normal;font-size:18px}
+@media (min-width:900px){.nav{padding:0 40px;height:76px}.nav .wordmark{height:28px}}
+
+body{background:#0B0B0A;color:#F4F1EA}
+.nav{color:#F4F1EA}.burger{background:#F4F1EA;color:#0B0B0A}
+.phero{position:relative;height:100svh;min-height:620px;display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(90% 60% at 50% 70%,#1E1B17 0%,#0B0B0A 70%)}
+.ph-stage{position:relative;flex:1;min-height:0;touch-action:pan-y;margin-top:64px}
+#ph-c{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ph-headline{position:absolute;left:16px;right:16px;top:18px;margin:0;font-weight:500;font-size:clamp(34px,9vw,64px);line-height:1.08;letter-spacing:-.03em;pointer-events:none}
+.ph-headline small{display:block;margin-bottom:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8F8A80}
+.ph-headline span,.ph-headline small{display:block;opacity:0;transform:translateY(14px);transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ph-headline.on span,.ph-headline.on small{opacity:1;transform:none}.ph-headline.on span:nth-of-type(2){transition-delay:.3s;color:#8F8A80}
+.ph-bottom{padding:12px 16px calc(24px + env(safe-area-inset-bottom));display:flex;justify-content:center}
+.go{background:#F4F1EA;color:#0B0B0A}.go i{background:#0B0B0A;color:#F4F1EA}
+#ph-hint,.ph-card{display:none}
+@media (min-width:900px){.ph-stage{width:min(1000px,100%);margin:76px auto 0}.ph-headline{text-align:center}}
+
+</style></head><body>
+<header class="nav"><svg class="wordmark" viewBox="0 0 1000 281.3" aria-hidden="true" focusable="false"><path class="wm-l" fill-rule="evenodd" d="M900.1 11.4 L897.0 10.3 L889.3 10.0 L860.2 10.4 L841.3 9.7 L810.2 9.9 L806.7 10.9 L805.6 14.7 L805.4 96.3 L804.6 100.5 L803.1 103.5 L800.6 105.8 L797.9 106.5 L795.2 105.9 L793.0 104.1 L791.1 98.1 L790.9 16.1 L789.7 11.4 L786.7 10.3 L714.2 10.0 L698.4 10.4 L695.4 11.0 L693.7 12.2 L692.5 16.8 L693.1 51.1 L692.5 122.9 L693.2 145.0 L693.2 265.8 L693.7 271.1 L695.9 274.2 L698.4 275.3 L781.1 275.3 L786.3 274.9 L789.7 273.4 L790.8 271.6 L791.2 268.3 L790.8 193.3 L792.5 185.4 L794.9 183.1 L797.9 182.3 L800.9 183.1 L803.4 185.4 L804.9 188.8 L805.8 193.3 L805.6 269.7 L806.7 273.8 L809.8 274.8 L818.9 275.6 L885.5 275.6 L903.7 274.3 L907.1 273.1 L909.4 271.2 L911.0 267.6 L912.0 258.1 L911.3 244.5 L904.5 208.8 L895.8 178.6 L890.8 168.8 L882.5 158.3 L873.9 150.4 L862.6 144.8 L860.7 142.5 L860.1 140.1 L860.5 137.7 L862.3 135.1 L872.5 127.0 L879.3 119.4 L885.2 109.6 L891.0 97.0 L894.8 83.4 L897.3 70.8 L901.0 43.4 L902.2 17.2 L901.7 13.5Z M471.3 9.8 L470.0 11.7 L469.6 135.2 L469.0 191.2 L468.1 209.1 L469.3 243.4 L469.0 267.2 L469.8 270.1 L472.6 271.6 L479.5 272.4 L534.5 273.6 L558.0 275.2 L591.2 276.0 L652.5 276.0 L664.8 275.4 L669.4 273.7 L671.2 271.6 L672.1 268.6 L673.5 250.8 L673.5 189.5 L672.8 185.0 L670.9 181.5 L668.9 180.2 L666.5 179.7 L577.2 181.0 L573.7 180.3 L570.8 178.7 L568.9 176.4 L568.2 173.4 L568.9 170.6 L571.1 167.9 L574.1 166.3 L577.6 165.5 L659.2 164.7 L662.1 164.2 L664.0 162.6 L665.7 155.9 L665.9 136.6 L665.3 120.9 L664.5 118.3 L663.1 116.8 L657.8 115.9 L577.9 116.2 L574.5 115.5 L571.9 114.0 L570.2 111.7 L569.8 109.3 L570.5 106.9 L572.2 105.0 L577.6 102.9 L592.3 102.3 L666.2 102.0 L669.7 100.9 L671.1 98.0 L672.8 87.9 L675.2 43.1 L672.7 17.9 L670.8 12.2 L668.5 10.3 L665.5 9.1 L650.8 8.4 L475.0 8.8Z M239.6 8.7 L237.7 11.6 L237.0 15.8 L237.8 230.8 L236.9 270.3 L237.6 272.9 L241.3 274.5 L257.4 275.0 L330.9 274.5 L333.5 273.4 L334.4 271.3 L334.8 266.2 L334.7 189.1 L335.3 175.8 L337.2 170.1 L339.5 168.1 L341.9 167.4 L344.2 167.9 L346.3 169.5 L347.7 171.7 L348.4 174.8 L349.5 202.5 L349.6 269.7 L350.7 273.9 L353.1 274.8 L362.2 275.3 L441.0 275.2 L448.0 274.2 L452.7 271.9 L455.1 268.6 L455.7 263.4 L454.6 227.7 L453.5 218.6 L451.7 211.2 L445.5 192.6 L439.0 179.3 L430.1 167.2 L417.1 153.0 L415.2 148.9 L415.9 145.8 L418.0 143.2 L428.0 139.4 L432.5 136.3 L434.6 132.4 L436.1 125.0 L437.1 100.9 L436.0 16.5 L434.8 11.3 L432.5 10.0 L410.2 7.8 L247.6 7.0 L242.4 7.4Z M342.6 78.7 L346.9 80.4 L349.7 84.8 L350.8 91.8 L351.3 106.5 L350.3 117.7 L349.1 122.6 L346.3 126.1 L342.2 127.4 L338.0 125.6 L335.8 121.2 L335.9 85.1 L337.2 82.1 L339.5 79.7Z M10.2 6.4 L8.7 8.2 L7.8 11.6 L6.7 28.4 L7.0 110.0 L4.9 245.9 L5.6 264.8 L7.3 271.7 L9.0 273.0 L11.2 273.4 L46.6 272.9 L101.2 274.1 L124.3 273.3 L143.6 274.8 L204.6 273.4 L214.0 271.6 L218.9 269.6 L220.8 267.1 L221.6 263.7 L222.4 243.1 L221.7 175.1 L220.2 151.0 L218.2 146.5 L214.0 142.4 L205.6 138.6 L193.7 136.5 L190.6 134.0 L189.5 130.6 L190.2 127.6 L192.4 125.2 L203.5 121.8 L207.0 119.0 L209.6 113.5 L211.9 100.9 L212.6 91.4 L212.6 64.4 L211.4 42.4 L208.0 15.8 L204.4 8.6 L201.3 6.1 L196.8 5.6 L13.7 5.3Z M113.1 156.4 L117.3 158.1 L119.7 162.5 L121.4 179.0 L121.5 195.1 L119.1 216.4 L116.7 220.1 L112.8 221.5 L110.4 220.9 L108.4 219.3 L106.5 214.4 L106.5 163.6 L107.4 160.1 L109.8 157.4Z M113.5 76.9 L117.7 78.6 L119.9 82.0 L121.9 105.8 L120.9 109.6 L119.1 112.4 L115.9 114.4 L113.1 115.1 L108.6 113.4 L106.1 109.3 L105.8 92.5 L107.4 80.6 L109.6 78.1Z"/><path class="wm-d" d="M932.7 202.6 L931.4 204.7 L930.9 208.4 L931.0 269.0 L932.7 274.4 L935.3 275.8 L942.9 276.3 L984.9 276.2 L990.5 275.7 L993.2 274.5 L994.4 272.7 L994.8 270.0 L994.7 206.0 L993.7 203.3 L989.1 201.4 L975.5 201.1 L936.3 201.5Z"/></svg><span class="burger"><i></i></span></header>
+<section class="phero"><div class="ph-stage" id="ph-stage"><canvas id="ph-c"></canvas>
+<h1 class="ph-headline" id="ph-hl"><small>Café de spécialité · Eaux-Vives, Genève</small><span>Un grain.</span><span>Une pause.</span></h1><div id="ph-hint"></div></div>
+<div class="ph-bottom"><a class="go" href="#">Commander <i>→</i></a></div></section>
+<div class="ph-card" id="ph-card"><b id="ph-cn"></b><span id="ph-cd"></span><a id="ph-cg"></a><button id="ph-cx"></button></div>
+<div class="tag">Aperçu 3 · « Le point » en noir</div>
+<script src="phero3.js"></script>
+</body></html>
