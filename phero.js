@@ -133,13 +133,13 @@ stage.addEventListener('pointerdown',function(e){lastInput=now;wake();var p=pos(
  if(b){drag=b;b.tx=p[0];b.ty=p[1];stage.classList.add('grab');stage.setPointerCapture(e.pointerId)}hint.style.opacity=0});
 stage.addEventListener('pointermove',function(e){var p=pos(e);if(drag){lastInput=now;drag.tx=p[0];drag.ty=p[1]}else{var b=hit(p[0],p[1]);stage.style.cursor=b?'grab':''}});
 function up(e){var p=pos(e);if(down){var moved=Math.hypot(p[0]-down.x,p[1]-down.y),quick=performance.now()-down.t<300;
-  if(down.b&&down.b.k==='L'&&moved<10&&quick){var c=document.getElementById('carte');if(c)c.scrollIntoView({behavior:'smooth'})}else if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);else if(!down.b&&moved<10)bodies.push(bean(p[0],-20))}
+  if(down.b&&down.b.k==='L'&&moved<10&&quick){var c=document.getElementById('carte');if(c)c.scrollIntoView({behavior:'smooth'})}else if(down.b&&down.b.k==='g'&&moved<10&&quick)openCard(down.b.n);}
  if(drag){drag.thrown=1;drag=null;stage.classList.remove('grab')}down=null;for(var i=0;bodies.length>70&&i<bodies.length;)if(bodies[i].k!=='L'&&!bodies[i].walk)bodies.splice(i,1);else i++}
 stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',function(){if(drag){drag=null;stage.classList.remove('grab')}down=null});
 var cardN=null;function openCard(n){cardN=n;var d=DRINKS[n];document.getElementById('ph-cn').textContent=d[0];document.getElementById('ph-cd').textContent=d[1];document.getElementById('ph-cg').textContent='Commander · '+d[2];document.getElementById('ph-card').classList.add('on')}
 var hl=document.getElementById('ph-hl');function tint(){var e=hl.querySelector('em');e.style.color=cur}
 document.getElementById('ph-cx').onclick=function(){document.getElementById('ph-card').classList.remove('on')};
-addEventListener('resize',function(){var oW=W;layout();bodies.forEach(function(b){b.x*=W/oW});if(HANG){HANG.x*=W/oW;var g=hangG(),hb=bodies.filter(function(b){return b.k==='L'})[0];HANG.y=g.py;HANG.len=g.len+((hb?hb.r:g.r)-g.r)}wake()});
+addEventListener('resize',function(){var oW=W,oH=H,oOy=oy;layout();if(W===oW&&H===oH&&oy===oOy)return;var kx=W/oW,dy=oy-oOy;bodies.forEach(function(b){b.x*=kx;b.y+=dy});parts.forEach(function(q){q.x*=kx;q.y+=dy});if(HANG){var g=hangG(),hb=bodies.filter(function(b){return b.k==='L'})[0];HANG.x*=kx;HANG.y=g.py;HANG.len=g.len+((hb?hb.r:g.r)-g.r);if(hb&&hb!==drag){var a=hb.a;hb.x=HANG.x-Math.sin(a)*HANG.len;hb.y=HANG.y+Math.cos(a)*HANG.len;hb.vx=hb.vy=0}}wake()});
 layout();schedule();wake();
 
 document.getElementById('ph-cg').addEventListener('click',function(e){e.preventDefault();document.getElementById('ph-card').classList.remove('on');var b=document.querySelector('.card-btn[data-item="'+({'iced-latte':'latte'}[cardN]||cardN)+'"]');if(b)b.click();});
